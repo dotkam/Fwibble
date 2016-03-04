@@ -24,3 +24,8 @@ var config = {
     //     port: 'vinegar'
     // }
 }
+
+require('../db/seeds/seed_users.js');
+require('../db/seeds/seed_user_room.js');
+require('../db/seeds/seed_rooms.js');
+require('../db/seeds/seed_text.js');
