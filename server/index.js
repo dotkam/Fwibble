@@ -9,6 +9,12 @@ var assetFolder = Path.resolve(__dirname, '../client');
 if(process.env.NODE_ENV !== 'test'){  
   // Catch-all Route
   // This is for supporting browser history pushstate.
+
+  routes.get('/gameview.jsx', function(request, response){
+    response.sendFile( assetFolder + '/app/gameview/gameview.jsx')
+  });
+
+
   // NOTE: Make sure this route is always LAST.
   routes.get('/*', function(request, response){
     response.sendFile( assetFolder + '/index.html');
