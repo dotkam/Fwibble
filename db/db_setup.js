@@ -17,7 +17,7 @@ var config = {
       database: "development",
       host: "localhost",
       port: 5432
-    },
+    }
     // production: {
     //     database: 'milk',
     //     host: 'honey',
