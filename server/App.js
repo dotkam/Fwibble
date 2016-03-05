@@ -11,7 +11,7 @@ ReactDOM.render((
           <RRouter.Route path="/" component={Index}/>
           <RRouter.Route path="/signin" component={Signin}/>
           <RRouter.Route path="/game" component={Game}/>
-           <RRouter.Route path="/gameview" component={GameView}/>
+          <RRouter.Route path="/gameview" component={GameView}/>
         </RRouter.Router>
     ), document.getElementById('app')
 )

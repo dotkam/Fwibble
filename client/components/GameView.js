@@ -5,12 +5,12 @@ var StoryBox = require('./StoryBox.js');
 var StoryInput = require('./StoryInput.js');
 
 var GameView = React.createClass({
-	getInitialState: function () 
-	// 	return {
-
-	// 	};
-	// },
-	render() {
+	getInitialState: function ()
+		return {
+			console.log("in getInitialState");
+		};
+	},
+	render: function() {
 		return (
 			<div className="GameView">
 				<h1>Fwibble!</h1>
@@ -23,14 +23,12 @@ var GameView = React.createClass({
 });
 
 
-ReactDOM.render(<GameView />,
-	document.getElementById('app')
-);
+ReactDOM.render(<GameView />, document.getElementById('app'));
 
 module.exports = GameView;
 
 
-
+//OLD WAY OF DOING IT:
 
 // var React = require('react');
 // var ReactDOM = require('react-dom');
