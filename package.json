@@ -7,7 +7,7 @@
     "node": "5.6"
   },
   "scripts": {
-    "start": "webpack-dev-server --content-base build/",
+    "start": "webpack-dev-server --content-base",
     "test": "./test/run.sh"
   },
   "license": "MIT",
