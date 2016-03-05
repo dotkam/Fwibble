@@ -7,7 +7,7 @@ module.exports = React.createClass({
       <div>
         <h2>Index Page</h2>
         <div><RRouter.Link to="/signin">Sign In</RRouter.Link></div>
-        <div><RRouter.Link to="/game">Game</RRouter.Link></div>
+        <div><RRouter.Link to="/gameview">Game</RRouter.Link></div>
       </div>
     )
   }
