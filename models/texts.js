@@ -38,7 +38,8 @@ Text.allOfRoom = function(roomId) {
 */
 
 Text.allOfUser = function(roomId, userId) {
-  return db.select('*').from('texts').where({'room_id': roomId, 'user_id: userId'})
+  // return db.select('*').from('texts').where({'room_id': roomId, 'user_id: userId'})
+  return db.select('*').from('texts').where({'room_id': roomId}).and({'user_id': userId})
     .catch(function(err) {
       if err console.log('error retreiving text from db', err)
     })
