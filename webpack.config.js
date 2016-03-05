@@ -8,7 +8,7 @@ var HTMLWebpackPluginConfig = new HmtlWebpackPlugin({
 
 module.exports = {
   entry: [
-    './server/_index.js'
+    './server/App.js'
   ],
 
   output: {
