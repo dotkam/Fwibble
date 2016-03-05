@@ -1,9 +1,13 @@
 var React = require('react');
+var RRouter = require('react-router');
 
 module.exports = React.createClass({
   render() {
     return (
-      <div>Index</div>
+      <div>
+        <h2>Index Page</h2>
+        <div><RRouter.Link to="/signin">Sign In</RRouter.Link></div>
+      </div>
     )
   }
 })

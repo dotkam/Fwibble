@@ -6,7 +6,7 @@ var Signin = require('../modules/Signin');
 var Game = require('../modules/Game');
 
 ReactDOM.render((
-        <RRouter.Router history={RRouter.hashHistory} >
+        <RRouter.Router history={RRouter.browserHistory} >
           <RRouter.Route path="/" component={Index}/>
           <RRouter.Route path="/signin" component={Signin}/>
           <RRouter.Route path="/game" component={Game}/>
