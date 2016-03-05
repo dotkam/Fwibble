@@ -17,10 +17,15 @@ var config = {
       database: "development",
       host: "localhost",
       port: 5432
-    },
+    }
     // production: {
     //     database: 'milk',
     //     host: 'honey',
     //     port: 'vinegar'
     // }
 }
+
+require('../db/seeds/seed_users.js');
+require('../db/seeds/seed_user_room.js');
+require('../db/seeds/seed_rooms.js');
+require('../db/seeds/seed_text.js');
