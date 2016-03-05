@@ -5,6 +5,8 @@
     Open a connection to that database environment
   createdb development
     Create a database named development in fwibbleDB directory
+  dropdb development
+    Delete all database tables (for testing purposes only!)
   psql "dbname=development options=--search_path=public" -f db/fwibble.sql
     Apply the db/fwibble.sql schema to the development database
   node db/db_setup.js
