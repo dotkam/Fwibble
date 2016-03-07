@@ -1,6 +1,6 @@
-const db = require('../db/db_setup');
+var pg = require('../db/db_setup');
 
-const Text = module.exports;
+var Text = module.exports;
 
 /* Insert new sentence segment into database
   attrs: 
@@ -10,9 +10,9 @@ const Text = module.exports;
 */
 
 Text.create = function(attrs) {
-  return db('texts').insert(attrs, ['text_id', 'text_content', 'room_id', 'user_id', 'createdAt'])
-    .catch(function(err) {
-      if err console.log('error inserting text into db', err)
+  return pg('texts').insert(attrs, ['text_id', 'text_content', 'room_id', 'user_id', 'createdAt'])
+    .catch(function(error) {
+      console.error('error inserting text', error)
     })
     .then(function(res){
       console.log('successfully inserted text')
@@ -24,9 +24,9 @@ Text.create = function(attrs) {
 */
 
 Text.allOfRoom = function(roomId) {
-  return db.select('*').from('texts').where({'room_id': roomId})//.orderBy('createdAt', 'asc')
-    .catch(function(err) {
-      if err console.log('error retreiving text from db', err)
+  return pg.select('*').from('texts').where({'room_id': roomId})//.orderBy('createdAt', 'asc')
+    .catch(function(error) {
+      console.error('error retrieving text', error)
     })
     .then(function(res){
       console.log('successfully retrieved text')
@@ -39,9 +39,9 @@ Text.allOfRoom = function(roomId) {
 
 Text.allOfUser = function(roomId, userId) {
   // return db.select('*').from('texts').where({'room_id': roomId, 'user_id: userId'})
-  return db.select('*').from('texts').where({'room_id': roomId}).and({'user_id': userId})
-    .catch(function(err) {
-      if err console.log('error retreiving text from db', err)
+  return pg.select('*').from('texts').where({'room_id': roomId}).and({'user_id': userId})
+    .catch(function(error) {
+      console.error('error retrieving text', error)
     })
     .then(function(res){
       console.log('successfully retrieved text')
