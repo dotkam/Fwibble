@@ -1,1 +1,1 @@
-../node_modules/.bin/mocha --recursive -r test/bootstrap.js "$@"
+./node_modules/.bin/mocha --recursive -r test/test-helper.js "$@"

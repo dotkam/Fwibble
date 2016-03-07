@@ -2,7 +2,7 @@
 require(TEST_HELPER) // <--- This must be at the top of every test file.
 
 const Text = require(__models + '/texts');
-const db      = require('../../db_setup');
+const pg      = require('../../db_setup');
 const dbCleaner = require('knex-cleaner');
 
 describe('Texts model', function() {
@@ -11,7 +11,7 @@ describe('Texts model', function() {
   	beforeEach(function() {
       return dbCleaner.clean(db, {mode: 'truncate'})
         .then(function() {
-          return db('texts').insert([
+          return pg('texts').insert([
             {
               text_content: 'This is an example of Fwibble',
               room_id: 1, 
