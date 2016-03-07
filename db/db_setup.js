@@ -25,7 +25,7 @@
 //     //     host: 'honey',
 //     //     port: 'vinegar'
 //     // }
-}
+// }
 
 const config = require('../knexfile');
 const env    = process.env.NODE_ENV || 'development';
@@ -38,6 +38,6 @@ module.exports = pg;
 
 
 require('../db/seeds/seed_users.js');
-require('../db/seeds/seed_user_room.js');
 require('../db/seeds/seed_rooms.js');
+require('../db/seeds/seed_user_room.js');
 require('../db/seeds/seed_text.js');
