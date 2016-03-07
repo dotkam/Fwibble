@@ -9,7 +9,7 @@ describe('Texts model', function() {
   describe('interface with database', function() {
 
   	beforeEach(function() {
-      return dbCleaner.clean(db, {mode: 'truncate'})
+      return dbCleaner.clean(pg, {mode: 'truncate'})
         .then(function() {
           return pg('texts').insert([
             {
