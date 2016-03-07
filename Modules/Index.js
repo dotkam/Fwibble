@@ -2,7 +2,7 @@ var React = require('react');
 var RRouter = require('react-router');
 
 module.exports = React.createClass({
-  render() {
+  render: function() {
     return (
       <div>
         <h2>Index Page</h2>
