@@ -1,7 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var StoryInput = React.createClass({
+module.exports = React.createClass({
 	handleSubmit: function(e) {
 		// don't use html submit
 		e.preventDefault();
