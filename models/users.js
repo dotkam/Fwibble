@@ -24,7 +24,7 @@ User.create = function(attrs) {
 */
 
 User.findActiveRoom = function(userId) {
-  return pg.select('active_room').from('users').where({'user_id': userId});
+  return pg.select('active_room').from('users').where({'user_id': userId})
     .catch(function(error) {
       console.error('error retrieving room', error)
     })

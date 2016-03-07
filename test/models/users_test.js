@@ -1,9 +1,8 @@
-users_test.js
 "use strict"
 require(TEST_HELPER) // <--- This must be at the top of every test file.
 
 const User = require(__models + '/users');
-const pg      = require('../../db_setup');
+const pg      = require('../../db/db_setup');
 const dbCleaner = require('knex-cleaner');
 
 describe('Users model', function() {
@@ -28,8 +27,8 @@ describe('Users model', function() {
           expect(rooms).to.have.length(1);
           expect(rooms[0].username).to.equal('PlayerOne');
         })
-        .catch(function(err) {
-          if (err) console.log('error retrieving user from db', err)
+        .catch(function(error) {
+          console.error('error retrieving users', error)
         })
     })
 
@@ -46,8 +45,8 @@ describe('Users model', function() {
           expect(user.username).to.equal('PlayerTwo');
           expect(user.active_room).to.equal(2);
         })
-        .catch(function(err) {
-          if err console.log('error retrieving user from db', err)
+        .catch(function(error) {
+          console.error('error inserting user', error)
         })
     })
 })
