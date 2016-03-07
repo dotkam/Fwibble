@@ -1,7 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var StoryTitle = React.createClass({
+module.exports = React.createClass({
 	render: function () {
 		var Title = (<div>Title loading...</div>);
 

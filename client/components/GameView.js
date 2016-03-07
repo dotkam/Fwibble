@@ -4,15 +4,11 @@ var StoryTitle = require('./StoryTitle.js');
 var StoryBox = require('./StoryBox.js');
 var StoryInput = require('./StoryInput.js');
 
-var GameView = React.createClass({
-	getInitialState: function ()
-		return {
-			console.log("in getInitialState");
-		};
-	},
+module.exports = React.createClass({
+
 	render: function() {
 		return (
-			<div className="GameView">
+			<div>
 				<h1>Fwibble!</h1>
 				<StoryTitle />
 				<StoryBox />
@@ -22,10 +18,9 @@ var GameView = React.createClass({
 	}
 });
 
+				// 
 
-ReactDOM.render(<GameView />, document.getElementById('app'));
-
-module.exports = GameView;
+// ReactDOM.render(<GameView />, document.getElementById('app'));
 
 
 //OLD WAY OF DOING IT:
