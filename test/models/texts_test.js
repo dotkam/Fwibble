@@ -13,6 +13,7 @@ describe('Texts model', function() {
         .then(function() {
           return pg('texts').insert([
             {
+              text_id: 1,
               text_content: 'This is an example of Fwibble',
               room_id: 1, 
               user_id: 1,
