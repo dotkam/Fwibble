@@ -7,7 +7,7 @@
     "node": "5.6"
   },
   "scripts": {
-    "start": "webpack-dev-server --content-base",
+    "start": "webpack-dev-server --content-base --history-api-fallback",
     "test": "./test/run.sh"
   },
   "license": "MIT",
