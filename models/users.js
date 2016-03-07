@@ -1,6 +1,6 @@
-const db = require('../db/db_setup');
+var pg = require('../db/db_setup');
 
-const User = module.exports;
+var User = module.exports;
 
 /* 
   Create new user
@@ -10,9 +10,9 @@ const User = module.exports;
 */
 
 User.create = function(attrs) {
-  return db('users').insert(attrs, ['user_id', 'username', 'password', 'active_room'])
-    .catch(function(err) {
-      if err console.log('error inserting user into db', err)
+  return pg('users').insert(attrs, ['user_id', 'username', 'password', 'active_room'])
+    .catch(function(error) {
+      console.error('error inserting user', error)
     })
     .then(function(res){
       console.log('successfully inserted user')
@@ -24,9 +24,9 @@ User.create = function(attrs) {
 */
 
 User.findActiveRoom = function(userId) {
-  return db.select('active_room').from('users').where({'user_id': userId});
-    .catch(function(err) {
-      if err console.log('error retreiving room from db', err)
+  return pg.select('active_room').from('users').where({'user_id': userId});
+    .catch(function(error) {
+      console.error('error retrieving room', error)
     })
     .then(function(res){
       console.log('successfully retrieved room')

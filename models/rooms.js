@@ -1,6 +1,6 @@
-const db = require('../db/db_setup');
+var pg = require('../db/db_setup');
 
-const Room = module.exports;
+var Room = module.exports;
 
 /*
   create new game room
@@ -8,9 +8,9 @@ const Room = module.exports;
 */
 
 Room.create = function(attrs) {
-  return db('rooms').insert(attrs, ['room_id', 'room_hash'])
-    .catch(function(err) {
-      if err console.log('error inserting Room into db', err)
+  return pg('rooms').insert(attrs, ['room_id', 'room_hash'])
+    .catch(function(error) {
+      console.error('error inserting room into db', error)
     })
     .then(function(res){
       console.log('successfully inserted room')
@@ -22,9 +22,9 @@ Room.create = function(attrs) {
   ??need to find active rooms only?  or do we purge old games
 */
 Room.allUser = function(userId) {
-  return db.select('room_id').from('user_room').where({'user_id': userId})
-    .catch(function(err) {
-      if err console.log('error retreiving rooms from db', err)
+  return pg.select('room_id').from('user_room').where({'user_id': userId})
+    .catch(function(error) {
+      console.error('error retrieving rooms', error)
     })
     .then(function(res){
       console.log('successfully retrieved rooms')
@@ -37,9 +37,9 @@ Room.allUser = function(userId) {
 */
 
 Room.allById = function() {
-  return db.select('*').from('rooms')
-    .catch(function(err) {
-      if err console.log('error retreiving rooms from db', err)
+  return pg.select('*').from('rooms')
+    .catch(function(error) {
+      console.error('error retrieving rooms', error)
     })
     .then(function(res){
       console.log('successfully retrieved rooms')
