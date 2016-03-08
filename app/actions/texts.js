@@ -10,7 +10,7 @@ var Text = module.exports;
 */
 
 Text.create = function(attrs) {
-  return pg('texts').insert(attrs, ['text_id', 'text_content', 'room_id', 'user_id', 'createdAt'])
+  return pg('texts').insert(attrs, ['text_id', 'text_content', 'room_id', 'user_id', 'createdat'])
     .catch(function(error) {
       console.error('error inserting text', error)
     })
