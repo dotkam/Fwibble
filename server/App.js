@@ -4,7 +4,7 @@ var RRouter = require('react-router');
 var Index = require('../modules/Index');
 var Signin = require('../modules/Signin');
 var Game = require('../modules/Game');
-var Gameview = require('../client/components/GameView')
+var Gameview = require('../app/components/GameView')
 
 ReactDOM.render((
         <RRouter.Router history={RRouter.browserHistory} >
