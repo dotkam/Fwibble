@@ -21,11 +21,11 @@ describe('Users model', function() {
         })
     })
 
-    it_('should list all texts of a room', function * () {
+    it_('should list the active room of a user', function * () {
       yield User.findActiveRoom(1)
         .then(function(rooms) {
           expect(rooms).to.have.length(1);
-          expect(rooms[0].username).to.equal('PlayerOne');
+          expect(rooms[0].active_room).to.equal(1);
         })
         .catch(function(error) {
           console.error('error retrieving users', error)
