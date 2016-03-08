@@ -1,9 +1,9 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var RRouter = require('react-router');
-var Index = require('../app/components/Index');
-var Signin = require('../app/components/Signin');
-var Gameview = require('../app/components/GameView')
+var Index = require('../app/components/index/Index');
+var Signin = require('../app/components/signin/Signin');
+var Gameview = require('../app/components/gameview/GameView')
 
 ReactDOM.render((
         <RRouter.Router history={RRouter.browserHistory} >
