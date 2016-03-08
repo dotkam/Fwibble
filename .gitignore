@@ -9,3 +9,6 @@ fwibbleDB
 
 # Dist
 dist
+
+# Debug
+npm-debug.log
