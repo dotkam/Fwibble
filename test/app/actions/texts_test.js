@@ -1,18 +1,19 @@
 "use strict"
-require(TEST_HELPER) // <--- This must be at the top of every test file.
+require('../../test-helper.js') // <--- This must be at the top of every test file.
 
-const Text = require(__models + '/texts');
-const db      = require('../../db');
+const Text = require(__app + '/actions/texts');
+const pg      = require('../../../db/db_setup');
 const dbCleaner = require('knex-cleaner');
 
 describe('Texts model', function() {
   describe('interface with database', function() {
 
   	beforeEach(function() {
-      return dbCleaner.clean(db, {mode: 'truncate'})
+      return dbCleaner.clean(pg, {mode: 'truncate'})
         .then(function() {
-          return db('texts').insert([
+          return pg('texts').insert([
             {
+              text_id: 1,
               text_content: 'This is an example of Fwibble',
               room_id: 1, 
               user_id: 1,
@@ -27,8 +28,8 @@ describe('Texts model', function() {
           expect(texts).to.have.length(1);
           expect(texts[0].text_content).to.equal('This is an example of Fwibble');
         })
-        .catch(function(err) {
-          if err console.log('error retrieving text from db', err)
+        .catch(function(error) {
+          console.error('error inserting text', error)
         })
     })
 
@@ -46,8 +47,8 @@ describe('Texts model', function() {
           expect(text.user_id).to.equal(2);
           expect(text.createdAt).to.be.ok;
         })
-        .catch(function(err) {
-          if err console.log('error retrieving text from db', err)
+        .catch(function(error) {
+          console.error('error inserting text', error)
         })
     })
 })

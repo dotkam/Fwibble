@@ -1,8 +1,8 @@
 "use strict"
-require(TEST_HELPER) // <--- This must be at the top of every test file.
+require('../../test-helper.js')  // <--- This must be at the top of every test file.
 
-const User = require(__models + '/users');
-const pg      = require('../../db/db_setup');
+const User = require(__app + '/actions/users');
+const pg      = require('../../../db/db_setup');
 const dbCleaner = require('knex-cleaner');
 
 describe('Users model', function() {
