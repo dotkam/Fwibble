@@ -1,13 +1,13 @@
 var React = require('react');
-var RRouter = require('react-router');
+var Link = require('react-router').Link;
 
 module.exports = React.createClass({
   render: function() {
     return (
       <div>
         <h2>Index Page</h2>
-        <div><RRouter.Link to="/signin">Sign In</RRouter.Link></div>
-        <div><RRouter.Link to="/gameview">Game</RRouter.Link></div>
+        <div><Link to="/signin">Sign In</Link></div>
+        <div><Link to="/gameview">Game</Link></div>
       </div>
     )
   }
