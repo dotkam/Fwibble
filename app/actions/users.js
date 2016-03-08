@@ -1,4 +1,4 @@
-var pg = require('../db/db_setup');
+var pg = require('../../db/db_setup');
 
 var User = module.exports;
 

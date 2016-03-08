@@ -1,14 +1,13 @@
 process.env.NODE_ENV = 'test'
 
-
 // The following allows you to require files independent of
 // the location of your test file.
 // Example:
 //  var User = require(__server + '/models/user.js')
 //
 global.__server = __dirname + '/../server'
-global.__client = __dirname + '/../client'
-global.__models = __dirname + '/../models'
+global.__app = __dirname + '/../app'
+global.__actions = __dirname + '/../actions'
 
 
 var chai = require('chai')

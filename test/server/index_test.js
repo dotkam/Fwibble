@@ -1,4 +1,4 @@
-require(TEST_HELPER) // <--- This must be at the top of every test file.
+require('../test-helper.js') // <--- This must be at the top of every test file.
 
 var request = require('supertest')
 var routes = require(__server + '/index.js')
