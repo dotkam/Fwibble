@@ -11,6 +11,23 @@ describe('Texts model', function() {
   	beforeEach(function() {
       return dbCleaner.clean(pg, {mode: 'truncate'})
         .then(function() {
+          return pg('rooms').insert([
+            {
+              room_id:1,
+              room_hash: 'abc123',
+            }
+          ])
+        })
+        .then(function() {
+          return pg('users').insert([
+            {
+              user_id:1,
+              username: 'Player1',
+              active_room: 1,
+            }
+          ])
+        })
+        .then(function(){
           return pg('texts').insert([
             {
               text_id: 1,
@@ -22,8 +39,9 @@ describe('Texts model', function() {
         })
     })
 
+
     it_('should list all texts of a room', function * () {
-      yield Text.allOfRoom(1)
+      yield Text.allOfRoom(3)
         .then(function(texts) {
           expect(texts).to.have.length(1);
           expect(texts[0].text_content).to.equal('This is an example of Fwibble');
@@ -40,7 +58,7 @@ describe('Texts model', function() {
         user_id: 2,
       }
 
-      yield Message.create(newText)
+      yield Text.create(newText)
         .then(function(text) {
           expect(text.text_content).to.equal('New Fwibble in the database word');
           expect(text.room_id).to.equal(1);
