@@ -18,18 +18,19 @@ Room.create = function(attrs) {
 }
 
 /* 
-  Find all games user is a part of
+  Find all users in a game room
   ??need to find active rooms only?  or do we purge old games
 */
-Room.allUser = function(userId) {
-  return pg.select('room_id').from('user_room').where({'user_id': userId})
+Room.allUser = function(roomId) {
+  return pg.select('user_id').from('user_room').where({'room_id': roomId})
     .catch(function(error) {
-      console.error('error retrieving rooms', error)
+      console.error('error retrieving users', error)
     })
     .then(function(res){
-      console.log('successfully retrieved rooms')
+      console.log('successfully retrieved users')
     })
 }
+
 
 /*
   List all active rooms
