@@ -19,9 +19,34 @@ describe('Users model', function() {
             },
           ])
         })
+        .then(function() {
+          return pg('rooms').insert([
+            {
+              room_id: 1,
+              room_hash: 'abc123'
+            },
+            {
+              room_id: 2,
+              room_hash: 'def456'
+            }
+          ])
+        })
+        .then(function() {
+          return pg('user_room').insert([
+            {
+              user_id: 1,
+              room_id: 1
+            },
+            {
+              user_id: 1,
+              room_id: 2
+            }
+          ])
+        })
     })
 
     it_('should list the active room of a user', function * () {
+
       yield User.findActiveRoom(1)
         .then(function(rooms) {
           expect(rooms).to.have.length(1);
@@ -47,6 +72,38 @@ describe('Users model', function() {
         })
         .catch(function(error) {
           console.error('error inserting user', error)
+        })
+    })
+
+    it_('should allow user to join a game room', function * () {
+      let newJoin ={
+        user_id: 2,
+        room_id: 2
+      }
+
+      yield User.joinRoom(newJoin)
+        .then(function(gameroom) {
+          expect(gameroom.user_id).to.equal(2);
+          expect(gameroom.room_id).to.equal(2);
+        })
+        .catch(function(error) {
+          console.error('error joining room', error)
+        })
+    })
+
+    it_('should allow user to join a game room', function * () {
+      let newJoin ={
+        user_id: 2,
+        room_id: 2
+      }
+
+      yield User.joinRoom(newJoin)
+        .then(function(gameroom) {
+          expect(gameroom.user_id).to.equal(2);
+          expect(gameroom.room_id).to.equal(2);
+        })
+        .catch(function(error) {
+          console.error('error joining room', error)
         })
     })
 })
