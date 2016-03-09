@@ -3,55 +3,90 @@ var ReactDOM = require('react-dom');
 var StoryTitle = require('./StoryTitle.js');
 var StoryBox = require('./StoryBox.js');
 var StoryInput = require('./StoryInput.js');
+var StorySnippet = require('./StorySnippet.js');
 
 module.exports = React.createClass({
 
-	render: function() {
+  getInitialState() {
+		return {users: [], storySnippets:[], text: ''};
+	},
+
+	// componentDidMount() {
+	// 	socket.on('init', this._initialize);
+	// 	socket.on('send:storySnipet', this._snippetRecieve);
+	// 	socket.on('user:join', this._userJoined);
+	// 	socket.on('user:left', this._userLeft);
+	// },
+
+	_initialize(data) {
+		var {users, name} = data;
+		this.setState({users, user: name});
+	},
+
+	_snippetRecieve(snippet) {
+		var {storySnippets} = this.state;
+		storySnippets.push(storySnippet);
+		this.setState({storySnippets});
+	},
+
+	_userJoined(data) {
+		var {users, storySnippets} = this.state;
+		var {name} = data;
+		users.push(name);
+		storySnippets.push({
+			user: 'APPLICATION BOT',
+			text : name +' Joined'
+		});
+		this.setState({users, storySnippets});
+	},
+
+	_userLeft(data) {
+		var {users, storySnippets} = this.state;
+		var {name} = data;
+		var index = users.indexOf(name);
+		users.splice(index, 1);
+		storySnippets.push({
+			user: 'APPLICATION BOT',
+			text : name +' Left'
+		});
+		this.setState({users, storySnippets});
+	},
+
+	handleSnippetSubmit(storySnippet) {
+		var {storySnippets} = this.state;
+		storySnippets.push(storySnippet);
+		for (var i = 0; i < storySnippets.length; i++) {
+			console.log(storySnippets[i]);
+      console.log(storySnippets[i].text);
+		}
+		this.setState({storySnippets});
+		// socket.emit('send:storySnippet', storySnippet);
+		console.log('this one:', this.state.storySnippets)
+	},
+
+	render() {
 		return (
 			<div>
-				<h1>Fwibble!</h1>
+			<h1>Fwibble!</h1>
 				<StoryTitle />
-				<StoryBox />
-				<StoryInput />
+				<StoryBox
+					storySnippets={this.state.storySnippets}
+				/>
+				<StoryInput
+					onSnippetSubmit={this.handleSnippetSubmit}
+					user={this.state.user}
+				/>
 			</div>
-		)
+		);
 	}
 });
-
-				// 
 
 // ReactDOM.render(<GameView />, document.getElementById('app'));
 
 
-//OLD WAY OF DOING IT:
 
-// var React = require('react');
-// var ReactDOM = require('react-dom');
-// var StoryTitle = require('./StoryTitle.js');
-// var StoryBox = require('./StoryBox.js');
-// var StoryInput = require('./StoryInput.js');
-
-// var GameView = React.createClass({
-// 	getInitialState: function () {
-// 		return {
-
-// 		};
-// 	},
-// 	render: function () {
-// 		return (
-// 			<div className="GameView">
-// 				<h1>Fwibble!</h1>
-// 				<StoryTitle />
-// 				<StoryBox />
-// 				<StoryInput />
-// 			</div>
-// 		)
+// var printThis = function() {
+// 	for (var i = 0; i < storySnippets.length; i++) {
+// 		return storySnippets[i].text;
 // 	}
-// });
-
-
-// ReactDOM.render(<GameView />,
-// 	document.getElementById('app')
-// );
-
-// module.exports = GameView;
+// }
