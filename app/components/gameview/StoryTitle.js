@@ -3,7 +3,7 @@ var ReactDOM = require('react-dom');
 
 module.exports = React.createClass({
 	render: function () {
-		var Title = (<div>Title loading...</div>);
+		var Title = (<div>Title Loading...</div>);
 
 		if (true) { Title = Title; }
 
