@@ -16,6 +16,7 @@ User.create = function(attrs) {
     })
     .then(function(res){
       console.log('successfully inserted user', res)
+      return res;
     })
 }
 
@@ -30,6 +31,7 @@ User.findActiveRoom = function(userId) {
     })
     .then(function(res){
       console.log('successfully retrieved room', res)
+      return res;
     })
 }
 
@@ -47,6 +49,7 @@ User.joinRoom = function(attrs) {
     })
     .then(function(res){
       console.log('successfully inserted user into room', res)
+      return res;
     })
 }
 
@@ -61,6 +64,7 @@ User.allRoom = function(userId) {
     })
     .then(function(res){
       console.log('successfully retrieved rooms', res)
+      return res;
     })
 }
 
@@ -75,5 +79,6 @@ User.findIdByUsername = function(username) {
     })
     .then(function(res){
       console.log('successfully retrieved user', res)
+      return res;
     })
 }
