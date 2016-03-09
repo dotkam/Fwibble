@@ -15,7 +15,7 @@ User.create = function(attrs) {
       console.error('error inserting user', error)
     })
     .then(function(res){
-      console.log('successfully inserted user')
+      console.log('successfully inserted user', res)
     })
 }
 
@@ -29,7 +29,7 @@ User.findActiveRoom = function(userId) {
       console.error('error retrieving room', error)
     })
     .then(function(res){
-      console.log('successfully retrieved room')
+      console.log('successfully retrieved room', res)
     })
 }
 
@@ -46,7 +46,7 @@ User.joinRoom = function(attrs) {
       console.error('error inserting user into room', error)
     })
     .then(function(res){
-      console.log('successfully inserted user into room')
+      console.log('successfully inserted user into room', res)
     })
 }
 
@@ -60,7 +60,20 @@ User.allRoom = function(userId) {
       console.error('error retrieving rooms', error)
     })
     .then(function(res){
-      console.log('successfully retrieved rooms')
+      console.log('successfully retrieved rooms', res)
     })
 }
 
+/*
+  Primary keys are arbitrarily assigned by PostgreSQL, this method gives us a way to find the ID based on username
+*/
+
+User.findIdByUsername = function(username) {
+  return pg.select('user_id').from('users').where({'username': username})
+    .catch(function(error) {
+      console.error('error retrieving user', error)
+    })
+    .then(function(res){
+      console.log('successfully retrieved user', res)
+    })
+}

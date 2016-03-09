@@ -3,7 +3,7 @@ CREATE SCHEMA public;
 
 CREATE TABLE IF NOT EXISTS users (
   user_id SERIAL NOT NULL PRIMARY KEY,
-  username varchar(20) NOT NULL,
+  username varchar(20) NOT NULL UNIQUE,
   password varchar,
   active_room varchar
 );
