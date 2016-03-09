@@ -53,6 +53,7 @@ describe('Texts model', function() {
 
 
     it_('should list all texts of a room', function * () {
+      
       yield Text.allOfRoom(1)
         .catch(function(error) {
           console.error('error retreiving texts', error)
@@ -64,6 +65,7 @@ describe('Texts model', function() {
     })
 
     it_('should create a new text', function * () {
+
       let newText = {
         text_content: 'New Fwibble in the database word',
         room_id: 1,
@@ -72,7 +74,7 @@ describe('Texts model', function() {
 
       yield Text.create(newText)
         .catch(function(error) {
-          console.error('error inserting text', error)
+          console.error('error inserting text', error);
         })
         .then(function(texts) {
           expect(texts[0].text_content).to.equal('New Fwibble in the database word');
@@ -82,9 +84,10 @@ describe('Texts model', function() {
     })
 
     it_('should list all texts of a user', function * () {
+
       yield Text.allOfUser(1,1)
         .catch(function(error) {
-          console.error('error retreiving texts', error)
+          console.error('error retreiving texts', error);
         })
         .then(function(texts) {
           expect(texts).to.have.length(2);
@@ -94,14 +97,15 @@ describe('Texts model', function() {
     })
 
     it_('should list no texts for a game room that does not exist', function * () {
+
       yield Text.allOfRoom(404)
+        .catch(function(error) {
+          console.error('error in retrieving texts', error);
+        })
         .then(function(texts) {
           expect(texts).to.have.length(0);
         })
-        .catch(function(error) {
-          console.error('error in retrieving texts', error)
-        })
-      })
+    })
 })
 })
 

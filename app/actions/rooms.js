@@ -4,11 +4,14 @@ var Room = module.exports;
 
 /*
   create new game room
-  attrs: room_hash? TBD
+  attrs: 
+    room_hash? TBD
+    room_title: TBD
+
 */
 
 Room.create = function(attrs) {
-  return pg('rooms').insert(attrs, ['room_id', 'room_hash'])
+  return pg('rooms').insert(attrs, ['room_id', 'room_hash', 'room_title'])
     .catch(function(error) {
       console.error('error inserting room into db', error)
     })
@@ -55,7 +58,7 @@ Room.allById = function() {
 */
 
 Room.findIdByHash = function(hash) {
-  return pg.select('room_id').from('rooms').where({'hash': room_hash})
+  return pg.select('room_id').from('rooms').where({'room_hash': hash})
     .catch(function(error) {
       console.error('error retrieving room', error)
     })
