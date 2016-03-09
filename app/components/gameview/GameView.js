@@ -3,11 +3,12 @@ var ReactDOM = require('react-dom');
 var StoryTitle = require('./StoryTitle.js');
 var StoryBox = require('./StoryBox.js');
 var StoryInput = require('./StoryInput.js');
+var StorySnippet = require('./StorySnippet.js');
 
 module.exports = React.createClass({
 
   getInitialState() {
-		return {users: [], storySnippets:["Fwibble"], text: ''};
+		return {users: [], storySnippets:[], text: ''};
 	},
 
 	// componentDidMount() {
@@ -56,7 +57,7 @@ module.exports = React.createClass({
 		storySnippets.push(storySnippet);
 		for (var i = 0; i < storySnippets.length; i++) {
 			console.log(storySnippets[i]);
-      // console.log(storySnippets[i[text]]);
+      console.log(storySnippets[i].text);
 		}
 		this.setState({storySnippets});
 		// socket.emit('send:storySnippet', storySnippet);
@@ -81,3 +82,10 @@ module.exports = React.createClass({
 
 // ReactDOM.render(<GameView />, document.getElementById('app'));
 
+
+
+// var printThis = function() {
+// 	for (var i = 0; i < storySnippets.length; i++) {
+// 		return storySnippets[i].text;
+// 	}
+// }
