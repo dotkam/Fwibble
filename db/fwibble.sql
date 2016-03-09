@@ -10,7 +10,8 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS rooms (
   room_id SERIAL NOT NULL PRIMARY KEY,
-  room_hash varchar
+  room_hash varchar,
+  room_title varchar
 );
 
 CREATE TABLE IF NOT EXISTS user_room (
@@ -24,5 +25,5 @@ CREATE TABLE IF NOT EXISTS texts (
   text_content varchar NOT NULL,
   room_id INTEGER REFERENCES rooms (room_id),
   user_id INTEGER REFERENCES users (user_id),
-  createdAt TIMESTAMP
+  createdat TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

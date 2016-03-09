@@ -16,6 +16,7 @@ Text.create = function(attrs) {
     })
     .then(function(res){
       console.log('successfully inserted text', res)
+      return res;
     })
 }
 
@@ -30,6 +31,7 @@ Text.allOfRoom = function(roomId) {
     })
     .then(function(res){
       console.log('successfully retrieved text', res)
+      return res;
     })
 }
 
@@ -38,12 +40,13 @@ Text.allOfRoom = function(roomId) {
 */
 
 Text.allOfUser = function(roomId, userId) {
-  // return db.select('*').from('texts').where({'room_id': roomId, 'user_id: userId'})
-  return pg.select('*').from('texts').where({'room_id': roomId}).and({'user_id': userId})
+  return pg.select('*').from('texts').where({'room_id': roomId, 'user_id': userId})
+  // return pg.select('*').from('texts').where({'room_id': roomId}).and({'user_id': userId})
     .catch(function(error) {
       console.error('error retrieving text', error)
     })
     .then(function(res){
       console.log('successfully retrieved text', res)
+      return res;
     })
 }

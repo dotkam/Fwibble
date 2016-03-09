@@ -14,6 +14,7 @@ Room.create = function(attrs) {
     })
     .then(function(res){
       console.log('successfully inserted room', res)
+      return res;
     })
 }
 
@@ -28,6 +29,7 @@ Room.allUser = function(roomId) {
     })
     .then(function(res){
       console.log('successfully retrieved users', res)
+      return res;
     })
 }
 
@@ -44,6 +46,7 @@ Room.allById = function() {
     })
     .then(function(res){
       console.log('successfully retrieved rooms', res)
+      return res;
     })	
 }
 
@@ -58,6 +61,7 @@ Room.findIdByHash = function(hash) {
     })
     .then(function(res){
       console.log('successfully retrieved room', res)
+      return res;
     })
 }
 /*
