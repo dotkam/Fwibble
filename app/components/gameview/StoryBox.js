@@ -24,7 +24,9 @@ module.exports = React.createClass({
 		{
 		  this.props.storySnippets.map((storySnippet, i) => {
 			return (
-			  <storySnippet
+			  <StorySnippet
+			    key={i}
+					user={storySnippet.user}
 				  text={storySnippet.text} 
 			  />
 			);

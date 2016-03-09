@@ -61,6 +61,7 @@ module.exports = React.createClass({
 		}
 		this.setState({storySnippets});
 		// socket.emit('send:storySnippet', storySnippet);
+		console.log('this one:', this.state.storySnippets)
 	},
 
 	render() {
