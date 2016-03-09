@@ -13,23 +13,24 @@ Room.create = function(attrs) {
       console.error('error inserting room into db', error)
     })
     .then(function(res){
-      console.log('successfully inserted room')
+      console.log('successfully inserted room', res)
     })
 }
 
 /* 
-  Find all games user is a part of
+  Find all users in a game room
   ??need to find active rooms only?  or do we purge old games
 */
-Room.allUser = function(userId) {
-  return pg.select('room_id').from('user_room').where({'user_id': userId})
+Room.allUser = function(roomId) {
+  return pg.select('user_id').from('user_room').where({'room_id': roomId})
     .catch(function(error) {
-      console.error('error retrieving rooms', error)
+      console.error('error retrieving users', error)
     })
     .then(function(res){
-      console.log('successfully retrieved rooms')
+      console.log('successfully retrieved users', res)
     })
 }
+
 
 /*
   List all active rooms
@@ -42,10 +43,23 @@ Room.allById = function() {
       console.error('error retrieving rooms', error)
     })
     .then(function(res){
-      console.log('successfully retrieved rooms')
+      console.log('successfully retrieved rooms', res)
     })	
 }
 
+/*
+  Primary keys are arbitrarily assigned by PostgreSQL, this method gives us a way to find the ID based on username
+*/
+
+Room.findIdByHash = function(hash) {
+  return pg.select('room_id').from('rooms').where({'hash': room_hash})
+    .catch(function(error) {
+      console.error('error retrieving room', error)
+    })
+    .then(function(res){
+      console.log('successfully retrieved room', res)
+    })
+}
 /*
   Not implemented, placeholder for possible future implementation
   List all rooms searching for players

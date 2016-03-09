@@ -15,7 +15,7 @@ Text.create = function(attrs) {
       console.error('error inserting text', error)
     })
     .then(function(res){
-      console.log('successfully inserted text')
+      console.log('successfully inserted text', res)
     })
 }
 
@@ -29,7 +29,7 @@ Text.allOfRoom = function(roomId) {
       console.error('error retrieving text', error)
     })
     .then(function(res){
-      console.log('successfully retrieved text')
+      console.log('successfully retrieved text', res)
     })
 }
 
@@ -44,6 +44,6 @@ Text.allOfUser = function(roomId, userId) {
       console.error('error retrieving text', error)
     })
     .then(function(res){
-      console.log('successfully retrieved text')
+      console.log('successfully retrieved text', res)
     })
 }

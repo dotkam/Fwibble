@@ -1,19 +1,20 @@
-"use strict"
 require('../../test-helper.js') // <--- This must be at the top of every test file.
 
-const Text = require(__app + '/actions/texts');
-const pg      = require('../../../db/db_setup');
-const dbCleaner = require('knex-cleaner');
+var Text = require(__app + '/actions/texts');
+var pg      = require('../../../db/db_setup');
+var dbCleaner = require('knex-cleaner');
 
 describe('Texts model', function() {
   describe('interface with database', function() {
 
   	beforeEach(function() {
       return dbCleaner.clean(pg, {mode: 'truncate'})
+        .catch(function(error) {
+          console.error('error inserting text', error)
+        })
         .then(function() {
           return pg('rooms').insert([
             {
-              room_id:1,
               room_hash: 'abc123',
             }
           ])
@@ -21,7 +22,6 @@ describe('Texts model', function() {
         .then(function() {
           return pg('users').insert([
             {
-              user_id:1,
               username: 'Player1',
               active_room: 1,
             }
@@ -30,7 +30,6 @@ describe('Texts model', function() {
         .then(function(){
           return pg('texts').insert([
             {
-              text_id: 1,
               text_content: 'This is an example of Fwibble',
               room_id: 1, 
               user_id: 1,
@@ -40,33 +39,35 @@ describe('Texts model', function() {
     })
 
 
-    it_('should list all texts of a room', function * () {
-      yield Text.allOfRoom(3)
-        .then(function(texts) {
-          expect(texts).to.have.length(1);
-          expect(texts[0].text_content).to.equal('This is an example of Fwibble');
-        })
+    xit('should list all texts of a room', function () {
+      Text.allOfRoom(1)
         .catch(function(error) {
-          console.error('error inserting text', error)
+          console.error('error retreiving texts', error)
         })
+        .then(function(texts) {
+          console.log(texts);
+          expect(texts).to.have.length(1);
+          expect(texts[0].text_content).to.equal('This is an example');
+        })
+
     })
 
-    it_('should create a new text', function * () {
-      let newText = {
+    xit('should create a new text', function () {
+      var newText = {
         text_content: 'New Fwibble in the database word',
         room_id: 1,
         user_id: 2,
       }
 
-      yield Text.create(newText)
+      Text.create(newText)
+        .catch(function(error) {
+          console.error('error inserting text', error)
+        })
         .then(function(text) {
           expect(text.text_content).to.equal('New Fwibble in the database word');
           expect(text.room_id).to.equal(1);
           expect(text.user_id).to.equal(2);
           expect(text.createdAt).to.be.ok;
-        })
-        .catch(function(error) {
-          console.error('error inserting text', error)
         })
     })
 })
