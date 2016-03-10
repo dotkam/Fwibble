@@ -24,6 +24,7 @@ module.exports = React.createClass({
     this.setState({password: ""})
   },
 
+
   render: function() {
     return (
       <div>
