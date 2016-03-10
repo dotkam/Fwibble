@@ -1,15 +1,18 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var RRouter = require('react-router');
+var Router = require('react-router').Router;
+var Route = require('react-router').Route;
+var browserHistory = require('react-router').browserHistory;
+
 var Index = require('../app/components/index/Index');
 var Signin = require('../app/components/signin/Signin');
 var Gameview = require('../app/components/gameview/GameView')
 
 ReactDOM.render((
-        <RRouter.Router history={RRouter.browserHistory} >
-          <RRouter.Route path="/" component={Index}/>
-          <RRouter.Route path="/signin" component={Signin}/>
-          <RRouter.Route path="/gameview" component={Gameview}/>
-        </RRouter.Router>
+        <Router history={browserHistory} >
+          <Route path="/" component={Index}/>
+          <Route path="/signin" component={Signin}/>
+          <Route path="/gameview" component={Gameview}/>
+        </Router>
     ), document.getElementById('app')
 )
