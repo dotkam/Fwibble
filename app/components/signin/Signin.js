@@ -2,7 +2,6 @@ var React = require('react');
 var Link = require('react-router').Link;
 
 module.exports = React.createClass({
-
   getInitialState: function() {
     return {
       username: '',
@@ -23,7 +22,6 @@ module.exports = React.createClass({
     console.log("username:", this.state.username, "\npassword:", this.state.password)
     this.setState({password: ""})
   },
-
 
   render: function() {
     return (
