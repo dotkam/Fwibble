@@ -7,6 +7,7 @@ var Route = ReactRouter.Route;
 var IndexRoute = ReactRouter.IndexRoute;
 var browserHistory = ReactRouter.browserHistory;
 
+var Stylesheet = require('../views/styles.css');
 var Index = require('../app/components/index/Index');
 var Signin = require('../app/components/signin/Signin');
 var Gameview = require('../app/components/gameview/GameView');
@@ -17,10 +18,12 @@ var App = React.createClass({
   render: function() {
     return (
       <div>
-        <div>
+        <div className='navbar'>
           <h1>Fwibble</h1>
-            <div><Link to='/signin'>Sign In</Link></div>
-            <div><Link to='/gameview'>Game</Link></div>
+          <ul className='nav-links'>
+            <li><Link to='/signin' className='fa fa-user'>Sign In</Link></li>
+            <li><Link to='/gameview' className='fa fa-pencil'>Game</Link></li>
+          </ul>
         </div>
         {this.props.children}
       </div>
