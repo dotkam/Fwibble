@@ -4,6 +4,7 @@ var StoryTitle = require('./StoryTitle.js');
 var StoryBox = require('./StoryBox.js');
 var StoryInput = require('./StoryInput.js');
 var StorySnippet = require('./StorySnippet.js');
+var UsersInRoom = require('./UsersInRoom.js');
 
 module.exports = React.createClass({
 
@@ -64,21 +65,24 @@ module.exports = React.createClass({
     console.log('this one:', this.state.storySnippets)
   },
 
-  render: function() {
-    return (
-      <div>
-      <h1>Game</h1>
-        <StoryTitle />
-        <StoryBox
-          storySnippets={this.state.storySnippets}
-        />
-        <StoryInput
-          onSnippetSubmit={this.handleSnippetSubmit}
-          user={this.state.user}
-        />
-      </div>
-    );
-  }
+
+	render() {
+		return (
+			<div>
+			<h1>Fwibble!</h1>
+				<StoryTitle />
+				<StoryBox
+					storySnippets={this.state.storySnippets}
+				/>
+				<StoryInput
+					onSnippetSubmit={this.handleSnippetSubmit}
+					user={this.state.user}
+				/>
+				<UsersInRoom />
+			</div>
+		);
+	}
+
 });
 
 // ReactDOM.render(<GameView />, document.getElementById('app'));
