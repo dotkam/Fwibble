@@ -78,7 +78,9 @@ module.exports = React.createClass({
 					onSnippetSubmit={this.handleSnippetSubmit}
 					user={this.state.user}
 				/>
-				<UsersInRoom />
+				<UsersInRoom 
+				  users={this.state.users}
+				/>
 			</div>
 		);
 	}
