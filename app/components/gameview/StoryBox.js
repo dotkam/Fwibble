@@ -4,18 +4,24 @@ var StorySnippet = require('./StorySnippet.js');
 var StoryInput = require('./StoryInput.js');
 
 module.exports = React.createClass({
-  // getInitialState: function(){
-  //   return {
-  //     story: 'wizzleteats'
-  //   }
-  // },
 
-	// handleNewStoryInput: function(e) {
-	// 	// don't use html submit
-	// 	e.preventDefault();
+	getInitialState() {
+		  return {user: ''};
+		},
 
-	// 	// $('newStoryInput').val('');
- //    },
+		handleSubmit(e) {
+			e.preventDefault();
+			var users = {
+				user : this.props.user,
+				text : this.state.text
+			}
+			this.props.onSnippetSubmit(storySnippet);	
+			this.setState({ text: '' });
+		},
+
+		changeHandler(e) {
+			this.setState({ text : e.target.value });
+		},
 
   render() {
 	return (
@@ -36,22 +42,3 @@ module.exports = React.createClass({
 	);
 	}
 });
-
-
-	// render: function () {
-	// 	var snippets = ['Once upon a time in a', 'land down under there was a', 'crocodile that swallowed a whole fwibble'];
-		
-	// 	var Story = "";
-	// 	for (var i=0; i<snippets.length; i++) {
-	// 		Story = Story + snippets[i] + " ";
-	// 	}
-
-	// 	return (
-	// 	  <div className="StoryBox">
-	// 	    {Story}
-	// 	  <br/>
-	// 	  <br/>
-	// 	    <StoryInput />
-	// 	  </div>
-	// 	);
-	// }
