@@ -5,9 +5,7 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div>
-        <h2>Index Page</h2>
-        <div><Link to="/signin">Sign In</Link></div>
-        <div><Link to="/gameview">Game</Link></div>
+        <h3>Index</h3>
       </div>
     )
   }
