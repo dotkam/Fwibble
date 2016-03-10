@@ -1,26 +1,40 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var Router = require('react-router').Router;
-var Route = require('react-router').Route;
-var IndexRoute = require('react-router').IndexRoute;
-var browserHistory = require('react-router').browserHistory;
+var ReactRouter = require('react-router');
+var Link = ReactRouter.Link;
+var Router = ReactRouter.Router;
+var Route = ReactRouter.Route;
+var IndexRoute = ReactRouter.IndexRoute;
+var browserHistory = ReactRouter.browserHistory;
 
 var Index = require('../app/components/index/Index');
 var Signin = require('../app/components/signin/Signin');
-var Gameview = require('../app/components/gameview/GameView')
+var Gameview = require('../app/components/gameview/GameView');
 
-ReactDOM.render((
 
+
+var App = React.createClass({
+  render: function() {
+    return (
+      <div>
+        <div>
+          <h1>Fwibble</h1>
+            <div><Link to='/signin'>Sign In</Link></div>
+            <div><Link to='/gameview'>Game</Link></div>
+        </div>
+        {this.props.children}
+      </div>
+    )
+  }
+})
+
+ReactDOM.render(
+  (
         <Router history={browserHistory} >
-          <Route path="/">
-            <IndexRoute component={Index}/>
-            <Route path="signin" component={Signin}/>
-            <Route path="gameview" component={Gameview}/>
+          <Route path='/' component={App} >
+            <Route path='signin' component={Signin}/>
+            <Route path='gameview' component={Gameview}/>
           </Route>
         </Router>
-    ), document.getElementById('app')
+  ), document.getElementById('app')
 )
-          // <Route path="/" component={Index} >
-          //   <Route path="signin" component={Signin} />
-          //   <Route path="gameview" component={Gameview} />
-          // </Route>

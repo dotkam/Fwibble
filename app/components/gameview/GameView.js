@@ -8,77 +8,77 @@ var StorySnippet = require('./StorySnippet.js');
 module.exports = React.createClass({
 
   getInitialState() {
-		return {users: [], storySnippets:[], text: ''};
-	},
+    return {users: [], storySnippets:[], text: ''};
+  },
 
-	// componentDidMount() {
-	// 	socket.on('init', this._initialize);
-	// 	socket.on('send:storySnipet', this._snippetRecieve);
-	// 	socket.on('user:join', this._userJoined);
-	// 	socket.on('user:left', this._userLeft);
-	// },
+  // componentDidMount() {
+  //  socket.on('init', this._initialize);
+  //  socket.on('send:storySnipet', this._snippetRecieve);
+  //  socket.on('user:join', this._userJoined);
+  //  socket.on('user:left', this._userLeft);
+  // },
 
-	_initialize(data) {
-		var {users, name} = data;
-		this.setState({users, user: name});
-	},
+  _initialize(data) {
+    var {users, name} = data;
+    this.setState({users, user: name});
+  },
 
-	_snippetRecieve(snippet) {
-		var {storySnippets} = this.state;
-		storySnippets.push(storySnippet);
-		this.setState({storySnippets});
-	},
+  _snippetRecieve(snippet) {
+    var {storySnippets} = this.state;
+    storySnippets.push(storySnippet);
+    this.setState({storySnippets});
+  },
 
-	_userJoined(data) {
-		var {users, storySnippets} = this.state;
-		var {name} = data;
-		users.push(name);
-		storySnippets.push({
-			user: 'APPLICATION BOT',
-			text : name +' Joined'
-		});
-		this.setState({users, storySnippets});
-	},
+  _userJoined(data) {
+    var {users, storySnippets} = this.state;
+    var {name} = data;
+    users.push(name);
+    storySnippets.push({
+      user: 'APPLICATION BOT',
+      text : name +' Joined'
+    });
+    this.setState({users, storySnippets});
+  },
 
-	_userLeft(data) {
-		var {users, storySnippets} = this.state;
-		var {name} = data;
-		var index = users.indexOf(name);
-		users.splice(index, 1);
-		storySnippets.push({
-			user: 'APPLICATION BOT',
-			text : name +' Left'
-		});
-		this.setState({users, storySnippets});
-	},
+  _userLeft(data) {
+    var {users, storySnippets} = this.state;
+    var {name} = data;
+    var index = users.indexOf(name);
+    users.splice(index, 1);
+    storySnippets.push({
+      user: 'APPLICATION BOT',
+      text : name +' Left'
+    });
+    this.setState({users, storySnippets});
+  },
 
-	handleSnippetSubmit(storySnippet) {
-		var {storySnippets} = this.state;
-		storySnippets.push(storySnippet);
-		for (var i = 0; i < storySnippets.length; i++) {
-			console.log(storySnippets[i]);
+  handleSnippetSubmit(storySnippet) {
+    var {storySnippets} = this.state;
+    storySnippets.push(storySnippet);
+    for (var i = 0; i < storySnippets.length; i++) {
+      console.log(storySnippets[i]);
       console.log(storySnippets[i].text);
-		}
-		this.setState({storySnippets});
-		// socket.emit('send:storySnippet', storySnippet);
-		console.log('this one:', this.state.storySnippets)
-	},
+    }
+    this.setState({storySnippets});
+    // socket.emit('send:storySnippet', storySnippet);
+    console.log('this one:', this.state.storySnippets)
+  },
 
-	render() {
-		return (
-			<div>
-			<h1>Fwibble!</h1>
-				<StoryTitle />
-				<StoryBox
-					storySnippets={this.state.storySnippets}
-				/>
-				<StoryInput
-					onSnippetSubmit={this.handleSnippetSubmit}
-					user={this.state.user}
-				/>
-			</div>
-		);
-	}
+  render: function() {
+    return (
+      <div>
+      <h1>Game</h1>
+        <StoryTitle />
+        <StoryBox
+          storySnippets={this.state.storySnippets}
+        />
+        <StoryInput
+          onSnippetSubmit={this.handleSnippetSubmit}
+          user={this.state.user}
+        />
+      </div>
+    );
+  }
 });
 
 // ReactDOM.render(<GameView />, document.getElementById('app'));
@@ -86,7 +86,7 @@ module.exports = React.createClass({
 
 
 // var printThis = function() {
-// 	for (var i = 0; i < storySnippets.length; i++) {
-// 		return storySnippets[i].text;
-// 	}
+//  for (var i = 0; i < storySnippets.length; i++) {
+//    return storySnippets[i].text;
+//  }
 // }
