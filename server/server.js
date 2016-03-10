@@ -2,10 +2,16 @@ var express = require('express');
 var Path = require('path');
 var app = express();
 var port = 3000;
+var routes = express.Router()
 var assetFolder = Path.resolve(__dirname + '/../dist')
 console.log(assetFolder)
-app.use(express.static(assetFolder));
-app.get('/*', function(req, res){
+routes.use(express.static(assetFolder));
+
+var textRouter = require('./apis/text-api');
+routes.use('/text', textRouter);
+
+
+routes.get('/*', function(req, res){
   res.sendFile(assetFolder + '/index.html');
 })
 

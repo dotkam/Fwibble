@@ -46,7 +46,7 @@ TextAPI.post('/:room_id/text', function(request, response) {
 })
 
 /*
-  GET room/:id_room/text
+  GET text/:id_room/
 
   Returns an array of texts for the given room
 
@@ -61,7 +61,9 @@ TextAPI.post('/:room_id/text', function(request, response) {
     ...
   ]
 */
-TextAPI.get('/:room_id/text', function(request, response) {
+
+//using room_id for now, can be changed to room_hash later, then run Room.findByHash to find the roomid to enter as argument
+TextAPI.get('/:room_id/', function(request, response) {
   var roomId = request.params.room_id;
 
   Text.allOfRoom(roomId)
