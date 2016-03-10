@@ -57,12 +57,11 @@ module.exports = React.createClass({
     var {storySnippets} = this.state;
     storySnippets.push(storySnippet);
     for (var i = 0; i < storySnippets.length; i++) {
-      console.log(storySnippets[i]);
-      console.log(storySnippets[i].text);
+      // console.log(storySnippets[i]);
+      // console.log(storySnippets[i].text);
     }
     this.setState({storySnippets});
     // socket.emit('send:storySnippet', storySnippet);
-    console.log('this one:', this.state.storySnippets)
   },
 
 
@@ -86,13 +85,3 @@ module.exports = React.createClass({
 	}
 
 });
-
-// ReactDOM.render(<GameView />, document.getElementById('app'));
-
-
-
-// var printThis = function() {
-//  for (var i = 0; i < storySnippets.length; i++) {
-//    return storySnippets[i].text;
-//  }
-// }
