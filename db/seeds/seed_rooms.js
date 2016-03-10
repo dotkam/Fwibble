@@ -5,12 +5,12 @@ var seedRoom = function() {
   //   .then(function() {
       return pg('rooms').insert([
         {
-          room_id: 1,
-          room_hash: '32a3f4'
+          room_hash: '32a3f4',
+          room_title: 'This is room'
         },
         {
-          room_id: 2,
-          room_hash: '458d21'
+          room_hash: '458d21',
+          room_title: 'Yes, this is Dog'
         }
       ])
     // })

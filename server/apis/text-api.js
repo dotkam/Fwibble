@@ -26,22 +26,25 @@ module.exports = TextAPI;
   }
 */
 
-TextAPI.post('/:room_id/text', function(request, response) {
-	var newText = {
-		text_content: request.body.text_content,
-		room_id: request.body.room_id,
-		user_id: request.body.user_id
+TextAPI.post('/:room_id/text', function(req, res) {
+
+  console.log("This is request: ", req.body);
+	
+  var newText = {
+		text_content: req.body.text_content,
+		room_id: req.params.room_id,
+		user_id: req.body.user_id
 	}
 
-	console.log('TextAPI.post req.body ', request.body);
+	console.log('TextAPI.post req.body ', req.body);
 
 	Text.create(newText)
 	  .then(function(data) { 
-	  	response.status(201).send(data);
+	  	res.status(201).send(data);
 	  })
 	  .catch(function(error) {
-	  	console.error('ERROR POSTING:', request.url);
-	  	response.status(500).send('Server error posting new text to room');
+	  	console.error('ERROR POSTING:', req.url);
+	  	res.status(500).send('Server error posting new text to room');
 	  })
 })
 
@@ -63,16 +66,16 @@ TextAPI.post('/:room_id/text', function(request, response) {
 */
 
 //using room_id for now, can be changed to room_hash later, then run Room.findByHash to find the roomid to enter as argument
-TextAPI.get('/:room_id/', function(request, response) {
-  var roomId = request.params.room_id;
+TextAPI.get('/:room_id/', function(req, res) {
+  var roomId = req.params.room_id;
 
   Text.allOfRoom(roomId)
-	 .then(function() { 
-	  	response.status(200)
+	 .then(function(data) { 
+	  	res.status(200).send(data);
 	  })
     .catch(function(error) {
       console.error('ERROR GET:', request.url);
-      response.status(500).send('Server error getting texts by room id');
+      res.status(500).send('Server error getting texts by room id');
     })
 })
 

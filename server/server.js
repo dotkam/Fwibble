@@ -3,13 +3,20 @@ var Path = require('path');
 var app = express();
 var port = 3000;
 var routes = express.Router()
+var bodyParser = require('body-parser');
 var assetFolder = Path.resolve(__dirname + '/../dist')
 console.log(assetFolder)
 routes.use(express.static(assetFolder));
 
-var textRouter = require('./apis/text-api');
-routes.use('/text', textRouter);
+app.use('/', routes)
 
+app.use( bodyParser.json() )
+app.use(bodyParser.urlencoded({ extended: true }));
+
+var textRouter = require('./apis/text-api');
+
+routes.use( bodyParser.json() )
+routes.use('/text', textRouter);
 
 routes.get('/*', function(req, res){
   res.sendFile(assetFolder + '/index.html');

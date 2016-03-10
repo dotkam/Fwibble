@@ -25,7 +25,7 @@ Text.create = function(attrs) {
 */
 
 Text.allOfRoom = function(roomId) {
-  return pg.select('*').from('texts').where({'room_id': roomId}).orderBy('createdAt', 'asc')
+  return pg.select('*').from('texts').where({'room_id': roomId}).orderBy('createdat', 'asc')
     .catch(function(error) {
       console.error('error retrieving text', error)
     })
