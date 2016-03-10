@@ -2,7 +2,7 @@ var React = require('react');
 var Link = require('react-router').Link;
 
 module.exports = React.createClass({
-<<<<<<< 3330b9e0b80710aaba83d41faf584335e58808ce
+
   getInitialState: function() {
     return {
       username: '',
@@ -25,28 +25,7 @@ module.exports = React.createClass({
   },
 
   render: function() {
-=======
 
-	// getInitialState() {
-	//   return {user: ''};
-	// },
-
-	// handleSubmit(e) {
-	// 	e.preventDefault();
-	// 	var user = {
-	// 		key?
-	// 		user : this.props.user,
-	// 	}
-	// 	this.props.onSignin(user);	
-	// 	this.setState({ user: '' });
-	// },
-
-	// changeHandler(e) {
-	// 	this.setState({ text : e.target.value });
-	// },
-
-  render() {
->>>>>>> dealing with instantiation of users
     return (
       <div>
         <h2>Signin Page</h2>
@@ -55,7 +34,9 @@ module.exports = React.createClass({
         <div className="signInForm">
 	        <form onSubmit={this.trySignIn}>
 		        <input type="text" placeholder="username" value={this.state.username} onChange={this.handleUsername} />
+		        <br/>
 		        <input type="password" placeholder="password" value={this.state.password} onChange={this.handlePassword} />
+		        <br/>
 		        <input type="submit" name="signInSubmit" onClick={this.handleClick} />
 		      </form>
 		    </div>
