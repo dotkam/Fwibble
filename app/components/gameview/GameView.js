@@ -17,32 +17,31 @@ var socket = io.connect();
 
 module.exports = React.createClass({
 
-  getInitialState() {
+  getInitialState: function() {
     return {users: [], storySnippets:[], text: ''};
   },
 
-  componentDidMount() {
+  componentDidMount: function() {
    socket.on('init', this._initialize);
    socket.on('send:storySnippet', this._snippetReceive);
    socket.on('user:join', this._userJoined);
    socket.on('user:left', this._userLeft);
+   console.log('Current state:', this.state);
   },
 
-  _initialize(data) {
+  _initialize: function(data) {
     var {users, name} = data;
-
-    console.log('hello');
-
     this.setState({users, user: name});
   },
 
-  _snippetReceive(snippet) {
+  _snippetReceive: function(snippet) {
+    console.log('snippetReceive snippet:', snippet)
     var {storySnippets} = this.state;
-    storySnippets.push(storySnippet);
+    storySnippets.push(snippet);
     this.setState({storySnippets});
   },
 
-  _userJoined(data) {
+  _userJoined: function(data) {
     var {users, storySnippets} = this.state;
     var {name} = data;
     users.push(name);
@@ -53,7 +52,7 @@ module.exports = React.createClass({
     this.setState({users, storySnippets});
   },
 
-  _userLeft(data) {
+  _userLeft: function(data) {
     var {users, storySnippets} = this.state;
     var {name} = data;
     var index = users.indexOf(name);
@@ -65,15 +64,16 @@ module.exports = React.createClass({
     this.setState({users, storySnippets});
   },
 
-  handleSnippetSubmit(storySnippet) {
+  handleSnippetSubmit: function(storySnippet) {
+    console.log('gameview storySnippet:', storySnippet);
     var {storySnippets} = this.state;
-    storySnippets.push(storySnippet);
-    for (var i = 0; i < storySnippets.length; i++) {
-      // console.log(storySnippets[i]);
-      // console.log(storySnippets[i].text);
-    }
+    storySnippets.push(storySnippet); // {text: storySnippet} => {text: storySnippet.text} => storySnippet
     this.setState({storySnippets});
     socket.emit('send:storySnippet', storySnippet);
+    // for (var i = 0; i < storySnippets.length; i++) {
+      // console.log(storySnippets[i]);
+      // console.log(storySnippets[i].text);
+    // }
   },
 
 
