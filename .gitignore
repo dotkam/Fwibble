@@ -6,3 +6,9 @@ node_modules
 
 #Database
 fwibbleDB
+
+# Dist
+dist
+
+# Debug
+npm-debug.log
