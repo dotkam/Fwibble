@@ -3,11 +3,11 @@ var ReactDOM = require('react-dom');
 
 module.exports = React.createClass({
 
-  getInitialState() {
+  getInitialState: function() {
 	  return {text: ''};
 	},
 
-	handleSubmit(e) {
+	handleSubmit: function(e) {
 		e.preventDefault();
 		var storySnippet = {
 			user : this.props.user,
@@ -17,11 +17,11 @@ module.exports = React.createClass({
 		this.setState({ text: '' });
 	},
 
-	changeHandler(e) {
+	changeHandler: function(e) {
 		this.setState({ text : e.target.value });
 	},
 
-	render() {
+	render: function() {
 		return(
 			<div className='storyInput_form'>
 				<form onSubmit={this.handleSubmit}>

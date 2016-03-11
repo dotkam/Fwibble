@@ -17,32 +17,29 @@ var socket = io.connect();
 
 module.exports = React.createClass({
 
-  getInitialState() {
+  getInitialState: function() {
     return {users: [], storySnippets:[], text: ''};
   },
 
-  componentDidMount() {
+  componentDidMount: function() {
    socket.on('init', this._initialize);
    socket.on('send:storySnippet', this._snippetReceive);
    socket.on('user:join', this._userJoined);
    socket.on('user:left', this._userLeft);
   },
 
-  _initialize(data) {
+  _initialize: function(data) {
     var {users, name} = data;
-
-    console.log('hello');
-
     this.setState({users, user: name});
   },
 
-  _snippetReceive(snippet) {
+  _snippetReceive: function(snippet) {
     var {storySnippets} = this.state;
     storySnippets.push(storySnippet);
     this.setState({storySnippets});
   },
 
-  _userJoined(data) {
+  _userJoined: function(data) {
     var {users, storySnippets} = this.state;
     var {name} = data;
     users.push(name);
@@ -53,7 +50,7 @@ module.exports = React.createClass({
     this.setState({users, storySnippets});
   },
 
-  _userLeft(data) {
+  _userLeft: function(data) {
     var {users, storySnippets} = this.state;
     var {name} = data;
     var index = users.indexOf(name);
@@ -65,13 +62,14 @@ module.exports = React.createClass({
     this.setState({users, storySnippets});
   },
 
-  handleSnippetSubmit(storySnippet) {
+  handleSnippetSubmit: function(storySnippet) {
     var {storySnippets} = this.state;
-    storySnippets.push(storySnippet);
-    for (var i = 0; i < storySnippets.length; i++) {
+    var {name} = data
+    storySnippets.push({text: storySnippet});
+    // for (var i = 0; i < storySnippets.length; i++) {
       // console.log(storySnippets[i]);
       // console.log(storySnippets[i].text);
-    }
+    // }
     this.setState({storySnippets});
     socket.emit('send:storySnippet', storySnippet);
   },

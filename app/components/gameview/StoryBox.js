@@ -5,11 +5,11 @@ var StoryInput = require('./StoryInput.js');
 
 module.exports = React.createClass({
 
-	getInitialState() {
+	getInitialState: function() {
 		  return {user: ''};
 		},
 
-		handleSubmit(e) {
+		handleSubmit: function(e) {
 			e.preventDefault();
 			var users = {
 				user : this.props.user,
@@ -23,7 +23,7 @@ module.exports = React.createClass({
 			this.setState({ text : e.target.value });
 		},
 
-  render() {
+  render: function() {
 	return (
 	  <div className='storySnippets'>
 		<h2> Story: </h2>
