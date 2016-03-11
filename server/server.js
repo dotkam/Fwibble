@@ -1,3 +1,11 @@
+/*
+  current dev server run instructions:
+  	first have your PostgreSQL server running
+  		postgres -D fwibbleDB
+    in another terminal run
+        node server/server.js
+*/
+
 var express = require('express');
 var Path = require('path');
 var http = require('http');
