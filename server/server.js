@@ -1,13 +1,24 @@
 var express = require('express');
 var Path = require('path');
+var http = require('http');
 var app = express();
-var port = 3000;
-var routes = express.Router()
-var bodyParser = require('body-parser');
-var assetFolder = Path.resolve(__dirname + '/../dist')
-console.log(assetFolder)
-routes.use(express.static(assetFolder));
+var server = http.createServer(app);
 
+var routes = express.Router();
+
+var port = 3000;
+var assetFolder = Path.resolve(__dirname + '/../dist');
+var bodyParser = require('body-parser');
+
+
+
+var socket = require('./socket.js');
+var io = require('socket.io').listen(server);
+io.sockets.on('connection', socket);
+
+
+
+routes.use(express.static(assetFolder));
 app.use('/', routes)
 
 app.use( bodyParser.json() )
@@ -19,11 +30,10 @@ routes.use( bodyParser.json() )
 routes.use('/text', textRouter);
 
 routes.get('/*', function(req, res){
-
   res.sendFile(assetFolder + '/index.html');
 })
 
-app.listen(port);
+server.listen(port);
 console.log('Listening on port', port);
 
 
