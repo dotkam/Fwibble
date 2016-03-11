@@ -19,6 +19,7 @@ routes.use( bodyParser.json() )
 routes.use('/text', textRouter);
 
 routes.get('/*', function(req, res){
+
   res.sendFile(assetFolder + '/index.html');
 })
 
