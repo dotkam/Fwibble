@@ -42,7 +42,7 @@ const pg     = require('knex')(config[env]);
 module.exports = pg;
 
 
-// require('../db/seeds/seed_users.js');
-// require('../db/seeds/seed_rooms.js');
-// require('../db/seeds/seed_user_room.js');
-// require('../db/seeds/seed_text.js');
+require('../db/seeds/seed_users.js');
+require('../db/seeds/seed_rooms.js');
+require('../db/seeds/seed_user_room.js');
+require('../db/seeds/seed_text.js');

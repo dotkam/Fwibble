@@ -5,14 +5,12 @@ var seedUser = function() {
   //   .then(function() {
       return pg('users').insert([
         {
-          user_id: 1,
           username: 'Player1',
-          active_room: 1
+          active_room: '458d21'
         },
         {
-          user_id: 2,
           username: 'Player2',
-          active_room: 1
+          active_room: '458d21'
         }
       ])
     // })
