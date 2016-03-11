@@ -7,7 +7,7 @@ var Route = ReactRouter.Route;
 var IndexRoute = ReactRouter.IndexRoute;
 var browserHistory = ReactRouter.browserHistory;
 
-var Stylesheet = require('../views/styles.css');
+var Stylesheet = require('../public/styles.css');
 var Index = require('../app/components/index/Index');
 var Signin = require('../app/components/signin/Signin');
 var Gameview = require('../app/components/gameview/GameView');
