@@ -18,13 +18,15 @@ var App = React.createClass({
   render: function() {
     return (
       <div>
-        <div className='navbar'>
-          <h1>Fwibble</h1>
-          <ul className='nav-links'>
-            <li><Link to='/signin' className='fa fa-user'>Sign In</Link></li>
-            <li><Link to='/gameview' className='fa fa-pencil'>Game</Link></li>
-          </ul>
-        </div>
+      <div class="container-fluid">
+      <div className='navbar'>
+      <h1>Fwibble</h1>
+      <ul className='nav-links'>
+        <li><Link to='/signin' className='fa fa-user'>Sign In</Link></li>
+        <li><Link to='/gameview' className='fa fa-pencil'>Game</Link></li>
+      </ul>
+    </div>
+  </div>
         {this.props.children}
       </div>
     )
