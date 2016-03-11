@@ -25,9 +25,11 @@ app.use( bodyParser.json() )
 app.use(bodyParser.urlencoded({ extended: true }));
 
 var textRouter = require('./apis/text-api');
+var userRouter = require('./apis/user-api');
 
 routes.use( bodyParser.json() )
 routes.use('/text', textRouter);
+routes.use('/user', userRouter);
 
 routes.get('/*', function(req, res){
   res.sendFile(assetFolder + '/index.html');
