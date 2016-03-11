@@ -3,7 +3,7 @@ var ReactDOM = require('react-dom');
 
 module.exports = React.createClass({
   
-	render() {
+	render: function (){
 		return (
 			<div className='users'>
 				<h3> Users in Room: </h3>
@@ -17,7 +17,7 @@ module.exports = React.createClass({
 							);
 						})
 					}
-				</ul>				
+				</ul>
 			</div>
 		);
 	}

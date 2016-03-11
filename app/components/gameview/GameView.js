@@ -5,6 +5,14 @@ var StoryBox = require('./StoryBox.js');
 var StoryInput = require('./StoryInput.js');
 var StorySnippet = require('./StorySnippet.js');
 var UsersInRoom = require('./UsersInRoom.js');
+var io = require('socket.io-client');
+var socket = io.connect();
+
+
+
+
+
+
 
 module.exports = React.createClass({
 
@@ -12,19 +20,22 @@ module.exports = React.createClass({
     return {users: [], storySnippets:[], text: ''};
   },
 
-  // componentDidMount() {
-  //  socket.on('init', this._initialize);
-  //  socket.on('send:storySnipet', this._snippetRecieve);
-  //  socket.on('user:join', this._userJoined);
-  //  socket.on('user:left', this._userLeft);
-  // },
+  componentDidMount() {
+   socket.on('init', this._initialize);
+   socket.on('send:storySnippet', this._snippetReceive);
+   socket.on('user:join', this._userJoined);
+   socket.on('user:left', this._userLeft);
+  },
 
   _initialize(data) {
     var {users, name} = data;
+
+    console.log('hello');
+
     this.setState({users, user: name});
   },
 
-  _snippetRecieve(snippet) {
+  _snippetReceive(snippet) {
     var {storySnippets} = this.state;
     storySnippets.push(storySnippet);
     this.setState({storySnippets});
@@ -61,22 +72,21 @@ module.exports = React.createClass({
       // console.log(storySnippets[i].text);
     }
     this.setState({storySnippets});
-    // socket.emit('send:storySnippet', storySnippet);
+    socket.emit('send:storySnippet', storySnippet);
   },
 
 
-	render() {
+	render: function() {
 		return (
 			<div>
-			<h1>Fwibble!</h1>
 				<StoryTitle />
-				<StoryBox
-					storySnippets={this.state.storySnippets}
-				/>
-				<StoryInput
-					onSnippetSubmit={this.handleSnippetSubmit}
-					user={this.state.user}
-				/>
+        <StoryBox
+          storySnippets={this.state.storySnippets}
+        />
+        <StoryInput
+          onSnippetSubmit={this.handleSnippetSubmit}
+          user={this.state.user}
+        />
 				<UsersInRoom 
 				  users={this.state.users}
 				/>
