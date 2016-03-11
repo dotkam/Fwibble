@@ -65,7 +65,6 @@ module.exports = function (socket) {
 
   // broadcast a user's story snippet to other users
   socket.on('send:storySnippet', function (data) {
-    console.log('halp im trapped in a snippet')
     socket.broadcast.emit('send:storySnippet', {
       user: name,
       text: data.text

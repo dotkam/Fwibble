@@ -26,6 +26,7 @@ module.exports = React.createClass({
    socket.on('send:storySnippet', this._snippetReceive);
    socket.on('user:join', this._userJoined);
    socket.on('user:left', this._userLeft);
+   console.log('Current state:', this.state);
   },
 
   _initialize: function(data) {
@@ -34,8 +35,9 @@ module.exports = React.createClass({
   },
 
   _snippetReceive: function(snippet) {
+    console.log('snippetReceive snippet:', snippet)
     var {storySnippets} = this.state;
-    storySnippets.push(storySnippet);
+    storySnippets.push(snippet);
     this.setState({storySnippets});
   },
 
@@ -63,15 +65,15 @@ module.exports = React.createClass({
   },
 
   handleSnippetSubmit: function(storySnippet) {
+    console.log('gameview storySnippet:', storySnippet);
     var {storySnippets} = this.state;
-    var {name} = data
-    storySnippets.push({text: storySnippet});
+    storySnippets.push(storySnippet); // {text: storySnippet} => {text: storySnippet.text} => storySnippet
+    this.setState({storySnippets});
+    socket.emit('send:storySnippet', storySnippet);
     // for (var i = 0; i < storySnippets.length; i++) {
       // console.log(storySnippets[i]);
       // console.log(storySnippets[i].text);
     // }
-    this.setState({storySnippets});
-    socket.emit('send:storySnippet', storySnippet);
   },
 
 
