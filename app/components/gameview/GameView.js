@@ -18,7 +18,7 @@ var socket = io.connect();
 module.exports = React.createClass({
 
   getInitialState: function() {
-    return {users: [], storySnippets:[], text: ''};
+    return {users: [], storySnippets:[], text: '', turn: 0};
   },
 
   componentDidMount: function() {
