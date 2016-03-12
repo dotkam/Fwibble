@@ -1,10 +1,6 @@
 var React = require('react');
 var Link = require('react-router').Link;
 var $ = require('../jquery.min.js');
-var ReactRouter = require('react-router');
-var Router = ReactRouter.Router;
-var DefaultRoute = Router.DefaultRoute;  
-var Route = Router.Route; 
 
 module.exports = React.createClass({
 
@@ -35,7 +31,7 @@ module.exports = React.createClass({
 
     $.ajax({
       type: 'POST',
-      url: '/user/signin',
+      url: '/user/signup',
       data: postData,
       contentType: 'application/json',
       success: function(data) {
@@ -63,19 +59,17 @@ module.exports = React.createClass({
 
     return (
       <div>
-        <h2>Signin Page</h2>
+        <h2>Signup Page</h2>
         <div><Link to="/">Home</Link></div>
         <br />
-        <div className="signInForm">
-	        <form onSubmit={this.trySignIn}>
+        <div className="signUpForm">
+	        <form>
 		        <input type="text" placeholder="username" value={this.state.username} onChange={this.handleUsername} />
 		        <br/>
 		        <input type="password" placeholder="password" value={this.state.password} onChange={this.handlePassword} />
 		        <br/>
-		        <input type="submit" name="signInSubmit" onClick={this.handleClick} />
+		        <input type="submit" name="signUpSubmit" onClick={this.handleClick} />
 		      </form>
-          <br />
-          <div><Link to="/signup">Don't have an account yet? Sign up!</Link></div>
 		    </div>
       </div>
     )

@@ -10,6 +10,7 @@ var browserHistory = ReactRouter.browserHistory;
 var Stylesheet = require('../public/styles.css');
 var Index = require('../app/components/index/Index');
 var Signin = require('../app/components/signin/Signin');
+var Signup = require('../app/components/signup/Signup');
 var Gameview = require('../app/components/gameview/GameView');
 
 
@@ -40,6 +41,7 @@ ReactDOM.render(
         <Router history={browserHistory} >
           <Route path='/' component={App} >
             <Route path='signin' component={Signin}/>
+            <Route path='signup' component={Signup}/>
             <Route path='gameview' component={Gameview}/>
           </Route>
         </Router>
