@@ -1,8 +1,8 @@
 var pg = require('../db_setup');
 
 var seedGame = function() {
-    return pg('user_game').truncate()
-    .then(function() {
+    // return pg('user_game').truncate()
+    // .then(function() {
       return pg('games').insert([
         {
           game_hash: '32a3f4',

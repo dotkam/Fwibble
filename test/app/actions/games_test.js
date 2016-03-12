@@ -88,7 +88,7 @@ describe('Games model', function() {
 		  })
       .then(function(game) {
         expect(game[0].game_hash).to.equal('def456');
-		    expect(room[0].room_title).to.equal('this is also room');
+		    expect(game[0].game_title).to.equal('this is also game');
 		  })
 	  })
 

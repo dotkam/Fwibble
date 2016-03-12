@@ -103,7 +103,7 @@ describe('Fwibs model', function() {
           console.error('error in retrieving fwibs', error);
         })
         .then(function(fwibs) {
-          expect(texts).to.have.length(0);
+          expect(fwibs).to.have.length(0);
         })
     })
 })

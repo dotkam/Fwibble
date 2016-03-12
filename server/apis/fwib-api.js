@@ -26,13 +26,13 @@ module.exports = FwibAPI;
   }
 */
 
-FwibAPI.post('/:game_id/text', function(req, res) {
+FwibAPI.post('/:game_id/fwib', function(req, res) {
 
   console.log("This is request: ", req.body);
 	
   var newFwib = {
 		fwib_content: req.body.text_content,
-		game_id: req.params.room_id,
+		game_id: req.params.game_id,
 		user_id: req.body.user_id
 	}
 
@@ -69,7 +69,7 @@ FwibAPI.post('/:game_id/text', function(req, res) {
 FwibAPI.get('/:game_id/', function(req, res) {
   var gameId = req.params.game_id;
 
-  Fwib.allOfGame(roomId)
+  Fwib.allOfGame(gameId)
 	 .then(function(data) { 
 	  	res.status(200).send(data);
 	  })
