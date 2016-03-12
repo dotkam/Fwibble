@@ -6,10 +6,6 @@ module.exports = {
       port: 5432,
       database: 'development'
     },
-    migrations: {
-      directory: './migrations',
-      tableName: 'knex_migrations'
-    },
     seeds: {
       directory: './db/seeds'
     },
