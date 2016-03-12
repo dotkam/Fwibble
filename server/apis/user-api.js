@@ -1,6 +1,7 @@
 var UserAPI = require('express').Router();
 
 var User = require('../../app/actions/users');
+var Game = require('../../app/actions/games');
 
 module.exports = UserAPI;
 
@@ -12,7 +13,7 @@ UserAPI.post('/signin', function(req, res) {
 	User.findIdByUsername(req.body.username)
 		.then(function(array) {
 			if(array.length) {
-				return User.findActiveRoom(array[0].user_id)
+				return User.findActiveGame(array[0].user_id)
 			} else {
 				// console.log("ELSE ",req.body.username)
 				// User.create(req.body.username, req.body.password)
@@ -25,7 +26,13 @@ UserAPI.post('/signin', function(req, res) {
 			}
 		})
 		.then(function(array) {
-			res.send("active room: " + array[0].active_room)
+			console.log("GameHash", array)
+			return Game.findIdByHash(array[0].active_game)
+		})
+		.then(function(array) {
+			// res.send("active room: " + array[0].active_room)
+			console.log("GameID: ",array[0].game_id)
+			res.redirect('./gameview')
 		})
 		.catch(function(err) {
 			res.send("could not login user: " + err)
