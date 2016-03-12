@@ -39,6 +39,7 @@
     "react-hot-loader": "^1.3.0",
     "style-loader": "^0.13.0",
     "supertest": "^1.1.0",
+    "supertest-as-promised": "^3.0.0",
     "webpack": "^1.12.13",
     "webpack-dev-server": "^1.14.1"
   },
