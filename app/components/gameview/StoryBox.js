@@ -1,6 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var StorySnippet = require('./StorySnippet.js');
+var Fwib = require('./Fwib.js');
 var StoryInput = require('./StoryInput.js');
 
 module.exports = React.createClass({
@@ -15,7 +15,7 @@ module.exports = React.createClass({
         user : this.props.user,
         text : this.state.text
       }
-      this.props.onSnippetSubmit(storySnippet); 
+      this.props.onFwibSubmit(fwib); 
       this.setState({ text: '' });
     },
 
@@ -25,15 +25,15 @@ module.exports = React.createClass({
 
   render: function() {
   return (
-    <div className='storySnippets'>
+    <div className='fwibs'>
     <h2> Story: </h2>
     {
-      this.props.storySnippets.map((storySnippet, i) => {
+      this.props.fwibs.map((fwib, i) => {
       return (
-        <StorySnippet
+        <Fwib
           key={i}
-          user={storySnippet.user}
-          text={storySnippet.text} 
+          user={fwib.user}
+          text={fwib.text} 
         />
       );
       })
