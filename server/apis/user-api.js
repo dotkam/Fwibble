@@ -32,7 +32,7 @@ UserAPI.post('/signin', function(req, res) {
 		.then(function(array) {
 			// res.send("active room: " + array[0].active_room)
 			console.log("GameID: ",array[0].game_id)
-			res.redirect('./gameview')
+			res.redirect('/game/' + array[0].game_id)
 		})
 		.catch(function(err) {
 			res.send("could not login user: " + err)
