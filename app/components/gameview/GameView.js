@@ -21,7 +21,7 @@ module.exports = React.createClass({
    socket.on('send:fwib', this._fwibReceive);
    socket.on('user:join', this._userJoined);
    socket.on('user:left', this._userLeft);
-   console.log('Current state:', this.state);
+   socket.on('change:turn', this._setTurn);
   },
 
   _initialize: function(data) {
@@ -37,13 +37,14 @@ module.exports = React.createClass({
   },
 
   _userJoined: function(data) {
-    var {users, fwibs} = this.state;
+    var {users, fwibs, turn} = this.state;
     var {name} = data;
     users.push(name);
     fwibs.push({
       user: 'APPLICATION BOT',
       text : name +' Joined'
     });
+    socket.emit('change:turn', turn);
     this.setState({users, fwibs});
   },
 
@@ -59,14 +60,32 @@ module.exports = React.createClass({
     this.setState({users, fwibs});
   },
 
-  handleFwibSubmit: function(fwib) {
-    console.log('gameview fwib:', fwib);
-    var {fwibs} = this.state;
-    fwibs.push(fwib); // {text: fwib} => {text: fwib.text} => fwib
-    this.setState({fwibs});
-    socket.emit('send:fwib', fwib);
+  _setTurn: function(data){
+    this.setState({turn: data.turn});
   },
 
+  _changeTurn: function(){
+    var {turn, users} = this.state;
+    turn++;
+    if(turn >= users.length){
+      turn = 0;
+    }
+    return turn;
+  },
+
+  handleFwibSubmit: function(fwib) {
+    var {fwibs, turn, users, user} = this.state;
+    if(user === users[turn]){
+      fwibs.push(fwib);
+      turn = this._changeTurn();
+      this.setState({fwibs});
+      socket.emit('change:turn', turn);
+      socket.emit('send:fwib', fwib);
+    }
+    else {
+      console.log('It\'s ' + users[turn] + '\'s turn!');
+    }
+  },
 
 	render: function() {
 		return (

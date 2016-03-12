@@ -63,32 +63,20 @@ module.exports = function (socket) {
     name: name
   });
 
-  // broadcast a user's story snippet to other users
-  socket.on('send:storySnippet', function (data) {
-    socket.broadcast.emit('send:storySnippet', {
+  // broadcast a user's fwib to other users
+  socket.on('send:fwib', function (data) {
+    socket.broadcast.emit('send:fwib', {
       user: name,
       text: data.text
     });
   });
 
-  // // validate a user's name change, and broadcast it on success
-  // socket.on('change:name', function (data, fn) {
-  //   if (userNames.claim(data.name)) {
-  //     var oldName = name;
-  //     userNames.free(oldName);
-
-  //     name = data.name;
-      
-  //     socket.broadcast.emit('change:name', {
-  //       oldName: oldName,
-  //       newName: name
-  //     });
-
-  //     fn(true);
-  //   } else {
-  //     fn(false);
-  //   }
-  // });
+  // Passes in updated turn counter and broadcasts it to other users
+  socket.on('change:turn', function(turn){
+    socket.broadcast.emit('change:turn', {
+      turn:turn
+    });
+  });
 
   // clean up when a user leaves, and broadcast it to other users
   socket.on('disconnect', function () {
