@@ -13,7 +13,7 @@ var socket = io.connect();
 module.exports = React.createClass({
 
   getInitialState: function() {
-    return {users: [], fwibs:[], text: ''};
+    return {users: [], fwibs:[], text: '', turn: 0};
   },
 
   componentDidMount: function() {
