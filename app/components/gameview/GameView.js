@@ -3,7 +3,7 @@ var ReactDOM = require('react-dom');
 var StoryTitle = require('./StoryTitle.js');
 var StoryBox = require('./StoryBox.js');
 var StoryInput = require('./StoryInput.js');
-var StorySnippet = require('./StorySnippet.js');
+var Fwib = require('./Fwib.js');
 var UsersInRoom = require('./UsersInRoom.js');
 
 var io = require('socket.io-client');
@@ -18,12 +18,12 @@ var socket = io.connect();
 module.exports = React.createClass({
 
   getInitialState: function() {
-    return {users: [], storySnippets:[], text: ''};
+    return {users: [], fwibs:[], text: ''};
   },
 
   componentDidMount: function() {
    socket.on('init', this._initialize);
-   socket.on('send:storySnippet', this._snippetReceive);
+   socket.on('send:fwib', this._fwibReceive);
    socket.on('user:join', this._userJoined);
    socket.on('user:left', this._userLeft);
    console.log('Current state:', this.state);
@@ -34,46 +34,42 @@ module.exports = React.createClass({
     this.setState({users, user: name});
   },
 
-  _snippetReceive: function(snippet) {
-    console.log('snippetReceive snippet:', snippet)
-    var {storySnippets} = this.state;
-    storySnippets.push(snippet);
-    this.setState({storySnippets});
+  _fwibReceive: function(fwib) {
+    console.log('fwibReceive fwib:', fwib)
+    var {fwibs} = this.state;
+    fwibs.push(fwib);
+    this.setState({fwibs});
   },
 
   _userJoined: function(data) {
-    var {users, storySnippets} = this.state;
+    var {users, fwibs} = this.state;
     var {name} = data;
     users.push(name);
-    storySnippets.push({
+    fwibs.push({
       user: 'APPLICATION BOT',
       text : name +' Joined'
     });
-    this.setState({users, storySnippets});
+    this.setState({users, fwibs});
   },
 
   _userLeft: function(data) {
-    var {users, storySnippets} = this.state;
+    var {users, fwibs} = this.state;
     var {name} = data;
     var index = users.indexOf(name);
     users.splice(index, 1);
-    storySnippets.push({
+    fwibs.push({
       user: 'APPLICATION BOT',
       text : name +' Left'
     });
-    this.setState({users, storySnippets});
+    this.setState({users, fwibs});
   },
 
-  handleSnippetSubmit: function(storySnippet) {
-    console.log('gameview storySnippet:', storySnippet);
-    var {storySnippets} = this.state;
-    storySnippets.push(storySnippet); // {text: storySnippet} => {text: storySnippet.text} => storySnippet
-    this.setState({storySnippets});
-    socket.emit('send:storySnippet', storySnippet);
-    // for (var i = 0; i < storySnippets.length; i++) {
-      // console.log(storySnippets[i]);
-      // console.log(storySnippets[i].text);
-    // }
+  handleFwibSubmit: function(fwib) {
+    console.log('gameview fwib:', fwib);
+    var {fwibs} = this.state;
+    fwibs.push(fwib); // {text: fwib} => {text: fwib.text} => fwib
+    this.setState({fwibs});
+    socket.emit('send:fwib', fwib);
   },
 
 
@@ -82,10 +78,10 @@ module.exports = React.createClass({
 			<div>
 				<StoryTitle />
         <StoryBox
-          storySnippets={this.state.storySnippets}
+          fwibs={this.state.fwibs}
         />
         <StoryInput
-          onSnippetSubmit={this.handleSnippetSubmit}
+          onFwibSubmit={this.handleFwibSubmit}
           user={this.state.user}
         />
 				<UsersInRoom 
