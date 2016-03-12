@@ -4,6 +4,8 @@ node_js:
 before_script: 
   - chmod 0777 ./node_modules/.bin/mocha
   - psql -c 'create database test;' -U postgres
+  - psql "dbname=test options=--search_path=public" -f db/fwibble.sql
+
   # - npm run migrate
 addons:
   - postgresql: "9.3"
