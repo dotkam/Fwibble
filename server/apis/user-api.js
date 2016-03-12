@@ -1,18 +1,40 @@
 var UserAPI = require('express').Router();
 
+var Text = require('../../app/actions/texts');
 var User = require('../../app/actions/users');
+var Room = require('../../app/actions/rooms');
 
 module.exports = UserAPI;
 
+/*
+  POST /signin
+
+  signs user in
+
+  Expects request: {
+    username: unique username
+    password: TBD
+  }
+
+  Responds with the user information: {
+    user_id:       Number <unique id for this user>
+  }
+
+  User ID is then fed into User.findActiveRoom with user_id
+
+  If fails, redirect to /signup
+*/
 UserAPI.post('/signin', function(req, res) {
 
 	console.log("signin request: ", req.body)
 	// var activeRoom = '32a3f4';
 
-	User.findIdByUsername(req.body.username)
-		.then(function(array) {
+	var username = req.body.username;
+
+	User.findIdByUsername(username)
+		.then(function(user) {
 			if(array.length) {
-				return User.findActiveRoom(array[0].user_id)
+				return User.findActiveRoom(user[0].user_id)
 			} else {
 				// console.log("ELSE ",req.body.username)
 				// User.create(req.body.username, req.body.password)
@@ -32,3 +54,5 @@ UserAPI.post('/signin', function(req, res) {
 		})
 
 })
+
+UserAPI.post('/signup', function(req, res) {
