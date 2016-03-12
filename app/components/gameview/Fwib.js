@@ -6,7 +6,7 @@ module.exports = React.createClass({
 
 	render: function() {
 	  return (
-		<div className="storySnippet">
+		<div className="fwib">
 		  <span>{this.props.text}</span>		
 		</div>
 		);

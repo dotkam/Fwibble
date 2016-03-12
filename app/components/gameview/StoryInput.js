@@ -9,11 +9,11 @@ module.exports = React.createClass({
 
   handleSubmit: function(e) {
     e.preventDefault();
-    var storySnippet = {
+    var fwib = {
       user : this.props.user,
       text : this.state.text
     }
-    this.props.onSnippetSubmit(storySnippet); 
+    this.props.onFwibSubmit(fwib); 
     this.setState({ text: '' });
   },
 
