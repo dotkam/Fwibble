@@ -1,32 +1,32 @@
 var pg = require('../../db/db_setup');
 
-var Room = module.exports;
+var Game = module.exports;
 
 /*
-  create new game room
+  create new game
   attrs: 
     room_hash? TBD
     room_title: TBD
 
 */
 
-Room.create = function(attrs) {
-  return pg('rooms').insert(attrs, ['room_id', 'room_hash', 'room_title'])
+Game.create = function(attrs) {
+  return pg('games').insert(attrs, ['game_id', 'game_hash', 'game_title'])
     .catch(function(error) {
-      console.error('error inserting room into db', error)
+      console.error('error inserting game into db', error)
     })
     .then(function(res){
-      console.log('successfully inserted room', res)
+      console.log('successfully inserted game', res)
       return res;
     })
 }
 
 /* 
-  Find all users in a game room
+  Find all users in a game
   ??need to find active rooms only?  or do we purge old games
 */
-Room.allUser = function(roomId) {
-  return pg.select('user_id').from('user_room').where({'room_id': roomId})
+Game.allUser = function(gameId) {
+  return pg.select('user_id').from('user_game').where({'game_id': gameId})
     .catch(function(error) {
       console.error('error retrieving users', error)
     })
@@ -38,17 +38,17 @@ Room.allUser = function(roomId) {
 
 
 /*
-  List all active rooms
+  List all active game
   ?? flag for full or searching for more
 */
 
-Room.allById = function() {
-  return pg.select('*').from('rooms')
+Game.allById = function() {
+  return pg.select('*').from('games')
     .catch(function(error) {
-      console.error('error retrieving rooms', error)
+      console.error('error retrieving games', error)
     })
     .then(function(res){
-      console.log('successfully retrieved rooms', res)
+      console.log('successfully retrieved games', res)
       return res;
     })	
 }
@@ -57,13 +57,13 @@ Room.allById = function() {
   Primary keys are arbitrarily assigned by PostgreSQL, this method gives us a way to find the ID based on username
 */
 
-Room.findIdByHash = function(hash) {
-  return pg.select('room_id').from('rooms').where({'room_hash': hash})
+Game.findIdByHash = function(hash) {
+  return pg.select('game_id').from('games').where({'game_hash': hash})
     .catch(function(error) {
-      console.error('error retrieving room', error)
+      console.error('error retrieving game', error)
     })
     .then(function(res){
-      console.log('successfully retrieved room', res)
+      console.log('successfully retrieved game', res)
       return res;
     })
 }

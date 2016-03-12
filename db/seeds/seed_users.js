@@ -6,16 +6,16 @@ var seedUser = function() {
       return pg('users').insert([
         {
           username: 'Player1',
-          active_room: '458d21'
+          active_game: '458d21'
         },
         {
           username: 'Player2',
-          active_room: '458d21'
+          active_game: '458d21'
         }
       ])
     // })
     .catch(function(error) {
-      console.error('error seeding messages', error)
+      console.error('error seeding users', error)
     })
 };
 

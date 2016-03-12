@@ -1,3 +1,11 @@
+/*
+  current dev server run instructions:
+  	first have your PostgreSQL server running
+  		postgres -D fwibbleDB
+    in another terminal run
+        node server/server.js
+*/
+
 var express = require('express');
 var Path = require('path');
 var http = require('http');
@@ -24,11 +32,11 @@ app.use('/', routes)
 app.use( bodyParser.json() )
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var textRouter = require('./apis/text-api');
+var fwibRouter = require('./apis/fwib-api');
 var userRouter = require('./apis/user-api');
 
 routes.use( bodyParser.json() )
-routes.use('/text', textRouter);
+routes.use('/game', fwibRouter);
 routes.use('/user', userRouter);
 
 routes.get('/*', function(req, res){

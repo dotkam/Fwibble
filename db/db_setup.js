@@ -36,13 +36,11 @@ const config = require('../knexfile');
 const env    = process.env.NODE_ENV || 'development';
 const pg     = require('knex')(config[env]);
 
-// This helps to ensure that the running database's schema is up to date
-// pg.migrate.latest();
-
 module.exports = pg;
 
 
-require('../db/seeds/seed_users.js');
-require('../db/seeds/seed_rooms.js');
-require('../db/seeds/seed_user_room.js');
-require('../db/seeds/seed_text.js');
+// require('../db/seeds/seed_users.js');
+// require('../db/seeds/seed_games.js');
+// require('../db/seeds/seed_user_game.js');
+require('../db/seeds/seed_fwibs.js');
+
