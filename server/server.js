@@ -32,11 +32,11 @@ app.use('/', routes)
 app.use( bodyParser.json() )
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var textRouter = require('./apis/text-api');
+var fwibRouter = require('./apis/fwib-api');
 var userRouter = require('./apis/user-api');
 
 routes.use( bodyParser.json() )
-routes.use('/text', textRouter);
+routes.use('/game', fwibRouter);
 routes.use('/user', userRouter);
 
 routes.get('/*', function(req, res){

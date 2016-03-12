@@ -10,7 +10,7 @@ var User = module.exports;
 */
 
 User.create = function(attrs) {
-  return pg('users').insert(attrs, ['user_id', 'username', 'password', 'active_room'])
+  return pg('users').insert(attrs, ['user_id', 'username', 'password', 'active_game'])
     .catch(function(error) {
       console.error('error inserting user', error)
     })
@@ -24,13 +24,13 @@ User.create = function(attrs) {
   Locates and loads active room/last room played in for user
 */
 
-User.findActiveRoom = function(userId) {
-  return pg.select('active_room').from('users').where({'user_id': userId})
+User.findActiveGame = function(userId) {
+  return pg.select('active_game').from('users').where({'user_id': userId})
     .catch(function(error) {
-      console.error('error retrieving room', error)
+      console.error('error retrieving game', error)
     })
     .then(function(res){
-      console.log('successfully retrieved room', res)
+      console.log('successfully retrieved game', res)
       return res;
     })
 }
@@ -39,16 +39,16 @@ User.findActiveRoom = function(userId) {
   Adds user to existing game room
   attrs: 
     user_id: id of user
-    room_id: id of room to join
+    game_id: id of room to join
 */
 
-User.joinRoom = function(attrs) {
-  return pg('user_room').insert(attrs, ['user_id', 'room_id'])
+User.joinGame = function(attrs) {
+  return pg('user_game').insert(attrs, ['user_id', 'game_id'])
     .catch(function(error) {
-      console.error('error inserting user into room', error)
+      console.error('error inserting user into game', error)
     })
     .then(function(res){
-      console.log('successfully inserted user into room', res)
+      console.log('successfully inserted user into game', res)
       return res;
     })
 }
@@ -57,13 +57,13 @@ User.joinRoom = function(attrs) {
   Find all games user is a part of
   ??need to find active rooms only?  or do we purge old games
 */
-User.allRoom = function(userId) {
-  return pg.select('room_id').from('user_room').where({'user_id': userId})
+User.allGame = function(userId) {
+  return pg.select('game_id').from('user_game').where({'user_id': userId})
     .catch(function(error) {
-      console.error('error retrieving rooms', error)
+      console.error('error retrieving games', error)
     })
     .then(function(res){
-      console.log('successfully retrieved rooms', res)
+      console.log('successfully retrieved games', res)
       return res;
     })
 }
