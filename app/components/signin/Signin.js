@@ -39,7 +39,23 @@ module.exports = React.createClass({
       data: postData,
       contentType: 'application/json',
       success: function(data) {
-        console.log("success data:", data)
+        // data = fwibble data object
+        console.log("success data:", data[0])
+
+        // import { Navigation } from Link
+        // React.createClass({
+        //   mixins: [ Navigation ]
+        // })
+
+        // this
+        //   .transitionTo('')
+        //<Route component={App}>
+        //  <Route path="gameview" component={GameView} />
+        //  <Redirect from="signin" to="gameview" />
+        //</Route>
+
+ 
+
       }.bind(this),
       error: function(data) {
         console.error("error data:", data)
