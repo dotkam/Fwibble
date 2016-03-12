@@ -1,8 +1,8 @@
 var pg = require('../db_setup');
 
 var seedUserGame = function() {
-    return pg('user_game').truncate()
-    .then(function() {
+    // return pg('user_game').truncate()
+    // .then(function() {
       return pg('user_game').insert([
         {
           user_id: 1,

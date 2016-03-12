@@ -2,8 +2,8 @@ var pg = require('../db_setup');
 
 
 var seedFwib = function() {
-    return pg('user_game').truncate()
-    .then(function() {
+    // return pg('user_game').truncate()
+    // .then(function() {
       return pg('fwibs').insert([
         {
           fwib_content: 'This little piggy went to the',
