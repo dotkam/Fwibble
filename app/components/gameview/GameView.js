@@ -39,13 +39,11 @@ module.exports = React.createClass({
   _userJoined: function(data) {
     var {users, fwibs, turn} = this.state;
     var {name, users} = data;
-    // users.push(name);
     fwibs.push({
       user: 'APPLICATION BOT',
       text : name +' Joined'
     });
     console.log('user joined:', name)
-    // socket.emit('change:turn', turn);
     this.setState({users, fwibs});
   },
 

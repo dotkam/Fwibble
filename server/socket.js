@@ -50,7 +50,7 @@ var userNames = (function () {
 
 // export function for listening to the socket
 module.exports = function (socket) {
-  var name// = userNames.getGuestName();
+  var name;
   socket.on('help', function(data){
 
     name = data.user;
