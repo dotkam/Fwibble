@@ -1,13 +1,31 @@
 var pg = require('../../db/db_setup');
+var sha1 = require('sha1');
 
 var Game = module.exports;
 
 /*
+  Creates random sha1 hash to enter into game_hash field
+  gameId: game_id created by db insertion
+*/
+
+Game.generateHash = function(gameId) {
+  var hash = sha1(gameId);
+  hash = hash.slice(0, 10);
+  console.log(hash)
+  return pg('games').where({'game_id': gameId}).update({'game_hash': hash}).returning(['game_id', 'game_hash', 'game_title'])
+    .catch(function(error) {
+      console.error('error inserting hash into db', error)
+    }) 
+    .then(function(res){
+      console.log('successfully updated hash', res)
+      return res;
+    })  
+}
+
+/*
   create new game
   attrs: 
-    room_hash? TBD
     room_title: TBD
-
 */
 
 Game.create = function(attrs) {
@@ -17,6 +35,9 @@ Game.create = function(attrs) {
     })
     .then(function(res){
       console.log('successfully inserted game', res)
+      var gameId = res[0].game_id;
+      console.log("game id", gameId);
+      Game.generateHash(gameId);
       return res;
     })
 }

@@ -73,12 +73,25 @@ describe('Games model', function() {
           ])
         })
 	})
+  
+    it_('should hash a game room', function * () {
+
+    let game = 22;
+      
+    yield Game.generateHash(game)
+      .catch(function(error) {
+        console.error('error inserting game', error);
+      })
+      .then(function(game) {
+        expect(game[0].game_hash).to.equal('df9e7e9f6d');
+        expect(game[0].game_title).to.equal('test');
+      })
+    })
 
 
-	it_('should create a first game', function * () {
+	  it_('should create a first game', function * () {
 
     let newGame1 = {
-		  game_hash: 'def456',
 		  game_title: 'this is also game'
     }
       
@@ -87,7 +100,6 @@ describe('Games model', function() {
 		    console.error('error inserting game', error);
 		  })
       .then(function(game) {
-        expect(game[0].game_hash).to.equal('def456');
 		    expect(game[0].game_title).to.equal('this is also game');
 		  })
 	  })
