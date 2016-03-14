@@ -50,19 +50,21 @@ var userNames = (function () {
 
 // export function for listening to the socket
 module.exports = function (socket) {
-  var name = userNames.getGuestName();
-
+  var name// = userNames.getGuestName();
   socket.on('help', function(data){
 
+    name = data.user;
+    userNames.claim(name);
 
     socket.emit('init', {
       name: data.user,
-      users: data.users
+      users: userNames.get()
     });
-    
     socket.broadcast.emit('user:join', {
-      name: data.user
+      name: data.user,
+      users: userNames.get()
     });
+
   })
   // send the new user their name and a list of users
 
@@ -71,7 +73,7 @@ module.exports = function (socket) {
   // broadcast a user's fwib to other users
   socket.on('send:fwib', function (data) {
     socket.broadcast.emit('send:fwib', {
-      user: name,
+      user: data.user,
       text: data.text
     });
   });
@@ -85,9 +87,10 @@ module.exports = function (socket) {
 
   // clean up when a user leaves, and broadcast it to other users
   socket.on('disconnect', function () {
-    socket.broadcast.emit('user:left', {
-      name: name
-    });
     userNames.free(name);
+    socket.broadcast.emit('user:left', {
+      name: name,
+      users: userNames.get()
+    });
   });
 };

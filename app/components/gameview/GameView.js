@@ -25,29 +25,27 @@ module.exports = React.createClass({
   },
 
   _initialize: function(data) {
-    console.log('init firing');
     var {users, name} = data;
-    users.push(name);
     this.setState({users, user: name});
   },
 
   _fwibReceive: function(fwib) {
-    console.log('fwibReceive fwib:', fwib)
+    console.log('fwib', fwib)
     var {fwibs} = this.state;
     fwibs.push(fwib);
     this.setState({fwibs});
   },
 
   _userJoined: function(data) {
-    console.log('userJoined firing')
     var {users, fwibs, turn} = this.state;
-    var {name} = data;
-    users.push(name);
+    var {name, users} = data;
+    // users.push(name);
     fwibs.push({
       user: 'APPLICATION BOT',
       text : name +' Joined'
     });
-    socket.emit('change:turn', turn);
+    console.log('user joined:', name)
+    // socket.emit('change:turn', turn);
     this.setState({users, fwibs});
   },
 
@@ -92,10 +90,9 @@ module.exports = React.createClass({
 
 	render: function() {
     if(this.state.user === undefined){
-      var {users} = this.state;
-      var user = ['austin', 'bob', 'carl', 'diana'][Math.floor(Math.random() * 4)]
-      console.log('user', user)
-      socket.emit('help', {user: user, users: users});
+      var user = 'User ' + Math.floor(Math.random() * 100)
+      console.log('user render', user)
+      socket.emit('help', {user: user});
     }
 		return (
 			<div>
