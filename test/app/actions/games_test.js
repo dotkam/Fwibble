@@ -132,5 +132,29 @@ describe('Games model', function() {
 		    expect(games[0].game_id).to.equal(27);
 		  })
     })
+
+    it_('should find and update turns correctly', function * () {
+
+    yield Game.findTurn(22)
+      .catch(function(error) {
+        console.error('error updating turn', error);
+      })
+      .then(function(game) {
+        expect(game[0].turn_index).to.equal(0);
+      })
+
+    yield Game.updateTurn(22, 2)
+      .catch(function(error) {
+        console.error('error updating turn', error);
+      })
+    
+    yield Game.findTurn(22)
+      .catch(function(error) {
+        console.error('error updating turn', error);
+      })
+      .then(function(game) {
+        expect(game[0].turn_index).to.equal(2);
+      })
+    })
 })
 })

@@ -11,7 +11,8 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS games (
   game_id SERIAL NOT NULL PRIMARY KEY,
   game_hash varchar,
-  game_title varchar
+  game_title varchar,
+  turn_index INTEGER DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS user_game (
