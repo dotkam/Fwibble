@@ -57,8 +57,9 @@ module.exports = function (socket) {
 
     socket.emit('init', {
       name: data.user,
-      users: userNames.get()
+      users: data.users
     });
+    
     socket.broadcast.emit('user:join', {
       name: data.user
     });

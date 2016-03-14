@@ -25,7 +25,9 @@ module.exports = React.createClass({
   },
 
   _initialize: function(data) {
+    console.log('init firing');
     var {users, name} = data;
+    users.push(name);
     this.setState({users, user: name});
   },
 
@@ -37,6 +39,7 @@ module.exports = React.createClass({
   },
 
   _userJoined: function(data) {
+    console.log('userJoined firing')
     var {users, fwibs, turn} = this.state;
     var {name} = data;
     users.push(name);
@@ -75,7 +78,7 @@ module.exports = React.createClass({
 
   handleFwibSubmit: function(fwib) {
     var {fwibs, turn, users, user} = this.state;
-    if(user === users[turn]){
+    if(user === users[turn]){;
       fwibs.push(fwib);
       turn = this._changeTurn();
       this.setState({fwibs, turn});
@@ -89,7 +92,10 @@ module.exports = React.createClass({
 
 	render: function() {
     if(this.state.user === undefined){
-      socket.emit('help', {user: 'Guest 1'});
+      var {users} = this.state;
+      var user = ['austin', 'bob', 'carl', 'diana'][Math.floor(Math.random() * 4)]
+      console.log('user', user)
+      socket.emit('help', {user: user, users: users});
     }
 		return (
 			<div>
