@@ -31,12 +31,12 @@ FwibAPI.post('/:game_id/fwib', function(req, res) {
   console.log("This is request: ", req.body);
 	
   var newFwib = {
-		fwib_content: req.body.text_content,
+		fwib_content: req.body.fwib_content,
 		game_id: req.params.game_id,
 		user_id: req.body.user_id
 	}
-
-	console.log('FwibAPI.post req.body ', req.body);
+  console.log("New Fwib", newFwib);
+	console.log('FwibAPI.post req.body ', req.body.fwib_content, req.body.user_id, req.params.game_id);
 
 	Fwib.create(newFwib)
 	  .then(function(data) { 

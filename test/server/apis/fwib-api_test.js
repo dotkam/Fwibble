@@ -20,7 +20,7 @@ describe('Fwib API', function() {
       .then(function() {
         return pg('users').insert([
           {
-            user_id: 7,
+            user_id: 55,
             username: 'PlayerOne', 
             active_game: 2
           },
@@ -37,7 +37,7 @@ describe('Fwib API', function() {
         .then(function() {
           return pg('user_game').insert([
             {
-              user_id: 7,
+              user_id: 55,
               game_id: 2
             }
           ])
@@ -48,24 +48,24 @@ describe('Fwib API', function() {
    	
    	return request(app)
    	.post('/game/2/fwib')
-   	.send({ fwib_content: 'Look at this fwibble, cower knave!', user_id: 7 })
+   	.send({ 'fwib_content': 'Look at this fwibble, cower knave!', 'user_id': 55 })
     .expect(201)
     .expect(function(res) {
-       var newFwib = res.body
+      var newFwib = res.body[0];
        console.log("This is the response body bro", res.body)
 
         expect(newFwib.fwib_id).to.not.be.undefined
-        expect(newFwib.user_id).to.equal(7)
-        expect(newFwib.room_id).to.equal(7)
+        expect(newFwib.user_id).to.equal(55)
+        expect(newFwib.game_id).to.equal(2)
         expect(newFwib.fwib_content).to.equal('Look at this fwibble, cower knave!')
         expect(newFwib.createdat).to.not.be.undefined
     })
     .then(function() {
       return request(app)
-      .get('/fwib/1')
+      .get('/game/2')
       .expect(200)
-      .expect(function(response) {
-      	var fwib = response.body
+      .expect(function(res) {
+      	var fwib = res.body
       	expect(fwib).to.be.an.instanceOf(Array)
         expect(fwib).to.have.length(1)
         expect(fwib[0].fwib_content).to.equal('Look at this fwibble, cower knave!')
