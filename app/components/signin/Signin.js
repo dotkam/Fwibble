@@ -8,6 +8,8 @@ var Route = Router.Route;
 
 module.exports = React.createClass({
 
+  // mixins: [Navigation],
+
   getInitialState: function() {
     return {
       username: '',
@@ -39,22 +41,20 @@ module.exports = React.createClass({
       data: postData,
       contentType: 'application/json',
       success: function(data) {
+        // data === whatever we respond with in user-api.js
         console.log("success data:", data)
+        // this.transitionTo('gameview') 
+ 
+        this.props.setUser(data)
+        console.log('props:',this.props)
+        console.log(this.props.user)
+
       }.bind(this),
       error: function(data) {
         console.error("error data:", data)
       }.bind(this)
 
     });
-
-  // if ($) {  
-  //       // jQuery is loaded  
-  //       alert("Yeah!");
-  //       console.log($.ajax)
-  //   } else {
-  //       // jQuery is not loaded
-  //       alert("Doesn't Work");
-  //   }
 
     this.setState({password: ""})
   },

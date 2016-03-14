@@ -16,6 +16,21 @@ var Gameview = require('../app/components/gameview/GameView');
 
 
 var App = React.createClass({
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
+
+  getInitialState: function() {
+    return {username: null}
+  },
+
+  setUser: function(username) {
+    console.log("App setUser called with", username)
+    this.setState({
+      username: username
+    })
+  },
+
   render: function() {
     return (
       <div>
@@ -23,13 +38,17 @@ var App = React.createClass({
           <div className='navbar'>
             <h1>Fwibble</h1>
             <ul className='nav-links'>
+
               <li><Link to='/signin' className='fa fa-user'>Sign In</Link></li>
               <li><Link to='/gameview' className='fa fa-pencil'>Game</Link></li>
             </ul>
           </div>
         </div>
         <div className="container">
-          {this.props.children}
+          {this.props.children && React.cloneElement(this.props.children, {
+            setUser: this.setUser,
+            user: this.state.username
+          })}
         </div>
       </div>
     )
