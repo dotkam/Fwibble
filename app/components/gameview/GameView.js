@@ -6,7 +6,7 @@ var StoryInput = require('./StoryInput.js');
 var Fwib = require('./Fwib.js');
 var UsersInRoom = require('./UsersInRoom.js');
 
-// var io = require('socket.io-client');
+var io = require('socket.io-client');
 var socket = io.connect();
 
 
@@ -21,7 +21,7 @@ module.exports = React.createClass({
    socket.on('send:fwib', this._fwibReceive);
    socket.on('user:join', this._userJoined);
    socket.on('user:left', this._userLeft);
-   socket.on('change:turn', this._setTurn);
+   socket.on('update:turn', this._setTurn);
   },
 
   _initialize: function(data) {
@@ -78,7 +78,7 @@ module.exports = React.createClass({
     if(user === users[turn]){
       fwibs.push(fwib);
       turn = this._changeTurn();
-      this.setState({fwibs});
+      this.setState({fwibs, turn});
       socket.emit('change:turn', turn);
       socket.emit('send:fwib', fwib);
     }

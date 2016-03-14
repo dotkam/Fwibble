@@ -54,7 +54,6 @@ module.exports = function (socket) {
 
   socket.on('help', function(data){
 
-    console.log('heard you, data.name: ', data.user);
 
     socket.emit('init', {
       name: data.user,
@@ -78,7 +77,7 @@ module.exports = function (socket) {
 
   // Passes in updated turn counter and broadcasts it to other users
   socket.on('change:turn', function(turn){
-    socket.broadcast.emit('change:turn', {
+    socket.broadcast.emit('update:turn', {
       turn:turn
     });
   });
