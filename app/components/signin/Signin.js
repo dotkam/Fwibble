@@ -40,7 +40,7 @@ module.exports = React.createClass({
       contentType: 'application/json',
       success: function(data) {
         // data = fwibble data object
-        console.log("success data:", data[0])
+        console.log("success data:", data)
 
         // import { Navigation } from Link
         // React.createClass({
