@@ -8,6 +8,8 @@ var Route = Router.Route;
 
 module.exports = React.createClass({
 
+  // mixins: [Navigation],
+
   getInitialState: function() {
     return {
       username: '',
@@ -39,22 +41,9 @@ module.exports = React.createClass({
       data: postData,
       contentType: 'application/json',
       success: function(data) {
-        // data = fwibble data object
+        // data === whatever we respond with in user-api.js
         console.log("success data:", data)
-
-        // import { Navigation } from Link
-        // React.createClass({
-        //   mixins: [ Navigation ]
-        // })
-
-        // this
-        //   .transitionTo('')
-        //<Route component={App}>
-        //  <Route path="gameview" component={GameView} />
-        //  <Redirect from="signin" to="gameview" />
-        //</Route>
-
- 
+        // this.transitionTo('gameview') 
 
       }.bind(this),
       error: function(data) {
@@ -62,15 +51,6 @@ module.exports = React.createClass({
       }.bind(this)
 
     });
-
-  // if ($) {  
-  //       // jQuery is loaded  
-  //       alert("Yeah!");
-  //       console.log($.ajax)
-  //   } else {
-  //       // jQuery is not loaded
-  //       alert("Doesn't Work");
-  //   }
 
     this.setState({password: ""})
   },

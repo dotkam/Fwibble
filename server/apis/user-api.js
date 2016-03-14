@@ -36,14 +36,7 @@ function signIn (req, res) {
     if(array.length) {
       return User.findActiveGame(array[0].user_id)
     } else {
-      // console.log("ELSE ",req.body.username)
-      // User.create(req.body.username, req.body.password)
-      //  .then(function(succ) {
-      //    console.log("Success!", succ)
-      //  })
-      //  .catch(function(err) {
-      //    console.log("couldn't add user because: ", err)
-      //  })
+
     }
   })
   .then(function(array) {
