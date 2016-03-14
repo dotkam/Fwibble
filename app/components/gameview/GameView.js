@@ -21,8 +21,7 @@ module.exports = React.createClass({
    socket.on('send:fwib', this._fwibReceive);
    socket.on('user:join', this._userJoined);
    socket.on('user:left', this._userLeft);
-   console.log('Current state:', this.props);
-   console.log('this.props.user: ', this.props.user)
+   console.log('Current state:', this.state);
   },
 
   _initialize: function(data) {
