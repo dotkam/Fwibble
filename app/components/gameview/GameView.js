@@ -6,7 +6,7 @@ var StoryInput = require('./StoryInput.js');
 var Fwib = require('./Fwib.js');
 var UsersInRoom = require('./UsersInRoom.js');
 
-var io = require('socket.io-client');
+// var io = require('socket.io-client');
 var socket = io.connect();
 
 
@@ -88,6 +88,9 @@ module.exports = React.createClass({
   },
 
 	render: function() {
+    if(this.state.user === undefined){
+      socket.emit('help', {user: 'Guest 1'});
+    }
 		return (
 			<div>
 				<StoryTitle />

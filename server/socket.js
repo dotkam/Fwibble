@@ -52,16 +52,21 @@ var userNames = (function () {
 module.exports = function (socket) {
   var name = userNames.getGuestName();
 
+  socket.on('help', function(data){
+
+    console.log('heard you, data.name: ', data.user);
+
+    socket.emit('init', {
+      name: data.user,
+      users: userNames.get()
+    });
+    socket.broadcast.emit('user:join', {
+      name: data.user
+    });
+  })
   // send the new user their name and a list of users
-  socket.emit('init', {
-    name: name,
-    users: userNames.get()
-  });
 
   // notify other clients that a new user has joined
-  socket.broadcast.emit('user:join', {
-    name: name
-  });
 
   // broadcast a user's fwib to other users
   socket.on('send:fwib', function (data) {
