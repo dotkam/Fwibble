@@ -46,7 +46,8 @@ function signIn (req, res) {
   .then(function(array) {
     // res.send("active room: " + array[0].active_room)
     console.log("GameID: ",array[0].game_id)
-    res.send("GameID: " + array[0].game_id)
+    // res.send("GameID: " + array[0].game_id)
+    res.send(req.body.username)
   })
   .catch(function(err) {
     res.send("could not login user: " + err)

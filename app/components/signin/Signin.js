@@ -44,6 +44,10 @@ module.exports = React.createClass({
         // data === whatever we respond with in user-api.js
         console.log("success data:", data)
         // this.transitionTo('gameview') 
+ 
+        this.props.setUser(data)
+        console.log('props:',this.props)
+        console.log(this.props.user)
 
       }.bind(this),
       error: function(data) {
