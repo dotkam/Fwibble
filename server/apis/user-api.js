@@ -8,39 +8,54 @@ module.exports = UserAPI;
 UserAPI.post('/signin', function(req, res) {
 
 	console.log("signin request: ", req.body)
-	// var activeRoom = '32a3f4';
+	// var activeRoom = '32a3f4';	
 
-	User.findIdByUsername(req.body.username)
-		.then(function(array) {
-			if(array.length) {
-				return User.findActiveGame(array[0].user_id)
-			} else {
-				// console.log("ELSE ",req.body.username)
-				// User.create(req.body.username, req.body.password)
-				// 	.then(function(succ) {
-				// 		console.log("Success!", succ)
-				// 	})
-				// 	.catch(function(err) {
-				// 		console.log("couldn't add user because: ", err)
-				// 	})
-			}
-		})
-		.then(function(array) {
-			console.log("GameHash", array)
-			return Game.findIdByHash(array[0].active_game)
-		})
-		.then(function(array) {
-			// res.send("active room: " + array[0].active_room)
-			console.log("GameID: ",array[0].game_id)
-			res.send("GameID: " + array[0].game_id)
-		})
-		.catch(function(err) {
-			res.send("could not login user: " + err)
-		})
+  signIn(req, res)
 
 })
 
 UserAPI.post('/signup', function(req, res) {
 	console.log("signup request: ", req.body)
-	User.create('default', req.body.username, req.body.password, '458d21')
+	User.create([{
+    username: req.body.username,
+    password: req.body.password,
+    active_game: '458d21'
+  }])
+	 .then(function(array) {
+    console.log('User.create: ', array)
+   })
+   .then(function() {
+    signIn(req, res)
+   })
 })
+
+
+function signIn (req, res) {
+  User.findIdByUsername(req.body.username)
+  .then(function(array) {
+    if(array.length) {
+      return User.findActiveGame(array[0].user_id)
+    } else {
+      // console.log("ELSE ",req.body.username)
+      // User.create(req.body.username, req.body.password)
+      //  .then(function(succ) {
+      //    console.log("Success!", succ)
+      //  })
+      //  .catch(function(err) {
+      //    console.log("couldn't add user because: ", err)
+      //  })
+    }
+  })
+  .then(function(array) {
+    console.log("GameHash", array)
+    return Game.findIdByHash(array[0].active_game)
+  })
+  .then(function(array) {
+    // res.send("active room: " + array[0].active_room)
+    console.log("GameID: ",array[0].game_id)
+    res.send("GameID: " + array[0].game_id)
+  })
+  .catch(function(err) {
+    res.send("could not login user: " + err)
+  })
+}
