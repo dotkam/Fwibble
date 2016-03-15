@@ -27,13 +27,13 @@ module.exports = React.createClass({
 
   handleClick: function (e) {
     e.preventDefault()
-    console.log("username:", this.state.username, "\npassword:", this.state.password)
+    // console.log("username:", this.state.username, "\npassword:", this.state.password)
     
     var postData = JSON.stringify({
       "username": this.state.username,
       "password": this.state.password
     })
-    console.log('data:',postData)
+    console.log('postData:',postData)
 
     $.ajax({
       type: 'POST',
@@ -73,7 +73,7 @@ module.exports = React.createClass({
           // TODO: route to game page
         }
 
-        console.log('props:',this.props)
+        console.log('props.user:',this.props.user)
 
       }.bind(this),
       error: function(data) {

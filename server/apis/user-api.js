@@ -80,7 +80,7 @@ function signIn (req, res, err) {
   })
   // catch-all for thrown errors
   .catch(function(err) {
-    console.error('catch all error:', err, 'response.err', response.errMessage)
+    console.error('response.err', response.errMessage)
     res.send(response)
   })
 }
