@@ -50,51 +50,47 @@ var userNames = (function () {
 
 // export function for listening to the socket
 module.exports = function (socket) {
-  var name = userNames.getGuestName();
+  var name;
+  socket.on('help', function(data){
+    console.log('socket data', data.user)
+    name = data.user;
+    userNames.claim(name);
 
+    socket.emit('init', {
+      name: data.user,
+      users: userNames.get()
+    });
+    socket.broadcast.emit('user:join', {
+      name: data.user,
+      users: userNames.get()
+    });
+
+  })
   // send the new user their name and a list of users
-  socket.emit('init', {
-    name: name,
-    users: userNames.get()
-  });
 
   // notify other clients that a new user has joined
-  socket.broadcast.emit('user:join', {
-    name: name
-  });
 
-  // broadcast a user's story snippet to other users
-  socket.on('send:storySnippet', function (data) {
-    socket.broadcast.emit('send:storySnippet', {
-      user: name,
+  // broadcast a user's fwib to other users
+  socket.on('send:fwib', function (data) {
+    socket.broadcast.emit('send:fwib', {
+      user: data.user,
       text: data.text
     });
   });
 
-  // // validate a user's name change, and broadcast it on success
-  // socket.on('change:name', function (data, fn) {
-  //   if (userNames.claim(data.name)) {
-  //     var oldName = name;
-  //     userNames.free(oldName);
-
-  //     name = data.name;
-      
-  //     socket.broadcast.emit('change:name', {
-  //       oldName: oldName,
-  //       newName: name
-  //     });
-
-  //     fn(true);
-  //   } else {
-  //     fn(false);
-  //   }
-  // });
+  // Passes in updated turn counter and broadcasts it to other users
+  socket.on('change:turn', function(turn){
+    socket.broadcast.emit('update:turn', {
+      turn:turn
+    });
+  });
 
   // clean up when a user leaves, and broadcast it to other users
   socket.on('disconnect', function () {
-    socket.broadcast.emit('user:left', {
-      name: name
-    });
     userNames.free(name);
+    socket.broadcast.emit('user:left', {
+      name: name,
+      users: userNames.get()
+    });
   });
 };

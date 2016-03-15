@@ -13,7 +13,7 @@ var socket = io.connect();
 module.exports = React.createClass({
 
   getInitialState: function() {
-    return {users: [], fwibs:[], text: ''};
+    return {users: [], fwibs:[], text: '', turn: 0};
   },
 
   componentDidMount: function() {
@@ -21,7 +21,7 @@ module.exports = React.createClass({
    socket.on('send:fwib', this._fwibReceive);
    socket.on('user:join', this._userJoined);
    socket.on('user:left', this._userLeft);
-   console.log('Current state:', this.state);
+   socket.on('update:turn', this._setTurn);
   },
 
   _initialize: function(data) {
@@ -30,20 +30,20 @@ module.exports = React.createClass({
   },
 
   _fwibReceive: function(fwib) {
-    console.log('fwibReceive fwib:', fwib)
+    console.log('fwib', fwib)
     var {fwibs} = this.state;
     fwibs.push(fwib);
     this.setState({fwibs});
   },
 
   _userJoined: function(data) {
-    var {users, fwibs} = this.state;
-    var {name} = data;
-    users.push(name);
+    var {users, fwibs, turn} = this.state;
+    var {name, users} = data;
     fwibs.push({
       user: 'APPLICATION BOT',
       text : name +' Joined'
     });
+    console.log('user joined:', name)
     this.setState({users, fwibs});
   },
 
@@ -59,16 +59,39 @@ module.exports = React.createClass({
     this.setState({users, fwibs});
   },
 
-  handleFwibSubmit: function(fwib) {
-    console.log('gameview fwib:', fwib);
-    var {fwibs} = this.state;
-    fwibs.push(fwib); // {text: fwib} => {text: fwib.text} => fwib
-    this.setState({fwibs});
-    socket.emit('send:fwib', fwib);
+  _setTurn: function(data){
+    this.setState({turn: data.turn});
   },
 
+  _changeTurn: function(){
+    var {turn, users} = this.state;
+    turn++;
+    if(turn >= users.length){
+      turn = 0;
+    }
+    return turn;
+  },
+
+  handleFwibSubmit: function(fwib) {
+    var {fwibs, turn, users, user} = this.state;
+    if(user === users[turn]){;
+      fwibs.push(fwib);
+      turn = this._changeTurn();
+      this.setState({fwibs, turn});
+      socket.emit('change:turn', turn);
+      socket.emit('send:fwib', fwib);
+    }
+    else {
+      console.log('It\'s ' + users[turn] + '\'s turn!');
+    }
+  },
 
 	render: function() {
+    if(this.state.user === undefined){
+      var {user} = this.props;
+      console.log('user render', user)
+      socket.emit('help', {user: user});
+    }
 		return (
 			<div>
 				<StoryTitle />
