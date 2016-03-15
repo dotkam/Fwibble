@@ -27,13 +27,21 @@ var App = React.createClass({
   },
 
   setUser: function(username) {
-    console.log("App setUser called with", username)
+    console.log("App setUser called with", username);
+    console.log("logged in?", Auth.loggedIn())
+    Auth.login();
     this.setState({
       username: username,
       loggedIn: Auth.loggedIn()
     })
   },
-
+  logoutUser: function(){
+    Auth.logout();
+    this.setState({
+      username: null,
+      loggedIn: Auth.loggedIn()
+    })
+  },
   render: function() {
     return (
       <div>
@@ -41,12 +49,11 @@ var App = React.createClass({
           <div className='navbar'>
             <h1>Fwibble</h1>
             <ul className='nav-links'>
-
-              <li>
-                {this.state.loggedIn ?
-                   (<Link to='/signout' className='fa fa-user'>Sign Out</Link>)
-                  :(<Link to='/signin' className='fa fa-user'>Sign In</Link>)
-                }
+                <li>{
+                  this.state.loggedIn ?
+                    (<Link to='/signout' className='fa fa-user'>Sign Out</Link>)
+                   :(<Link to='/signin' className='fa fa-user'>Sign In</Link>)
+                  }
               </li>
               <li><Link to='/gameview' className='fa fa-pencil'>Game</Link></li>
             </ul>
@@ -55,7 +62,8 @@ var App = React.createClass({
         <div className="container">
           {this.props.children && React.cloneElement(this.props.children, {
             setUser: this.setUser,
-            user: this.state.username,
+            logoutUser: this.logoutUser,
+            user: this.state.username
           })}
         </div>
       </div>
@@ -67,10 +75,11 @@ ReactDOM.render(
   (
         <Router history={browserHistory} >
           <Route path='/' component={App} >
+            <IndexRoute component={Index} onEnter={Auth.requireAuth} />
             <Route path='signin' component={Signin}/>
             <Route path='signup' component={Signup}/>
             <Route path='signout' component={Signout}/>
-            <Route path='gameview' component={Gameview}/>
+            <Route path='gameview' component={Gameview} onEnter={Auth.requireAuth}/>
           </Route>
         </Router>
   ), document.getElementById('app')

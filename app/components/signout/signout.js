@@ -3,7 +3,7 @@ var Auth = require('../../../server/auth');
 
 module.exports = React.createClass({
   componentDidMount: function(){
-    Auth.logout();
+    this.props.logoutUser();
   },
   render: function(){
     return <p>Successfully logged out</p>
