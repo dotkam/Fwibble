@@ -27,3 +27,8 @@ module.exports = {
   getToken: getToken,
   requireAuth: requireAuth
 }
+
+// replace({
+// pathname: '/signin',
+// state: { nextPathname: nextState.location.pathname }
+// })
