@@ -11,8 +11,9 @@ var Stylesheet = require('../public/styles.css');
 var Index = require('../app/components/index/Index');
 var Signin = require('../app/components/signin/Signin');
 var Signup = require('../app/components/signup/Signup');
+var Signout = require('../app/components/signout/Signout')
 var Gameview = require('../app/components/gameview/GameView');
-
+var Auth = require('./auth');
 
 
 var App = React.createClass({
@@ -21,13 +22,15 @@ var App = React.createClass({
   },
 
   getInitialState: function() {
-    return {username: null}
+
+    return {username: null, loggedIn: Auth.loggedIn()}
   },
 
   setUser: function(username) {
     console.log("App setUser called with", username)
     this.setState({
-      username: username
+      username: username,
+      loggedIn: Auth.loggedIn()
     })
   },
 
@@ -39,7 +42,12 @@ var App = React.createClass({
             <h1>Fwibble</h1>
             <ul className='nav-links'>
 
-              <li><Link to='/signin' className='fa fa-user'>Sign In</Link></li>
+              <li>
+                {this.state.loggedIn ?
+                   (<Link to='/signout' className='fa fa-user'>Sign Out</Link>)
+                  :(<Link to='/signin' className='fa fa-user'>Sign In</Link>)
+                }
+              </li>
               <li><Link to='/gameview' className='fa fa-pencil'>Game</Link></li>
             </ul>
           </div>
@@ -47,7 +55,7 @@ var App = React.createClass({
         <div className="container">
           {this.props.children && React.cloneElement(this.props.children, {
             setUser: this.setUser,
-            user: this.state.username
+            user: this.state.username,
           })}
         </div>
       </div>
@@ -61,6 +69,7 @@ ReactDOM.render(
           <Route path='/' component={App} >
             <Route path='signin' component={Signin}/>
             <Route path='signup' component={Signup}/>
+            <Route path='signout' component={Signout}/>
             <Route path='gameview' component={Gameview}/>
           </Route>
         </Router>
