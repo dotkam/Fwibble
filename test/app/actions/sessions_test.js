@@ -27,6 +27,20 @@ describe('Sessions model', function() {
             }
           ])
         })
+        .then(function() {
+          return pg('sessions').insert([
+            {
+              session_id: 33,
+              user_id: 1,
+              token: 'thisisntarealtoken'
+            },
+            {
+              session_id: 37,
+              user_id: 2,
+              token: 'dontworryaboutititsallfine'
+            }
+          ])
+        })
     })
 
     it_('should create a session and token', function * () {
@@ -43,6 +57,39 @@ describe('Sessions model', function() {
           console.log(session);
           expect(session[0].user_id).to.equal(1);
         })
+      
+      Session.findTokenByUserId(1)
+        .catch(function(error) {
+          console.log('error locating token', error);
+        })
+        .then(function(session) {
+          console.log(session);
+          expect(session[0].token).to.exist;
+        })
+    })
+
+    it_('should find a session with user id', function * () {
+
+      yield Session.findIdByUserId(2)
+        .catch(function(error) {
+          console.log('error retrieving session', error);
+        })
+        .then(function(session) {
+          expect(session[0].session_id).to.equal(37);
+        })
+    })
+
+    it_('should delete a session', function * () {
+
+    yield Session.delete(33)
+      .catch(function(error) {
+        console.log('error retrieving session', error);
+      })
+      .then(Session.findIdByUserId(1))
+      .then(function(session) {
+        console.log('SESSION', session)
+        expect(session).to.equal(1);
+      })
     })
   })
 })
