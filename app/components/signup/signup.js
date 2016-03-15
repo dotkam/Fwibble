@@ -42,16 +42,6 @@ module.exports = React.createClass({
       }.bind(this)
 
     });
-
-  // if ($) {  
-  //       // jQuery is loaded  
-  //       alert("Yeah!");
-  //       console.log($.ajax)
-  //   } else {
-  //       // jQuery is not loaded
-  //       alert("Doesn't Work");
-  //   }
-
     this.setState({password: ""})
   },
 

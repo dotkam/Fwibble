@@ -6,7 +6,6 @@ var login = function(){
 };
 var logout = function(){
   delete localStorage.fwibbleToken;
-  // delete App state.username
 };
 var getToken = function(){
   return localStorage.fwibbleToken;
