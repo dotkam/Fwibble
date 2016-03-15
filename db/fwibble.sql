@@ -28,3 +28,10 @@ CREATE TABLE IF NOT EXISTS fwibs (
   user_id INTEGER REFERENCES users (user_id),
   createdat TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE IF NOT EXISTS sessions (
+  session_id SERIAL NOT NULL PRIMARY KEY,
+  user_id INTEGER REFERENCES users (user_id),
+  createdat TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  token varchar
+);
