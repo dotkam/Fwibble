@@ -36,6 +36,7 @@ module.exports = React.createClass({
       contentType: 'application/json',
       success: function(data) {
         console.log("success data:", data)
+        this.props.setUser(data.activeUser);
       }.bind(this),
       error: function(data) {
         console.error("error data:", data)
