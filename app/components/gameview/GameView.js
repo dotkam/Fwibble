@@ -88,7 +88,7 @@ module.exports = React.createClass({
 
 	render: function() {
     if(this.state.user === undefined){
-      var user = 'User ' + Math.floor(Math.random() * 100)
+      var {user} = this.props;
       console.log('user render', user)
       socket.emit('help', {user: user});
     }

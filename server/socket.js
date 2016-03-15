@@ -52,7 +52,7 @@ var userNames = (function () {
 module.exports = function (socket) {
   var name;
   socket.on('help', function(data){
-
+    console.log('socket data', data.user)
     name = data.user;
     userNames.claim(name);
 
