@@ -68,6 +68,7 @@ describe('Users model', function() {
       
       let newUser = {
         username: 'PlayerTwo',
+        password: 'password',
         active_game: 2,
       }
 
@@ -76,8 +77,21 @@ describe('Users model', function() {
           console.log('error inserting user', error);
         })
         .then(function(user) {
+          console.log(user);
           expect(user[0].username).to.equal('PlayerTwo');
           expect(user[0].active_game).to.equal('2');
+        })
+
+      yield User.findIdByUsername('PlayerTwo')
+        .catch(function(error) {
+          console.log('error finding user', error);
+        })
+        .then(function(user){
+          var userId = user[0].user_id;
+          User.checkPassword(userId, 'password123')
+           .then(function(res){
+            expect(res).to.equal(false);
+          })
         })
     })
 
