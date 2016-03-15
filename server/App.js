@@ -11,8 +11,9 @@ var Stylesheet = require('../public/styles.css');
 var Index = require('../app/components/index/Index');
 var Signin = require('../app/components/signin/Signin');
 var Signup = require('../app/components/signup/Signup');
+var Signout = require('../app/components/signout/Signout')
 var Gameview = require('../app/components/gameview/GameView');
-
+var Auth = require('./auth');
 
 
 var App = React.createClass({
@@ -21,16 +22,26 @@ var App = React.createClass({
   },
 
   getInitialState: function() {
-    return {username: null}
+
+    return {username: null, loggedIn: Auth.loggedIn()}
   },
 
   setUser: function(username) {
-    console.log("App setUser called with", username)
+    console.log("App setUser called with", username);
+    console.log("logged in?", Auth.loggedIn())
+    Auth.login();
     this.setState({
-      username: username
+      username: username,
+      loggedIn: Auth.loggedIn()
     })
   },
-
+  logoutUser: function(){
+    Auth.logout();
+    this.setState({
+      username: null,
+      loggedIn: Auth.loggedIn()
+    })
+  },
   render: function() {
     return (
       <div>
@@ -38,8 +49,12 @@ var App = React.createClass({
           <div className='navbar'>
             <h1>Fwibble</h1>
             <ul className='nav-links'>
-
-              <li><Link to='/signin' className='fa fa-user'>Sign In</Link></li>
+                <li>{
+                  this.state.loggedIn ?
+                    (<Link to='/signout' className='fa fa-user'>Sign Out</Link>)
+                   :(<Link to='/signin' className='fa fa-user'>Sign In</Link>)
+                  }
+              </li>
               <li><Link to='/gameview' className='fa fa-pencil'>Game</Link></li>
             </ul>
           </div>
@@ -47,6 +62,7 @@ var App = React.createClass({
         <div className="container">
           {this.props.children && React.cloneElement(this.props.children, {
             setUser: this.setUser,
+            logoutUser: this.logoutUser,
             user: this.state.username
           })}
         </div>
@@ -59,9 +75,11 @@ ReactDOM.render(
   (
         <Router history={browserHistory} >
           <Route path='/' component={App} >
+            <IndexRoute component={Index} onEnter={Auth.requireAuth} />
             <Route path='signin' component={Signin}/>
             <Route path='signup' component={Signup}/>
-            <Route path='gameview' component={Gameview}/>
+            <Route path='signout' component={Signout}/>
+            <Route path='gameview' component={Gameview} onEnter={Auth.requireAuth}/>
           </Route>
         </Router>
   ), document.getElementById('app')

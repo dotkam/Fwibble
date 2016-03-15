@@ -75,6 +75,7 @@ module.exports = React.createClass({
 
         console.log('props.user:',this.props.user)
 
+
       }.bind(this),
       error: function(data) {
         console.error("Connection error:", data)

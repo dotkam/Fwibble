@@ -36,22 +36,13 @@ module.exports = React.createClass({
       contentType: 'application/json',
       success: function(data) {
         console.log("success data:", data)
+        this.props.setUser(data.activeUser);
       }.bind(this),
       error: function(data) {
         console.error("error data:", data)
       }.bind(this)
 
     });
-
-  // if ($) {  
-  //       // jQuery is loaded  
-  //       alert("Yeah!");
-  //       console.log($.ajax)
-  //   } else {
-  //       // jQuery is not loaded
-  //       alert("Doesn't Work");
-  //   }
-
     this.setState({password: ""})
   },
 
