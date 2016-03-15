@@ -8,8 +8,6 @@ var Route = Router.Route;
 
 module.exports = React.createClass({
 
-  // mixins: [Navigation],
-
   getInitialState: function() {
     return {
       username: '',
@@ -43,34 +41,39 @@ module.exports = React.createClass({
       data: postData,
       contentType: 'application/json',
       success: function(data) {
+
         // data === whatever we respond with in user-api.js
-        // console.log("success data:", data)
-        // this.transitionTo('gameview') 
-        //Object {userStatus: false, passStatus: false, activeUser: null, 
-        // activeGame: null, errMessage: "Username not found. Please create an
+        //        {
+        //          userStatus: false,
+        //          passStatus: false,
+        //          activeUser: null,
+        //          activeGame: null,
+        //          errMessage: null
+        //        }
         
-        console.log('Login response object:', data)
-        // handle err message
+        console.log('Signin response object:', data)
+
+        // Handle login err message
         if (data.errMessage!==null) {
           this.setState({loginMsg: data.errMessage})
+          // clear input fields (if username is good, only clear password)
           if (data.userStatus===false) {
             this.setState({username: ""})
             this.setState({password: ""})
           } else {
               this.setState({password: ""})
           }
-          // trigger display of error message
+          // trigger on-page display of error message
           this.setState({loginErr: true})
-        // or set active user
+
+        // Or set active user and route to game
         } else {
           this.setState({loginErr: false})
           this.props.setUser(data.activeUser)
           // TODO: route to game page
         }
 
-
         console.log('props:',this.props)
-        // console.log(this.props.user)
 
       }.bind(this),
       error: function(data) {
@@ -81,7 +84,7 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    var loginMessage = this.state.loginErr ? <div>{this.state.loginMsg}</div> : null;
+    var loginMessage = this.state.loginErr ? this.state.loginMsg : null;
 
     return (
       <div>
@@ -94,9 +97,9 @@ module.exports = React.createClass({
 		        <br/>
 		        <input type="password" placeholder="password" value={this.state.password} onChange={this.handlePassword} />
 		        <br/>
-		        <input type="submit" name="signInSubmit" onClick={this.handleClick} />           {loginMessage}
+		        <input type="submit" name="signInSubmit" onClick={this.handleClick} /> 
 		      </form>
-          <br />
+          <p>{loginMessage}</p>
           <div><Link to="/signup">Don't have an account yet? Sign up!</Link></div>
 		    </div>
       </div>
