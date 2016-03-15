@@ -6,16 +6,13 @@ var Game = require('../../app/actions/games');
 module.exports = UserAPI;
 
 UserAPI.post('/signin', function(req, res) {
-
 	console.log("signin request: ", req.body)
-	// var activeRoom = '32a3f4';	
-
   signIn(req, res)
-
 })
 
 UserAPI.post('/signup', function(req, res) {
 	console.log("signup request: ", req.body)
+
 	User.create([{
     username: req.body.username,
     password: req.body.password,
@@ -30,26 +27,60 @@ UserAPI.post('/signup', function(req, res) {
 })
 
 
-function signIn (req, res) {
-  User.findIdByUsername(req.body.username)
-  .then(function(array) {
-    if(array.length) {
-      return User.findActiveGame(array[0].user_id)
-    } else {
+function signIn (req, res, err) {
 
+  var response = {
+    userStatus: false,
+    passStatus: false,
+    activeUser: null,
+    activeGame: null,
+    errMessage: null
+  }, uid;
+
+  User.findIdByUsername(req.body.username)
+  // catch unknown username
+  .then(function(array) {
+    if (array.length>0) {
+      response.userStatus = true;
+      response.activeUser = req.body.username;
+      uid = array[0].user_id
+    } else {
+      response.errMessage = '' + req.body.username + ' not found. Please create an account.'
+      throw err
+    }
+    return
+  })
+  // if username is valid, ask model if password is good
+  .then(function() {
+    return User.checkPassword(uid, req.body.password)
+  })
+  // if password is incorrect, respond and throw error
+  .then(function(bool) {
+    // console.log('bool', bool)
+    if (!bool) {
+      response.errMessage = 'Password incorrect. Please try again.'
+      console.log('password incorrect: ',response.errMessage)
+      throw err
+    // otherwise, find active game
+    } else {
+      response.passStatus = true;
+      response.activeUser = req.body.username;
+      return User.findActiveGame(uid)
     }
   })
+  // translate GameHash to GameId
   .then(function(array) {
-    console.log("GameHash", array)
     return Game.findIdByHash(array[0].active_game)
   })
+  // and send relevant response
   .then(function(array) {
-    // res.send("active room: " + array[0].active_room)
-    console.log("GameID: ",array[0].game_id)
-    // res.send("GameID: " + array[0].game_id)
-    res.send(req.body.username)
+    response.activeGame = array[0].game_id;
+
+    res.send(response)
   })
+  // catch-all for thrown errors
   .catch(function(err) {
-    res.send("could not login user: " + err)
+    console.error('response.err', response.errMessage)
+    res.send(response)
   })
 }

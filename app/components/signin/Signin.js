@@ -8,12 +8,12 @@ var Route = Router.Route;
 
 module.exports = React.createClass({
 
-  // mixins: [Navigation],
-
   getInitialState: function() {
     return {
       username: '',
-      password: ''
+      password: '',
+      loginErr: false,
+      loginMsg: null
     }
   },
 
@@ -27,13 +27,13 @@ module.exports = React.createClass({
 
   handleClick: function (e) {
     e.preventDefault()
-    console.log("username:", this.state.username, "\npassword:", this.state.password)
+    // console.log("username:", this.state.username, "\npassword:", this.state.password)
     
     var postData = JSON.stringify({
       "username": this.state.username,
       "password": this.state.password
     })
-    console.log('data:',postData)
+    console.log('postData:',postData)
 
     $.ajax({
       type: 'POST',
@@ -41,25 +41,50 @@ module.exports = React.createClass({
       data: postData,
       contentType: 'application/json',
       success: function(data) {
+
         // data === whatever we respond with in user-api.js
-        console.log("success data:", data)
-        // this.transitionTo('gameview') 
- 
-        this.props.setUser(data)
-        console.log('props:',this.props)
-        console.log(this.props.user)
+        //        {
+        //          userStatus: false,
+        //          passStatus: false,
+        //          activeUser: null,
+        //          activeGame: null,
+        //          errMessage: null
+        //        }
+        
+        console.log('Signin response object:', data)
+
+        // Handle login err message
+        if (data.errMessage!==null) {
+          this.setState({loginMsg: data.errMessage})
+          // clear input fields (if username is good, only clear password)
+          if (data.userStatus===false) {
+            this.setState({username: ""})
+            this.setState({password: ""})
+          } else {
+              this.setState({password: ""})
+          }
+          // trigger on-page display of error message
+          this.setState({loginErr: true})
+
+        // Or set active user and route to game
+        } else {
+          this.setState({loginErr: false})
+          this.props.setUser(data.activeUser)
+          // TODO: route to game page
+        }
+
+        console.log('props.user:',this.props.user)
 
       }.bind(this),
       error: function(data) {
-        console.error("error data:", data)
+        console.error("Connection error:", data)
       }.bind(this)
 
     });
-
-    this.setState({password: ""})
   },
 
   render: function() {
+    var loginMessage = this.state.loginErr ? this.state.loginMsg : null;
 
     return (
       <div>
@@ -72,9 +97,9 @@ module.exports = React.createClass({
 		        <br/>
 		        <input type="password" placeholder="password" value={this.state.password} onChange={this.handlePassword} />
 		        <br/>
-		        <input type="submit" name="signInSubmit" onClick={this.handleClick} />
+		        <input type="submit" name="signInSubmit" onClick={this.handleClick} /> 
 		      </form>
-          <br />
+          <p>{loginMessage}</p>
           <div><Link to="/signup">Don't have an account yet? Sign up!</Link></div>
 		    </div>
       </div>
