@@ -9,11 +9,19 @@ module.exports = React.createClass({
 
   handleSubmit: function(e) {
     e.preventDefault();
-    var fwib = {
-      user : this.props.user,
-      text : this.state.text
+    var trimmedWord = this.state.text.trim();
+    var trimmedWordLength = trimmedWord.split(' ').length;
+
+    if(trimmedWordLength === 6){    
+      var fwib = {
+        user : this.props.user,
+        text : trimmedWord
+      }
+      this.props.onFwibSubmit(fwib); 
     }
-    this.props.onFwibSubmit(fwib); 
+    else {
+      console.log('Not 6 words!'); // Change to alert/flash
+    }
     this.setState({ text: '' });
   },
 
