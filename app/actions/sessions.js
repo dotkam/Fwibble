@@ -20,20 +20,6 @@ Session.generateToken = function(sessionId, timestamp) {
     })  
 }
 
-/*
-  Find createdat value for token creation with sessionId
-*/
-
-Session.findTimestamp = function(sessionId) {
-  return pg.select('createdat').from('sessions').where({'session_id': sessionId})
-    .catch(function(error) {
-      console.error('error retrieving timestamp', error)
-    })
-    .then(function(res){
-      console.log('successfully retrieved timestamp', res)
-      return res;
-    })
-}
 
 /* 
   find session token via existing user id
@@ -86,7 +72,13 @@ Session.create = function(attrs) {
 }
 
 Session.delete = function(sessionId) {
-  return db('sessions').where({'session_id': sessionId}).del()
-    .catch(reportError('error deleting session'))
+  return pg('sessions').where({'session_id': sessionId}).del()
+    .catch(function(error) {
+      console.error('error deleting session');
+    })
+    .then(function(res) {
+      console.log('successfully deleted session row', res)
+      return res;
+    })
 }
 
