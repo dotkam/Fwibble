@@ -11,7 +11,7 @@ var Stylesheet = require('../public/styles.css');
 var Index = require('../app/components/index/Index');
 var Signin = require('../app/components/signin/Signin');
 var Signup = require('../app/components/signup/Signup');
-var Signout = require('../app/components/signout/Signout')
+var Signout = require('../app/components/signout/Signout');
 var Gameview = require('../app/components/gameview/GameView');
 var Auth = require('./auth');
 
@@ -50,13 +50,13 @@ var App = React.createClass({
           <div className='navbar'>
             <h1>Fwibble</h1>
             <ul className='nav-links'>
-                <li>{
-                  this.state.loggedIn ?
-                    (<Link to='/signout' className='fa fa-user'>Sign Out</Link>)
-                   :(<Link to='/signin' className='fa fa-user'>Sign In</Link>)
-                  }
-              </li>
               <li><Link to='/gameview' className='fa fa-pencil'>Game</Link></li>
+              <li>
+                { this.state.loggedIn ?
+                  (<Link to='/signout' className='fa fa-user'>Sign Out</Link>)
+                  :(<Link to='/signin' className='fa fa-user'>Sign In</Link>)
+                }
+              </li>
             </ul>
           </div>
         </div>

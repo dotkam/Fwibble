@@ -11,6 +11,7 @@ var Fwib = module.exports;
 
 Fwib.create = function(attrs) {
   return pg('fwibs').insert(attrs, ['fwib_id', 'fwib_content', 'game_hash', 'username', 'createdat'])
+
     .catch(function(error) {
       console.error('error inserting fwib', error)
     })

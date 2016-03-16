@@ -74,12 +74,13 @@ module.exports = React.createClass({
 
   handleFwibSubmit: function(fwib) {
     var {fwibs, turn, users, user} = this.state;
-    if(user === users[turn]){;
+    if(user === users[turn]){
       fwibs.push(fwib);
       turn = this._changeTurn();
       this.setState({fwibs, turn});
       socket.emit('change:turn', turn);
       socket.emit('send:fwib', fwib);
+      // send fwib to database
     }
     else {
       console.log('It\'s ' + users[turn] + '\'s turn!');

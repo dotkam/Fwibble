@@ -1,4 +1,8 @@
 // Keep track of which names are used so that there are no duplicates
+var Fwib = require('../app/actions/fwibs.js')
+var User = require('../app/actions/users.js')
+var Game = require('../app/actions/games.js')
+
 var userNames = (function () {
   var names = {};
 
@@ -72,10 +76,39 @@ module.exports = function (socket) {
 
   // broadcast a user's fwib to other users
   socket.on('send:fwib', function (data) {
+    var fwib_content = data.text;
+    var user_id;
+    var game_id;
     socket.broadcast.emit('send:fwib', {
       user: data.user,
       text: data.text
     });
+    User.findIdByUsername(data.user)
+      .then(function(res){
+        user_id = res[0].user_id;
+      })
+      .then(function(){
+        User.findActiveGame(user_id)
+          .then(function(res){
+            var game_hash = res[0].active_game;
+            console.log('findIdByUsername', user_id);
+            console.log('findActiveGame', game_hash);
+            Game.findIdByHash(game_hash)
+              .then(function(res){
+                game_id = res[0].game_id;
+                console.log('IdByHash', game_id)
+              })
+              .then(function(){    
+                var fwibData = {
+                  fwib_content: data.text,
+                  game_id: game_id,
+                  user_id: user_id
+                }
+                console.log('fwibData', fwibData)
+                Fwib.create(fwibData)
+              })
+          })
+      });
   });
 
   // Passes in updated turn counter and broadcasts it to other users
@@ -94,3 +127,4 @@ module.exports = function (socket) {
     });
   });
 };
+

@@ -1,6 +1,6 @@
 var React = require('react');
 var Link = require('react-router').Link;
-var $ = require('../jquery.min.js');
+var $ = require('../../../jquery.min.js');
 var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
 var DefaultRoute = Router.DefaultRoute;  

@@ -96,6 +96,7 @@ User.create = function(attrs) {
 
 User.findActiveGame = function(username) {
   return pg.select('active_game').from('users').where({'username': username})
+
     .catch(function(error) {
       console.error('error retrieving game', error)
     })
