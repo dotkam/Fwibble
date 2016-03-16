@@ -91,21 +91,17 @@ module.exports = function (socket) {
         User.findActiveGame(user_id)
           .then(function(res){
             var game_hash = res[0].active_game;
-
-            Game.findIdByHash(game_hash)
-              .then(function(res){
-
-                game_id = res[0].game_id;
-              })
-              .then(function(){    
-                var fwibData = {
-                  fwib_content: data.text,
-                  game_id: game_id,
-                  user_id: user_id
-                }
-                Fwib.create(fwibData)
-              })
           })
+          .then(function(){    
+            var fwibData = {
+              fwib_content: data.text,
+              game_hash: game_hash,
+              user_id: user_id
+            }
+            Fwib.create(fwibData)
+          })
+
+        })
       });
   });
 
