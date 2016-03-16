@@ -7,7 +7,9 @@ var DefaultRoute = Router.DefaultRoute;
 var Route = Router.Route; 
 
 module.exports = React.createClass({
-
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
   getInitialState: function() {
     return {
       username: '',
@@ -71,6 +73,7 @@ module.exports = React.createClass({
           this.setState({loginErr: false})
           this.props.setUser(data.activeUser)
           // TODO: route to game page
+          this.context.router.replace('/gameview')
         }
 
         console.log('props.user:',this.props.user)
