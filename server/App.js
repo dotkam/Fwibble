@@ -34,6 +34,7 @@ var App = React.createClass({
       username: username,
       loggedIn: Auth.loggedIn()
     })
+    this.context.router.replace('/gameview')
   },
   logoutUser: function(){
     Auth.logout();

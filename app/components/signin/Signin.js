@@ -7,7 +7,9 @@ var DefaultRoute = Router.DefaultRoute;
 var Route = Router.Route; 
 
 module.exports = React.createClass({
-
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
   getInitialState: function() {
     return {
       username: '',
