@@ -16,37 +16,26 @@ describe('Users model', function() {
         .then(function() {
           return pg('users').insert([
             {
-              user_id: 7,
               username: 'PlayerOne', 
-              active_game: 1
+              password: 'password',
+              active_game: 'abc123'
             },
+            {
+              username: 'PlayerTwo',
+              password: 'dorwssap' 
+            }
           ])
         })
         .then(function() {
           return pg('games').insert([
             {
-              game_id: 1,
               game_hash: 'abc123'
             },
             {
-              game_id: 2,
               game_hash: 'def456'
             },
             {
-              game_id: 3,
               game_hash: 'ghi789'
-            }
-          ])
-        })
-        .then(function() {
-          return pg('user_game').insert([
-            {
-              user_id: 7,
-              game_id: 1
-            },
-            {
-              user_id: 7,
-              game_id: 2
             }
           ])
         })
@@ -54,21 +43,21 @@ describe('Users model', function() {
 
     it_('should list the active game of a user', function * () {
 
-      yield User.findActiveGame(7)
+      yield User.findActiveGame('PlayerOne')
         .catch(function(error) {
           console.error('error retrieving users', error);
         })
         .then(function(games) {
-          expect(games).to.equal('1');
+          expect(games).to.equal('abc123');
         })
     })
 
     it_('should create a new user', function * () {
       
       let newUser = {
-        username: 'PlayerTwo',
-        password: 'password',
-        active_game: 2,
+        username: 'PlayerThree',
+        password: 'password12',
+        active_game: 'abc123',
       }
 
       yield User.create(newUser)
@@ -77,61 +66,36 @@ describe('Users model', function() {
         })
         .then(function(user) {
           console.log(user);
-          expect(user.username).to.equal('PlayerTwo');
-          expect(user.active_game).to.equal('2');
+          expect(user.username).to.equal('PlayerThree');
+          expect(user.active_game).to.equal('abc123');
         })
 
-      yield User.findIdByUsername('PlayerTwo')
-        .catch(function(error) {
-          console.log('error finding user', error);
-        })
-        .then(function(user){
-          var userId = user;
-          User.checkPassword(userId, 'password123')
+      yield User.checkPassword('PlayerThree', 'password123')
            .then(function(res){
             expect(res).to.equal(false);
           })
         })
     })
 
-    it_('should allow user to join a game', function * () {
+    it_('should update an active room', function *() {
 
-      let newJoin ={
-        user_id: 7,
-        game_id: 3
-      }
-
-      yield User.joinGame(newJoin)
+      yield User.addActiveRoom('PlayerTwo', 'ghi789')
         .catch(function(error) {
-          console.error('error joining game', error);
+          console.error('error updating active room', error);
         })
-        .then(function(game) {
-          expect(game.user_id).to.equal(7);
-          expect(game.game_id).to.equal(3);
-        })
+        // .then(function(user) {
+        //   expect(user.active_game).to.equal('ghi789');
+        // })
     })
 
-    it_('should show all games user is a part of', function * () {
+    it_('should delete an active room', function *() {
 
-      yield User.allGame(7)
+      yield User.deleteActiveRoom('PlayerOne')
         .catch(function(error) {
-          console.error('error retrieving games', error)
+          console.error('error deleting active room', error);
         })
-        .then(function(games) {
-          // expect(games).to.have.length(2);
-          expect(games).to.equal(1);
-        })
+        // .then(function(user) {
+        //   expect(user.active_game).to.equal(null);
+        // })
     })
-
-    it_('should locate a user id by username', function *() {
-
-      yield User.findIdByUsername('PlayerOne')
-        .catch(function(error) {
-          console.error('error retrieving user id', error);
-        })
-        .then(function(userid) {
-          expect(userid).to.equal(7);
-        })
-    })
-})
 })

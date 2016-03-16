@@ -13,30 +13,30 @@ module.exports = FwibAPI;
 
   Expects request: {
     fwib_content: six words from submit form
-    game_id:      which game room or instance text was entered into
-    user_id:      which user entered sentence
+    game_hash:    which game room or instance text was entered into
+    username:     which user entered sentence
   }
 
   Responds with the new message: {
     fwib_id:       Number <unique id for this fwib>
     fwib_content:  The six word fragment 
-    game_id:       Game number it was entered in
-    user_id:       Which user entered the text
+    game_hash:       Game number it was entered in
+    username:       Which user entered the text
     createdat:     timestamp, to help sort story flow
   }
 */
 
-FwibAPI.post('/:game_id/fwib', function(req, res) {
+FwibAPI.post('/:game_hash/fwib', function(req, res) {
 
   console.log("This is request: ", req.body);
 	
   var newFwib = {
 		fwib_content: req.body.fwib_content,
-		game_id: req.params.game_id,
-		user_id: req.body.user_id
+		game_hash: req.params.game_hash,
+		username: req.body.username
 	}
   console.log("New Fwib", newFwib);
-	console.log('FwibAPI.post req.body ', req.body.fwib_content, req.body.user_id, req.params.game_id);
+	console.log('FwibAPI.post req.body ', req.body.fwib_content, req.body.username, req.params.game_hash);
 
 	Fwib.create(newFwib)
 	  .then(function(data) { 
@@ -57,8 +57,8 @@ FwibAPI.post('/:game_id/fwib', function(req, res) {
     {
     fwib_id:       Number <unique id for this text>
     fwib_content:  The six word fragment 
-    game_id:       Game number it was entered in
-    user_id:       Which user entered the text
+    game_ihash:       Game number it was entered in
+    username:       Which user entered the text
     createdAt:     timestamp, to help sort story flow
     },
     ...
@@ -66,16 +66,16 @@ FwibAPI.post('/:game_id/fwib', function(req, res) {
 */
 
 //using room_id for now, can be changed to room_hash later, then run Room.findByHash to find the roomid to enter as argument
-FwibAPI.get('/:game_id/', function(req, res) {
-  var gameId = req.params.game_id;
+FwibAPI.get('/:game_hash/', function(req, res) {
+  var gamehash = req.params.game_hash;
 
-  Fwib.allOfGame(gameId)
+  Fwib.allOfGame(gamehash)
 	 .then(function(data) { 
 	  	res.status(200).send(data);
 	  })
     .catch(function(error) {
       console.error('ERROR GET:', request.url);
-      res.status(500).send('Server error getting fwibs by game id');
+      res.status(500).send('Server error getting fwibs by game hash');
     })
 })
 

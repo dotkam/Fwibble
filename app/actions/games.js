@@ -10,7 +10,7 @@ var Game = module.exports;
 
 Game.generateHash = function(gameId) {
   var hash = sha1(gameId);
-  hash = hash.slice(0, 10);
+  hash = hash.slice(0, 15);
   console.log(hash)
   return pg('games').where({'game_id': gameId}).update({'game_hash': hash}).returning(['game_id', 'game_hash', 'game_title'])
     .catch(function(error) {
@@ -18,7 +18,7 @@ Game.generateHash = function(gameId) {
     }) 
     .then(function(res){
       console.log('successfully updated hash', res)
-      return res[0];
+      return res;
     })  
 }
 
@@ -43,11 +43,10 @@ Game.create = function(attrs) {
 }
 
 /* 
-  Find all users in a game
-  ??need to find active rooms only?  or do we purge old games
+  Find all users in a game (where game is in progress)
 */
-Game.allUser = function(gameId) {
-  return pg.select('user_id').from('user_game').where({'game_id': gameId})
+Game.allUser = function(gamehash) {
+  return pg.select('username').from('games').where({'game_hash': gamehash})
     .catch(function(error) {
       console.error('error retrieving users', error)
     })
@@ -61,6 +60,7 @@ Game.allUser = function(gameId) {
 /*
   List all active game
   ?? flag for full or searching for more
+  where status equals completed, in progress, joinable
 */
 
 Game.allById = function() {
@@ -76,6 +76,7 @@ Game.allById = function() {
 
 /*
   Primary keys are arbitrarily assigned by PostgreSQL, this method gives us a way to find the ID based on username
+  **depreciated**
 */
 
 Game.findIdByHash = function(hash) {
@@ -92,8 +93,8 @@ Game.findIdByHash = function(hash) {
 /*
   Finds the active turn of game by game id
 */
-Game.findTurn = function(gameId) {
-  return pg.select('turn_index').from('games').where({'game_id': gameId})
+Game.findTurn = function(gamehash) {
+  return pg.select('turn_index').from('games').where({'game_hash': gamehash})
     .catch(function(error) {
       console.error('error retrieving turn', error)
     })
@@ -105,12 +106,12 @@ Game.findTurn = function(gameId) {
 
 /*
   Update the turn value inside the game to appropriately identify the active turn
-  GameId: game_id
+  Gamehash: game_hash
   newTurn: new value of turn to update in column
 */
 
-Game.updateTurn = function(gameId, newTurn) {
-  return pg('games').where({'game_id': gameId}).update({'turn_index': newTurn})
+Game.updateTurn = function(gamehash, newTurn) {
+  return pg('games').where({'game_hash': gamehash}).update({'turn_index': newTurn})
     .catch(function(error) {
       console.error('error updating turn', error)
     })
