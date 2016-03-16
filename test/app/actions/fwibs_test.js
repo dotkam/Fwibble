@@ -77,9 +77,9 @@ describe('Fwibs model', function() {
           console.error('error inserting fwib', error);
         })
         .then(function(fwibs) {
-          expect(fwibs[0].fwib_content).to.equal('New Fwibble in the database word');
-          expect(fwibs[0].game_id).to.equal(1);
-          expect(fwibs[0].user_id).to.equal(2);
+          expect(fwibs.fwib_content).to.equal('New Fwibble in the database word');
+          expect(fwibs.game_id).to.equal(1);
+          expect(fwibs.user_id).to.equal(2);
         })
     })
 
@@ -96,9 +96,9 @@ describe('Fwibs model', function() {
           console.error('error in inserting fwib', error);
         })
         .then(function(fwibs) {
-          expect(fwibs[0].fwib_content).to.exist;
-          expect(fwibs[0].game_id).to.equal(1);
-          expect(fwibs[0].user_id).to.equal(1);
+          expect(fwibs.fwib_content).to.exist;
+          expect(fwibs.game_id).to.equal(1);
+          expect(fwibs.user_id).to.equal(1);
         })      
     })
 
