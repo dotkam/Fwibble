@@ -1,25 +1,26 @@
-require('../test-helper.js') // <--- This must be at the top of every test file.
+// "use strict"
+// require('../test-helper.js') // <--- This must be at the top of every test file.
 
-var request = require('supertest')
-var routes = require(__server + '/index.js')
+// const request = require('supertest')
+// const routes = require(__server + '/server.js')
 
-describe("The Server", function() {
+// describe("The Server", function() {
 
-  var app = TestHelper.createApp()
-  app.use('/', routes)
-  app.testReady()
+//   var app = TestHelper.createApp()
+//   app.use('/', routes)
+//   app.testReady()
 
-  xit("serves an example endpoint", function * () {
+//   it("serves an example endpoint", function * () {
 
-    //
-    // Notice how we're in a generator function (indicated by the the *)
-    // See test/test-helper.js for details of why this works.
-    //
-    yield request(app)
-      .get('/api/tags-example')
-      .expect(200)
-      .expect(function(response) {
-        expect(response.body).to.include('node')
-      })
-  })
-})
+//     //
+//     // Notice how we're in a generator function (indicated by the the *)
+//     // See test/test-helper.js for details of why this works.
+//     //
+//     yield request(app)
+//       .get('/api/tags-example')
+//       .expect(200)
+//       .expect(function(response) {
+//         expect(response.body).to.include('node')
+//       })
+//   })
+// })

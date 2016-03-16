@@ -18,49 +18,48 @@ describe('Users model', function() {
             {
               user_id: 7,
               username: 'PlayerOne', 
-              active_room: 1
+              active_game: 1
             },
           ])
         })
         .then(function() {
-          return pg('rooms').insert([
+          return pg('games').insert([
             {
-              room_id: 1,
-              room_hash: 'abc123'
+              game_id: 1,
+              game_hash: 'abc123'
             },
             {
-              room_id: 2,
-              room_hash: 'def456'
+              game_id: 2,
+              game_hash: 'def456'
             },
             {
-              room_id: 3,
-              room_hash: 'ghi789'
+              game_id: 3,
+              game_hash: 'ghi789'
             }
           ])
         })
         .then(function() {
-          return pg('user_room').insert([
+          return pg('user_game').insert([
             {
               user_id: 7,
-              room_id: 1
+              game_id: 1
             },
             {
               user_id: 7,
-              room_id: 2
+              game_id: 2
             }
           ])
         })
     })
 
-    it_('should list the active room of a user', function * () {
+    it_('should list the active game of a user', function * () {
 
-      yield User.findActiveRoom(7)
+      yield User.findActiveGame(7)
         .catch(function(error) {
           console.error('error retrieving users', error);
         })
-        .then(function(rooms) {
-          expect(rooms).to.have.length(1);
-          expect(rooms[0].active_room).to.equal('1');
+        .then(function(games) {
+          expect(games).to.equal('1');
         })
     })
 
@@ -68,7 +67,8 @@ describe('Users model', function() {
       
       let newUser = {
         username: 'PlayerTwo',
-        active_room: 2,
+        password: 'password',
+        active_game: 2,
       }
 
       yield User.create(newUser)
@@ -76,37 +76,50 @@ describe('Users model', function() {
           console.log('error inserting user', error);
         })
         .then(function(user) {
-          expect(user[0].username).to.equal('PlayerTwo');
-          expect(user[0].active_room).to.equal('2');
+          console.log(user);
+          expect(user.username).to.equal('PlayerTwo');
+          expect(user.active_game).to.equal('2');
+        })
+
+      yield User.findIdByUsername('PlayerTwo')
+        .catch(function(error) {
+          console.log('error finding user', error);
+        })
+        .then(function(user){
+          var userId = user;
+          User.checkPassword(userId, 'password123')
+           .then(function(res){
+            expect(res).to.equal(false);
+          })
         })
     })
 
-    it_('should allow user to join a game room', function * () {
+    it_('should allow user to join a game', function * () {
 
       let newJoin ={
         user_id: 7,
-        room_id: 3
+        game_id: 3
       }
 
-      yield User.joinRoom(newJoin)
+      yield User.joinGame(newJoin)
         .catch(function(error) {
-          console.error('error joining room', error);
+          console.error('error joining game', error);
         })
-        .then(function(gameroom) {
-          expect(gameroom[0].user_id).to.equal(7);
-          expect(gameroom[0].room_id).to.equal(3);
+        .then(function(game) {
+          expect(game.user_id).to.equal(7);
+          expect(game.game_id).to.equal(3);
         })
     })
 
     it_('should show all games user is a part of', function * () {
 
-      yield User.allRoom(7)
+      yield User.allGame(7)
         .catch(function(error) {
-          console.error('error retrieving rooms', error)
+          console.error('error retrieving games', error)
         })
-        .then(function(rooms) {
-          expect(rooms).to.have.length(2);
-          expect(rooms[0].room_id).to.equal(1);
+        .then(function(games) {
+          // expect(games).to.have.length(2);
+          expect(games).to.equal(1);
         })
     })
 
@@ -117,7 +130,7 @@ describe('Users model', function() {
           console.error('error retrieving user id', error);
         })
         .then(function(userid) {
-          expect(userid[0].user_id).to.equal(7);
+          expect(userid).to.equal(7);
         })
     })
 })

@@ -1,44 +1,44 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var StorySnippet = require('./StorySnippet.js');
+var Fwib = require('./Fwib.js');
 var StoryInput = require('./StoryInput.js');
 
 module.exports = React.createClass({
 
-	getInitialState() {
-		  return {user: ''};
-		},
+  getInitialState: function() {
+      return {user: ''};
+    },
 
-		handleSubmit(e) {
-			e.preventDefault();
-			var users = {
-				user : this.props.user,
-				text : this.state.text
-			}
-			this.props.onSnippetSubmit(storySnippet);	
-			this.setState({ text: '' });
-		},
+    handleSubmit: function(e) {
+      e.preventDefault();
+      var users = {
+        user : this.props.user,
+        text : this.state.text
+      }
+      this.props.onFwibSubmit(fwib); 
+      this.setState({ text: '' });
+    },
 
-		changeHandler(e) {
-			this.setState({ text : e.target.value });
-		},
+    changeHandler(e) {
+      this.setState({ text : e.target.value });
+    },
 
-  render() {
-	return (
-	  <div className='storySnippets'>
-		<h2> Story: </h2>
-		{
-		  this.props.storySnippets.map((storySnippet, i) => {
-			return (
-			  <StorySnippet
-			    key={i}
-					user={storySnippet.user}
-				  text={storySnippet.text} 
-			  />
-			);
-		  })
-		} 
-	  </div>
-	);
-	}
+  render: function() {
+  return (
+    <div className='fwibs'>
+    <h2> Story: </h2>
+    {
+      this.props.fwibs.map((fwib, i) => {
+      return (
+        <Fwib
+          key={i}
+          user={fwib.user}
+          text={fwib.text} 
+        />
+      );
+      })
+    } 
+    </div>
+  );
+  }
 });
