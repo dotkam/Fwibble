@@ -33,7 +33,11 @@ User.findIdByUsername = function(username) {
     })
     .then(function(res){
       console.log('successfully retrieved user', res)
-      return res[0].user_id;
+      if (res.length===0) {
+        return false
+      } else {
+        return res[0].user_id;
+      }
     })
 }
 
