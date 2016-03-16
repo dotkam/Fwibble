@@ -83,8 +83,8 @@ describe('Games model', function() {
         console.error('error inserting game', error);
       })
       .then(function(game) {
-        expect(game[0].game_hash).to.equal('df9e7e9f6d');
-        expect(game[0].game_title).to.equal('test');
+        expect(game.game_hash).to.equal('df9e7e9f6d');
+        expect(game.game_title).to.equal('test');
       })
     })
 
@@ -100,7 +100,7 @@ describe('Games model', function() {
 		    console.error('error inserting game', error);
 		  })
       .then(function(game) {
-		    expect(game[0].game_title).to.equal('this is also game');
+		    expect(game.game_title).to.equal('this is also game');
 		  })
 	  })
 
@@ -140,8 +140,7 @@ describe('Games model', function() {
 		    console.error('error retrieving games', error);
 		  })
 		  .then(function(games) {
-		    expect(games).to.have.length(1);
-		    expect(games[0].game_id).to.equal(27);
+		    expect(games).to.equal(27);
 		  })
     })
 
@@ -152,7 +151,7 @@ describe('Games model', function() {
         console.error('error updating turn', error);
       })
       .then(function(game) {
-        expect(game[0].turn_index).to.equal(0);
+        expect(game).to.equal(0);
       })
 
     yield Game.updateTurn(22, 2)
@@ -165,7 +164,7 @@ describe('Games model', function() {
         console.error('error updating turn', error);
       })
       .then(function(game) {
-        expect(game[0].turn_index).to.equal(2);
+        expect(game).to.equal(2);
       })
     })
 })

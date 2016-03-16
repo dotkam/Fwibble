@@ -18,7 +18,7 @@ User.encryptPassword = function(userId, password) {
     }) 
     .then(function(res){
       console.log('successfully updated hash', res)
-      return res;
+      return res[0];
     })  
 }
 
@@ -33,7 +33,7 @@ User.findIdByUsername = function(username) {
     })
     .then(function(res){
       console.log('successfully retrieved user', res)
-      return res;
+      return res[0].user_id;
     })
 }
 
@@ -81,7 +81,7 @@ User.create = function(attrs) {
       var password = res[0].password;
       console.log("user id", userId);
       User.encryptPassword(userId, password);
-      return res;
+      return res[0];
     })
 }
 
@@ -110,7 +110,7 @@ User.findActiveGame = function(userId) {
     })
     .then(function(res){
       console.log('successfully retrieved game', res)
-      return res;
+      return res[0].active_game;
     })
 }
 
@@ -128,7 +128,7 @@ User.joinGame = function(attrs) {
     })
     .then(function(res){
       console.log('successfully inserted user into game', res)
-      return res;
+      return res[0];
     })
 }
 
@@ -143,7 +143,7 @@ User.allGame = function(userId) {
     })
     .then(function(res){
       console.log('successfully retrieved games', res)
-      return res;
+      return res[0].game_id;
     })
 }
 

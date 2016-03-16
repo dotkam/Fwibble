@@ -51,7 +51,7 @@ describe('Fwib API', function() {
    	.send({ 'fwib_content': 'Look at this fwibble, cower knave!', 'user_id': 55 })
     .expect(201)
     .expect(function(res) {
-      var newFwib = res.body[0];
+      var newFwib = res.body;
        console.log("This is the response body bro", res.body)
 
         expect(newFwib.fwib_id).to.not.be.undefined

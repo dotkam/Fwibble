@@ -59,8 +59,7 @@ describe('Users model', function() {
           console.error('error retrieving users', error);
         })
         .then(function(games) {
-          expect(games).to.have.length(1);
-          expect(games[0].active_game).to.equal('1');
+          expect(games).to.equal('1');
         })
     })
 
@@ -78,8 +77,8 @@ describe('Users model', function() {
         })
         .then(function(user) {
           console.log(user);
-          expect(user[0].username).to.equal('PlayerTwo');
-          expect(user[0].active_game).to.equal('2');
+          expect(user.username).to.equal('PlayerTwo');
+          expect(user.active_game).to.equal('2');
         })
 
       yield User.findIdByUsername('PlayerTwo')
@@ -87,7 +86,7 @@ describe('Users model', function() {
           console.log('error finding user', error);
         })
         .then(function(user){
-          var userId = user[0].user_id;
+          var userId = user;
           User.checkPassword(userId, 'password123')
            .then(function(res){
             expect(res).to.equal(false);
@@ -107,8 +106,8 @@ describe('Users model', function() {
           console.error('error joining game', error);
         })
         .then(function(game) {
-          expect(game[0].user_id).to.equal(7);
-          expect(game[0].game_id).to.equal(3);
+          expect(game.user_id).to.equal(7);
+          expect(game.game_id).to.equal(3);
         })
     })
 
@@ -119,8 +118,8 @@ describe('Users model', function() {
           console.error('error retrieving games', error)
         })
         .then(function(games) {
-          expect(games).to.have.length(2);
-          expect(games[0].game_id).to.equal(1);
+          // expect(games).to.have.length(2);
+          expect(games).to.equal(1);
         })
     })
 
@@ -131,7 +130,7 @@ describe('Users model', function() {
           console.error('error retrieving user id', error);
         })
         .then(function(userid) {
-          expect(userid[0].user_id).to.equal(7);
+          expect(userid).to.equal(7);
         })
     })
 })
