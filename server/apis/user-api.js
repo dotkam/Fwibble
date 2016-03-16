@@ -39,11 +39,11 @@ function signIn (req, res, err) {
 
   User.findIdByUsername(req.body.username)
   // catch unknown username
-  .then(function(array) {
-    if (array.length>0) {
+  .then(function(userId) {
+    if (userId) {
       response.userStatus = true;
       response.activeUser = req.body.username;
-      uid = array[0].user_id
+      uid = userId
     } else {
       response.errMessage = '' + req.body.username + ' not found. Please create an account.'
       throw err
