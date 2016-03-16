@@ -91,12 +91,11 @@ module.exports = function (socket) {
         User.findActiveGame(user_id)
           .then(function(res){
             var game_hash = res[0].active_game;
-            console.log('findIdByUsername', user_id);
-            console.log('findActiveGame', game_hash);
+
             Game.findIdByHash(game_hash)
               .then(function(res){
+
                 game_id = res[0].game_id;
-                console.log('IdByHash', game_id)
               })
               .then(function(){    
                 var fwibData = {
@@ -104,7 +103,6 @@ module.exports = function (socket) {
                   game_id: game_id,
                   user_id: user_id
                 }
-                console.log('fwibData', fwibData)
                 Fwib.create(fwibData)
               })
           })
