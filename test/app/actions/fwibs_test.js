@@ -83,6 +83,25 @@ describe('Fwibs model', function() {
         })
     })
 
+    it_('should insert a random fwib when prompted', function * () {
+
+      let newFwib = {
+        fwib_content: Fwib.starterFwib(),
+        game_id: 1,
+        user_id: 1
+      }
+
+      yield Fwib.create(newFwib)
+        .catch(function(error) {
+          console.error('error in inserting fwib', error);
+        })
+        .then(function(fwibs) {
+          expect(fwibs[0].fwib_content).to.exist;
+          expect(fwibs[0].game_id).to.equal(1);
+          expect(fwibs[0].user_id).to.equal(1);
+        })      
+    })
+
     it_('should list all fwibs of a user', function * () {
 
       yield Fwib.allOfUser(1,1)
@@ -106,6 +125,7 @@ describe('Fwibs model', function() {
           expect(fwibs).to.have.length(0);
         })
     })
+
 })
 })
 

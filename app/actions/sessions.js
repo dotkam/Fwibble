@@ -16,7 +16,7 @@ Session.generateToken = function(sessionId, timestamp) {
     }) 
     .then(function(res){
       console.log('successfully updated token', res)
-      return res;
+      return res[0];
     })  
 }
 
@@ -32,7 +32,7 @@ Session.findTokenByUserId = function(userId) {
     })
     .then(function(res){
       console.log('successfully retrieved token', res)
-      return res;
+      return res[0].token;
     })
 }
 
@@ -43,11 +43,11 @@ Session.findTokenByUserId = function(userId) {
 Session.findIdByUserId = function(userId) {
   return pg.select('session_id').from('sessions').where({'user_id': userId})
     .catch(function(error) {
-      console.error('error retrieving game', error)
+      console.error('error retrieving session', error)
     })
     .then(function(res){
-      console.log('successfully retrieved game', res)
-      return res;
+      console.log('successfully retrieved session', res)
+      return res[0].session_id;
     })
 }
 
@@ -67,7 +67,7 @@ Session.create = function(attrs) {
       var timestamp = res[0].createdat;
       console.log("sessionid", sessionId);
       Session.generateToken(sessionId, timestamp);
-      return res;
+      return res[0];
     })
 }
 

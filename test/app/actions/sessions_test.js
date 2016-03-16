@@ -55,7 +55,7 @@ describe('Sessions model', function() {
         })
         .then(function(session) {
           console.log(session);
-          expect(session[0].user_id).to.equal(1);
+          expect(session.user_id).to.equal(1);
         })
       
       Session.findTokenByUserId(1)
@@ -64,7 +64,7 @@ describe('Sessions model', function() {
         })
         .then(function(session) {
           console.log(session);
-          expect(session[0].token).to.exist;
+          expect(session).to.exist;
         })
     })
 
@@ -75,7 +75,7 @@ describe('Sessions model', function() {
           console.log('error retrieving session', error);
         })
         .then(function(session) {
-          expect(session[0].session_id).to.equal(37);
+          expect(session).to.equal(37);
         })
     })
 
