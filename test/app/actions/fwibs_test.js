@@ -16,7 +16,6 @@ describe('Fwibs model', function() {
         .then(function() {
           return pg('games').insert([
             {
-              game_id: 1,
               game_hash: 'abc123',
             }
           ])
@@ -24,14 +23,12 @@ describe('Fwibs model', function() {
         .then(function() {
           return pg('users').insert([
             {
-              user_id: 1,
               username: 'Player1',
-              active_game: 1,
+              active_game: 'abc123'
             },
             {
-              user_id: 2,
               username: 'Player2',
-              active_game: 1,
+              active_game: 'abc123'
             }
           ])
         })
@@ -39,13 +36,13 @@ describe('Fwibs model', function() {
           return pg('fwibs').insert([
             {
               fwib_content: 'This is an example of Fwibble',
-              game_id: 1, 
-              user_id: 1,
+              game_hash: 'abc123', 
+              username: 'Player1'
             },
             {
               fwib_content: 'Sample words and phrases right here',
-              game_id: 1, 
-              user_id: 1,
+              game_hash: 'abc123', 
+              username: 'Player1'
             }
           ])
         })
@@ -54,7 +51,7 @@ describe('Fwibs model', function() {
 
     it_('should list all fwibs of a game', function * () {
       
-      yield Fwib.allOfGame(1)
+      yield Fwib.allOfGame('abc123')
         .catch(function(error) {
           console.error('error retreiving fwibs', error)
         })
@@ -68,8 +65,8 @@ describe('Fwibs model', function() {
 
       let newFwib = {
         fwib_content: 'New Fwibble in the database word',
-        game_id: 1,
-        user_id: 2,
+        game_hash: 'abc123',
+        username: 'Player2'
       }
 
       yield Fwib.create(newFwib)
@@ -78,8 +75,8 @@ describe('Fwibs model', function() {
         })
         .then(function(fwibs) {
           expect(fwibs.fwib_content).to.equal('New Fwibble in the database word');
-          expect(fwibs.game_id).to.equal(1);
-          expect(fwibs.user_id).to.equal(2);
+          expect(fwibs.game_hash).to.equal('abc123');
+          expect(fwibs.username).to.equal('Player2');
         })
     })
 
@@ -87,8 +84,8 @@ describe('Fwibs model', function() {
 
       let newFwib = {
         fwib_content: Fwib.starterFwib(),
-        game_id: 1,
-        user_id: 1
+        game_hash: 'abc123',
+        username: 'Player1'
       }
 
       yield Fwib.create(newFwib)
@@ -97,14 +94,14 @@ describe('Fwibs model', function() {
         })
         .then(function(fwibs) {
           expect(fwibs.fwib_content).to.exist;
-          expect(fwibs.game_id).to.equal(1);
-          expect(fwibs.user_id).to.equal(1);
+          expect(fwibs.game_hash).to.equal('abc123');
+          expect(fwibs.username).to.equal('Player1');
         })      
     })
 
     it_('should list all fwibs of a user', function * () {
 
-      yield Fwib.allOfUser(1,1)
+      yield Fwib.allOfUser('abc123', 'Player1')
         .catch(function(error) {
           console.error('error retreiving fwibs', error);
         })
@@ -117,7 +114,7 @@ describe('Fwibs model', function() {
 
     it_('should list no fwibs for a game that does not exist', function * () {
 
-      yield Fwib.allOfGame(404)
+      yield Fwib.allOfGame('def456')
         .catch(function(error) {
           console.error('error in retrieving fwibs', error);
         })

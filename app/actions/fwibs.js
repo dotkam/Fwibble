@@ -5,12 +5,12 @@ var Fwib = module.exports;
 /* Insert new sentence segment into database
   attrs: 
     fwib_content: six words from submit form
-    game_id: which game room text was entered into
-    user_id: which user entered sentence
+    game_hash: which game room text was entered into
+    username: which user entered sentence
 */
 
 Fwib.create = function(attrs) {
-  return pg('fwibs').insert(attrs, ['fwib_id', 'fwib_content', 'game_id', 'user_id', 'createdat'])
+  return pg('fwibs').insert(attrs, ['fwib_id', 'fwib_content', 'game_hash', 'username', 'createdat'])
     .catch(function(error) {
       console.error('error inserting fwib', error)
     })
@@ -24,8 +24,8 @@ Fwib.create = function(attrs) {
   Retrieve all fwibs related to the game.
 */
 
-Fwib.allOfGame = function(gameId) {
-  return pg.select('*').from('fwibs').where({'game_id': gameId}).orderBy('createdat', 'asc')
+Fwib.allOfGame = function(gamehash) {
+  return pg.select('*').from('fwibs').where({'game_hash': gamehash}).orderBy('createdat', 'asc')
     .catch(function(error) {
       console.error('error retrieving fwib', error)
     })
@@ -39,8 +39,8 @@ Fwib.allOfGame = function(gameId) {
   Retrieve all fwibs related to a particular user inside the game.
 */
 
-Fwib.allOfUser = function(gameId, userId) {
-  return pg.select('*').from('fwibs').where({'game_id': gameId, 'user_id': userId})
+Fwib.allOfUser = function(gamehash, username) {
+  return pg.select('*').from('fwibs').where({'game_hash': gamehash, 'username': username})
     .catch(function(error) {
       console.error('error retrieving fwib', error)
     })

@@ -8,11 +8,11 @@ var User = module.exports;
   userId: user_id created by db insertion
 */
 
-User.encryptPassword = function(userId, password) {
+User.encryptPassword = function(username, password) {
   var salt = bcrypt.genSaltSync(10);
   var hash = bcrypt.hashSync(password, salt);
   console.log(hash)
-  return pg('users').where({'user_id': userId}).update({'password': hash}).returning(['user_id', 'username', 'password', 'active_game'])
+  return pg('users').where({'username': username}).update({'password': hash}).returning(['user_id', 'username', 'password', 'active_game'])
     .catch(function(error) {
       console.error('error inserting hash into db', error)
     }) 
@@ -24,6 +24,7 @@ User.encryptPassword = function(userId, password) {
 
 /*
   Primary keys are arbitrarily assigned by PostgreSQL, this method gives us a way to find the ID based on username
+  **Depreciated**
 */
 
 User.findIdByUsername = function(username) {
@@ -47,8 +48,8 @@ User.findIdByUsername = function(username) {
   password:  entered password
 */
 
-User.checkPassword = function(userId, password) {
-  return pg.select('password').from('users').where({'user_id': userId})
+User.checkPassword = function(username, password) {
+  return pg.select('password').from('users').where({'username': username})
     .catch(function(error) {
       console.error('error retrieving hash', error)
     })
@@ -81,34 +82,20 @@ User.create = function(attrs) {
     })
     .then(function(res){
       console.log('successfully inserted user', res)
-      var userId = res[0].user_id;
+      var username = res[0].username;
       var password = res[0].password;
-      console.log("user id", userId);
-      User.encryptPassword(userId, password);
+      console.log("username", username);
+      User.encryptPassword(username, password);
       return res[0];
     })
 }
-
-// Game.create = function(attrs) {
-//   return pg('games').insert(attrs, ['game_id', 'game_hash', 'game_title'])
-//     .catch(function(error) {
-//       console.error('error inserting game into db', error)
-//     })
-//     .then(function(res){
-//       console.log('successfully inserted game', res)
-//       var gameId = res[0].game_id;
-//       console.log("game id", gameId);
-//       Game.generateHash(gameId);
-//       return res;
-//     })
-// }
 
 /*
   Locates and loads active room/last room played in for user
 */
 
-User.findActiveGame = function(userId) {
-  return pg.select('active_game').from('users').where({'user_id': userId})
+User.findActiveGame = function(username) {
+  return pg.select('active_game').from('users').where({'username': username})
     .catch(function(error) {
       console.error('error retrieving game', error)
     })
@@ -123,6 +110,8 @@ User.findActiveGame = function(userId) {
   attrs: 
     user_id: id of user
     game_id: id of room to join
+
+    **Depreciated**
 */
 
 User.joinGame = function(attrs) {
@@ -136,19 +125,49 @@ User.joinGame = function(attrs) {
     })
 }
 
+/*
+  Updates active_game field for user
+  username: unique username
+  gamehash: unique game_hash of game
+*/
+
+User.addActiveRoom = function(username, gamehash) {
+  return pg('users').where({'username': username}).update({'active_game': gamehash}).returning(['user_id', 'username', 'password', 'active_game'])    
+    .catch(function(error) {
+      console.error('error inserting active game', error)
+    })
+    .then(function(res){
+      console.log('successfully updated active game', res)
+      return res;
+    })
+}
+
+User.deleteActiveRoom = function(username) {
+  return pg('users').where({'username': username}).update({'active_game': null}).returning(['user_id', 'username', 'password', 'active_game'])
+    .catch(function(error) {
+      console.error('error inserting active game', error)
+    })
+    .then(function(res){
+      console.log('successfully updated active game', res)
+      return res;
+    })
+}
+
 /* 
   Find all games user is a part of
   ??need to find active rooms only?  or do we purge old games
+
+  **Depreciated** Use User.findActiveGame
 */
-User.allGame = function(userId) {
-  return pg.select('game_id').from('user_game').where({'user_id': userId})
-    .catch(function(error) {
-      console.error('error retrieving games', error)
-    })
-    .then(function(res){
-      console.log('successfully retrieved games', res)
-      return res[0].game_id;
-    })
-}
+// User.allGame = function(username) {
+//   return pg.select('game_hash').from('user_game').where({'username': username})
+//     .catch(function(error) {
+//       console.error('error retrieving games', error)
+//     })
+//     .then(function(res){
+//       console.log('successfully retrieved games', res)
+//       return res[0].game_hash;
+//     })
+// }
 
 
