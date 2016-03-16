@@ -73,7 +73,6 @@ module.exports = React.createClass({
           this.setState({loginErr: false})
           this.props.setUser(data.activeUser)
           // TODO: route to game page
-          this.context.router.replace('/gameview')
         }
 
         console.log('props.user:',this.props.user)
