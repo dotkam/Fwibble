@@ -12,18 +12,30 @@ UserAPI.post('/signin', function(req, res) {
 
 UserAPI.post('/signup', function(req, res) {
 	console.log("signup request: ", req.body)
+  var errMsg = "Please try again later."
 
-	User.create([{
-    username: req.body.username,
-    password: req.body.password,
-    active_game: '458d21'
-  }])
-	 .then(function(array) {
-    console.log('User.create: ', array)
-   })
-   .then(function() {
+  User.findIdByUsername(req.body.username)
+  .then(function(response) {
+    // response is false if user is unknown
+    if (response) {
+      errMsg = "The username " + req.body.username + " is taken. Please try again."
+      console.log('ERROR MESSAGE: ',errMsg)
+      throw err
+    } else {
+      return User.create([{
+        username: req.body.username,
+        password: req.body.password,
+        active_game: '458d21'
+      }])      
+    }
+  })
+ .then(function(response) {
+    console.log('User.create: ', response)
     signIn(req, res)
-   })
+ })
+ .catch(function() {
+  res.send({error: errMsg})
+ })
 })
 
 

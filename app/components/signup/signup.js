@@ -7,7 +7,8 @@ module.exports = React.createClass({
   getInitialState: function() {
     return {
       username: '',
-      password: ''
+      password: '',
+      loginErr: null
     }
   },
 
@@ -36,7 +37,14 @@ module.exports = React.createClass({
       contentType: 'application/json',
       success: function(data) {
         console.log("success data:", data)
-        this.props.setUser(data.activeUser);
+        // display error if username unavailable else create user and login
+        if (data.error) {
+          this.setState({loginError: (<div className="alert alert-danger"><strong>{data.error}</strong></div>)})
+        } else {
+          this.setState({loginError: (<div className="alert alert-success"><strong>Login Successful</strong></div>)})
+          var setUserClosure = this.props.setUser;
+          setTimeout(function(){setUserClosure(data.activeUser)}, 1000);
+        }
       }.bind(this),
       error: function(data) {
         console.error("error data:", data)
@@ -60,6 +68,7 @@ module.exports = React.createClass({
 		        <input type="password" placeholder="password" value={this.state.password} onChange={this.handlePassword} />
 		        <br/>
 		        <input type="submit" name="signUpSubmit" onClick={this.handleClick} />
+            {this.state.loginError}
 		      </form>
 		    </div>
       </div>
