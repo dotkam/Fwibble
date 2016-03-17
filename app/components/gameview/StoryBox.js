@@ -26,18 +26,20 @@ module.exports = React.createClass({
   render: function() {
   return (
     <div className='fwibs'>
-    <h2> Story: </h2>
-    {
-      this.props.fwibs.map((fwib, i) => {
-      return (
-        <Fwib
-          key={i}
-          user={fwib.user}
-          text={fwib.text} 
-        />
-      );
-      })
-    } 
+      <div className='storyBoxStyling'>
+        <h2> Story: </h2>
+        {
+          this.props.fwibs.map((fwib, i) => {
+          return (
+            <Fwib
+              key={i}
+              user={fwib.user}
+              text={fwib.text} 
+            />
+          );
+          })
+        } 
+      </div>
     </div>
   );
   }
