@@ -16,19 +16,21 @@ UserAPI.post('/signup', function(req, res) {
 
   User.findIdByUsername(req.body.username)
   .then(function(response) {
-    // response is false if username is available
+    // response is false if user is unknown
     if (response) {
-      errMsg = "Username taken. Please try again."
+      errMsg = "The username " + req.body.username + " is taken. Please try again."
+      console.log('ERROR MESSAGE: ',errMsg)
       throw err
+    } else {
+      return User.create([{
+        username: req.body.username,
+        password: req.body.password,
+        active_game: '458d21'
+      }])      
     }
-    return User.create([{
-      username: req.body.username,
-      password: req.body.password,
-      active_game: '458d21'
-    }])
   })
  .then(function(response) {
-    console.log('User.create: ', array)
+    console.log('User.create: ', response)
     signIn(req, res)
  })
  .catch(function() {
