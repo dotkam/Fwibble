@@ -50,10 +50,8 @@ User.findIdByUsername = function(username) {
 
 User.checkPassword = function(username, password) {
   return pg.select('password').from('users').where({'username': username})
-    .catch(function(error) {
-      console.error('error retrieving hash', error)
-    })
     .then(function(hashed){
+      console.log('hashed', hashed)
       var validated = false;
       var hash = hashed[0].password;
       console.log('successfully retrieved hash', hash);
@@ -65,6 +63,9 @@ User.checkPassword = function(username, password) {
           console.log('incorrect password, beat it bozo!');
         }
       return validated;
+    })
+    .catch(function(error) {
+      console.error('error retrieving hash', error)
     })
 }
 
