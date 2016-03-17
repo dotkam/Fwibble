@@ -44,7 +44,6 @@ module.exports = React.createClass({
       contentType: 'application/json',
       success: function(data) {
 
-        // data === whatever we respond with in user-api.js
         //        {
         //          userStatus: false,
         //          passStatus: false,

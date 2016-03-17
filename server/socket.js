@@ -75,35 +75,29 @@ module.exports = function (socket) {
   // notify other clients that a new user has joined
 
   // broadcast a user's fwib to other users
+  // and store in DB
   socket.on('send:fwib', function (data) {
     var fwib_content = data.text;
-    var user_id;
-    var game_id;
+    var gamehash;
+
     socket.broadcast.emit('send:fwib', {
       user: data.user,
       text: data.text
-    });
-    User.findIdByUsername(data.user)
+    })
+    User.findActiveGame(data.user)
       .then(function(res){
-        user_id = res[0].user_id;
+        game_hash = res;
+        console.log('sendFwib got game_hash', game_hash)
       })
       .then(function(){
-        User.findActiveGame(user_id)
-          .then(function(res){
-            var game_hash = res[0].active_game;
-          })
-          .then(function(){    
-            var fwibData = {
-              fwib_content: data.text,
-              game_hash: game_hash,
-              user_id: user_id
-            }
-            Fwib.create(fwibData)
-          })
-
-        })
-      });
-  });
+        var fwibData = {
+          fwib_content: data.text,
+          game_hash: game_hash,
+          username: data.user
+        }
+        Fwib.create(fwibData)
+      })
+    });
 
   // Passes in updated turn counter and broadcasts it to other users
   socket.on('change:turn', function(turn){
