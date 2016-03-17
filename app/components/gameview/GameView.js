@@ -37,15 +37,19 @@ module.exports = React.createClass({
   },
 
   _userJoined: function(data) {
-    var {user, users, fwibs, turn, myTurn} = this.state;
+    var {user, users, fwibs, turn} = this.state;
     var {name, users} = data;
     fwibs.push({
       user: 'APPLICATION BOT',
       text : name +' Joined'
     });
-    if (user===users[0]) { myTurn = true };
     console.log('user joined:', name)
-    this.setState({users, fwibs, myTurn});
+    this.setState({users, fwibs});
+    
+    // TODO: put this logic in GO button function instead!
+    var {myTurn} = this.state;
+    if (user===users[0]) { myTurn = true };
+    this.setState({myTurn});
   },
 
   _userLeft: function(data) {
