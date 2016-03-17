@@ -17,11 +17,18 @@ describe('Games model', function() {
           return pg('games').insert([
             {
               game_hash: 'abc123',
-              game_title: 'test'
+              game_title: 'test',
+              game_status: 'open'
             },
             {
               game_hash: 'ghi789',
-              game_title: 'yes, i am dog'
+              game_title: 'yes, i am dog',
+              game_status: 'in progress'
+            },
+            {
+              game_hash: 'jkl000',
+              game_title: 'neuroplasticity lasts forever',
+              game_status: 'open'
             }
           ])
         })
@@ -71,33 +78,83 @@ describe('Games model', function() {
       })
     })
 
-    // it_('should find all users in a game room', function * () {
+    it_('should find all games', function * () {
 
-    // yield Game.allUser('abc123')
-    //   .catch(function(error) {
-		  //   console.error('error retrieving users', error);
-		  // })
-		  // .then(function(users) {
-		  //   expect(users).to.have.length(3);
-		  //   expect(users[0].username).to.equal('Player1');
-		  //   expect(users[1].username).to.equal('Player2');
-		  //   expect(users[2].username).to.equal('Player3');
-		  // })
-    // })
+    yield Game.all()
+      .catch(function(error) {
+		    console.error('error retrieving users', error);
+		  })
+		  .then(function(games) {
+		    expect(games).to.have.length(3);
+		    expect(games[0].game_hash).to.equal('abc123');
+		    expect(games[1].game_hash).to.equal('ghi789');
+		    expect(games[2].game_hash).to.equal('jkl000');
+		  })
+    })
 
-    it_('should find all active games', function * () {
+    it_('should change status and find all open games', function * () {
 
-    yield Game.allById()
+    yield Game.updateToOpen('ghi789')
+      .catch(function(error) {
+        console.error('error updating status', error);
+      })
+      .then(function(res) {
+        console.log('status updated')
+      Game.allJoinable()
       .catch(function(error) {
 		    console.error('error retrieving games', error);
 		  })
 		  .then(function(games) {
-		    expect(games).to.have.length(2);
-		    expect(games[0].game_hash).to.equal('abc123');
-		    expect(games[1].game_hash).to.equal('ghi789');
-		    expect(games[0].game_title).to.equal('test');
-		    expect(games[1].game_title).to.equal('yes, i am dog');
+		    expect(games).to.have.length(3);
+        expect(games[0].game_hash).to.equal('abc123');
+        expect(games[0].game_title).to.equal('test');
+        expect(games[2].game_hash).to.equal('ghi789');
+        expect(games[2].game_title).to.equal('yes, i am dog');
+        expect(games[1].game_hash).to.equal('jkl000');
+        expect(games[1].game_title).to.equal('neuroplasticity lasts forever');
 		  })
+    })
+    })
+
+    it_('should change status and find in progress games', function * () {
+
+    yield Game.updateToInProgress('abc123')
+      .catch(function(error) {
+        console.error('error updating status', error);
+      })
+      .then(function(res) {
+        console.log('status updated')
+        Game.allInProgress()
+         .catch(function(error) {
+           console.error('error retrieving games', error);
+         })
+         .then(function(games) {
+           expect(games).to.have.length(2);
+           expect(games[1].game_hash).to.equal('abc123');
+           expect(games[1].game_title).to.equal('test');
+        })
+      })
+    })
+
+   it_('should change status and find completed games', function * () {
+
+    yield Game.updateToCompleted('abc123')
+      .catch(function(error) {
+        console.error('error updating status', error);
+      })
+      .then(function(res) {
+        console.log('status updated')
+      })
+
+    yield Game.allCompleted()
+      .catch(function(error) {
+        console.error('error retrieving games', error);
+      })
+      .then(function(games) {
+        expect(games).to.have.length(1);
+        expect(games[0].game_hash).to.equal('abc123');
+        expect(games[0].game_title).to.equal('test');
+      })
     })
 
     it_('should find games by hash value', function * () {

@@ -59,12 +59,13 @@ Game.allUser = function(gamehash) {
 
 /*
   List all active game
-  ?? flag for full or searching for more
-  where status equals completed, in progress, joinable
+  where status equals joinable: open and accepting players
+                      in progress: active but closed to new players
+                      completed: not active game has ended
 */
 
-Game.allById = function() {
-  return pg.select('*').from('games')
+Game.allJoinable = function() {
+  return pg.select('*').from('games').where({'game_status': 'open'})
     .catch(function(error) {
       console.error('error retrieving games', error)
     })
@@ -72,6 +73,79 @@ Game.allById = function() {
       console.log('successfully retrieved games', res)
       return res;
     })	
+}
+
+Game.allInProgress = function() {
+  return pg.select('*').from('games').where({'game_status': 'in progress'})
+    .catch(function(error) {
+      console.error('error retrieving games', error)
+    })
+    .then(function(res){
+      console.log('successfully retrieved games', res)
+      return res;
+    })  
+}
+
+Game.allCompleted = function() {
+  return pg.select('*').from('games').where({'game_status': 'completed'})
+    .catch(function(error) {
+      console.error('error retrieving games', error)
+    })
+    .then(function(res){
+      console.log('successfully retrieved games', res)
+      return res;
+    })  
+}
+
+Game.all = function() {
+  return pg.select('*').from('games')
+    .catch(function(error) {
+      console.error('error retrieving games', error)
+    })
+    .then(function(res){
+      console.log('successfully retrieved games', res)
+      return res;
+    })  
+}
+
+/*
+  Update the game status to change how rooms are viewable and accept players
+  Gamehash: game_hash
+  Status: Must be 'open', 'in progress', 'completed'
+
+*/
+
+Game.updateToOpen = function(gamehash) {
+  return pg('games').where({'game_hash': gamehash}).update({'game_status': 'open'})
+    .catch(function(error) {
+      console.error('error updating status', error)
+    })
+    .then(function(res){
+      console.log('successfully updated status', res)
+      return res;
+    })
+}
+
+Game.updateToInProgress = function(gamehash) {
+  return pg('games').where({'game_hash': gamehash}).update({'game_status': 'in progress'})
+    .catch(function(error) {
+      console.error('error updating status', error)
+    })
+    .then(function(res){
+      console.log('successfully updated status', res)
+      return res;
+    })
+}
+
+Game.updateToCompleted = function(gamehash) {
+  return pg('games').where({'game_hash': gamehash}).update({'game_status': 'completed'})
+    .catch(function(error) {
+      console.error('error updating status', error)
+    })
+    .then(function(res){
+      console.log('successfully updated status', res)
+      return res;
+    })
 }
 
 /*

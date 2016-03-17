@@ -7,28 +7,28 @@ var seedFwib = function() {
       return pg('fwibs').insert([
         {
           fwib_content: 'This little piggy went to the',
-          game_id: 2,
-          user_id: 1
+          game_hash: '458d21',
+          username: 'Player1'
         },
         {
           fwib_content: 'dentist. After a painful tooth pull',
-          game_id: 2,
-          user_id: 2
+          game_hash: '458d21',
+          username: 'Player2'
         },
         {
           fwib_content: 'the piggy had a bowl of',
-          game_id: 2,
-          user_id: 1
+          game_hash: '458d21',
+          username: 'Player1'
         },
         {
           fwib_content: 'pain killers. It really hurt. So',
-          game_id: 2,
-          user_id: 2
+          game_hash: '458d21',
+          username: 'Player2'
         },
         {
           fwib_content: 'he slept a lot. The End',
-          game_id: 2,
-          user_id: 1
+          game_hash: '458d21',
+          username: 'Player1'
         },
       ])
     // })
