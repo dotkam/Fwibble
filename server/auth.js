@@ -11,7 +11,6 @@ var getToken = function(){
   return localStorage.fwibbleToken;
 };
 var requireAuth = function(nextState, replace){
-  console.log('logged in?', loggedIn(), localStorage.getItem('fwibbleToken'));
   if(!loggedIn()){
     replace({
       pathname: '/signin',

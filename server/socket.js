@@ -1,4 +1,8 @@
 // Keep track of which names are used so that there are no duplicates
+var Fwib = require('../app/actions/fwibs.js')
+var User = require('../app/actions/users.js')
+var Game = require('../app/actions/games.js')
+
 var userNames = (function () {
   var names = {};
 
@@ -51,10 +55,11 @@ var userNames = (function () {
 // export function for listening to the socket
 module.exports = function (socket) {
   var name;
+  
   socket.on('help', function(data){
     console.log('socket data', data.user)
     name = data.user;
-    userNames.claim(name);
+    userNames.claim(name); // Grab all users for room
 
     socket.emit('init', {
       name: data.user,
@@ -71,12 +76,29 @@ module.exports = function (socket) {
   // notify other clients that a new user has joined
 
   // broadcast a user's fwib to other users
+  // and store in DB
   socket.on('send:fwib', function (data) {
+    var fwib_content = data.text;
+    var gamehash;
+
     socket.broadcast.emit('send:fwib', {
       user: data.user,
       text: data.text
+    })
+    User.findActiveGame(data.user)
+      .then(function(res){
+        game_hash = res;
+        console.log('sendFwib got game_hash', game_hash)
+      })
+      .then(function(){
+        var fwibData = {
+          fwib_content: data.text,
+          game_hash: game_hash,
+          username: data.user
+        }
+        Fwib.create(fwibData)
+      })
     });
-  });
 
   // Passes in updated turn counter and broadcasts it to other users
   socket.on('change:turn', function(turn){
@@ -94,3 +116,4 @@ module.exports = function (socket) {
     });
   });
 };
+

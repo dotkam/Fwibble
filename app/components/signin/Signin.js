@@ -1,6 +1,6 @@
 var React = require('react');
 var Link = require('react-router').Link;
-var $ = require('../jquery.min.js');
+var $ = require('../../../jquery.min.js');
 var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
 var DefaultRoute = Router.DefaultRoute;  
@@ -44,7 +44,6 @@ module.exports = React.createClass({
       contentType: 'application/json',
       success: function(data) {
 
-        // data === whatever we respond with in user-api.js
         //        {
         //          userStatus: false,
         //          passStatus: false,

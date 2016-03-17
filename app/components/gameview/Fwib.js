@@ -7,7 +7,7 @@ module.exports = React.createClass({
 	render: function() {
 	  return (
 		<div className="fwib">
-		  <span>{this.props.text}</span>		
+		  <span>{this.props.text}</span>
 		</div>
 		);
 	}

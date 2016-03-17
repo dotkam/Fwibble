@@ -32,42 +32,15 @@ module.exports = React.createClass({
   render: function() {
     return(
       <div className='storyInput_form'>
-        <form onSubmit={this.handleSubmit}>
+        <form  className="form-inline" onSubmit={this.handleSubmit}>
           <input
+            className="form-control"
             placeholder="Enter 6 words"
             onChange={this.changeHandler}
-            value={this.state.text}
-          />
-          <button type="submit">Submit</button>
+            value={this.state.text}></input>
+          <button type="submit" className="btn btn-primary">Submit</button>
         </form>
       </div>
     );
   }
 });
-
-
-
-
-
-
-
-//  getInitialState: function(){
-//       return {
-//         currentText: 'blah'
-//       }
-//   },
-
-//  render: function() {
-//    return (
-//    <div class-name="storyInputDisplay">
-//      <form onSubmit={this.props.onClick}>
-//        <input className="newStoryInput" type="text" placeholder="Enter 6 words"></input>
-//        <button type="submit">Submit</button>
-//        <div>Hey {this.state.currentText}</div>
-//      </form>
-//      </div>
-//    )
-//  }
-// });
-
-//when submitted, create a new storySnippet(prop of master as well as a new snippet)

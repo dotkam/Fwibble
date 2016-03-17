@@ -74,12 +74,13 @@ module.exports = React.createClass({
 
   handleFwibSubmit: function(fwib) {
     var {fwibs, turn, users, user} = this.state;
-    if(user === users[turn]){;
+    if(user === users[turn]){
       fwibs.push(fwib);
       turn = this._changeTurn();
       this.setState({fwibs, turn});
       socket.emit('change:turn', turn);
       socket.emit('send:fwib', fwib);
+      // send fwib to database
     }
     else {
       console.log('It\'s ' + users[turn] + '\'s turn!');
@@ -94,19 +95,27 @@ module.exports = React.createClass({
     }
 		return (
 			<div>
-				<StoryTitle />
-        <StoryBox
-          fwibs={this.state.fwibs}
-        />
-        <StoryInput
-          onFwibSubmit={this.handleFwibSubmit}
-          user={this.state.user}
-        />
-				<UsersInRoom 
-				  users={this.state.users}
-				/>
+        <div className="container">
+          <div className="row">
+            <div className="col-md-9">
+      				<StoryTitle />
+            </div>
+          </div>
+          <div>
+            <div className="row">
+              <div className="col-md-9">
+                <StoryBox fwibs={this.state.fwibs} />
+              </div>
+              <div className="col-md-2">
+        				<UsersInRoom users={this.state.users} />
+              </div>
+            </div>
+          </div>
+          <div className="col-md-9">
+            <StoryInput onFwibSubmit={this.handleFwibSubmit} user={this.state.user} />
+          </div>
+        </div>
 			</div>
 		);
 	}
-
 });

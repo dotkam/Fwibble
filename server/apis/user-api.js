@@ -40,6 +40,7 @@ function signIn (req, res, err) {
   User.findIdByUsername(req.body.username)
   // catch unknown username
   .then(function(userId) {
+    console.log('user-api userId', userId)
     if (userId) {
       response.userStatus = true;
       response.activeUser = req.body.username;
