@@ -15,8 +15,8 @@ module.exports = React.createClass({
             <ul className="nav navbar-nav navbar-right">
               <li>
                 { this.props.loggedIn ?
-                  (<Link to='/signout' className='fa fa-user'>Sign Out</Link>)
-                  :(<Link to='/signin' className='fa fa-user'>Sign In</Link>)
+                  (<Link to='/signout'>Sign Out</Link>)
+                  :(<Link to='/signin'>Sign In</Link>)
                 }
               </li>
               <li><Link to={`/gameview/${this.props.active_game}`} className="menuOptions">Game</Link></li>
