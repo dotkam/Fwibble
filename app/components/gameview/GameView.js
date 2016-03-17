@@ -13,7 +13,7 @@ var socket = io.connect();
 module.exports = React.createClass({
 
   getInitialState: function() {
-    return {users: [], fwibs:[], text: '', turn: 0};
+    return {users: [], fwibs:[], text: '', turn: 0, myTurn: undefined};
   },
 
   componentDidMount: function() {
@@ -60,7 +60,13 @@ module.exports = React.createClass({
   },
 
   _setTurn: function(data){
-    this.setState({turn: data.turn});
+    var {turn, user, users, myTurn} = this.state;
+    turn = data.turn;
+    if (user === users[turn]) {
+      myTurn = true;
+    }
+    this.setState({turn, myTurn});
+    console.log("_setTurn just ran. myTurn: ", myTurn)
   },
 
   _changeTurn: function(){
@@ -73,11 +79,13 @@ module.exports = React.createClass({
   },
 
   handleFwibSubmit: function(fwib) {
-    var {fwibs, turn, users, user} = this.state;
+    var {fwibs, turn, users, user, myTurn} = this.state;
     if(user === users[turn]){
       fwibs.push(fwib);
       turn = this._changeTurn();
-      this.setState({fwibs, turn});
+      myTurn = false;
+      console.log('handleFwibSubmit just ran. myTurn: ', myTurn)
+      this.setState({fwibs, turn, myTurn});
       socket.emit('change:turn', turn);
       socket.emit('send:fwib', fwib);
       // send fwib to database
