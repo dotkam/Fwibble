@@ -13,7 +13,7 @@ var NavBar = require('../app/components/navbar/NavBar');
 var Signin = require('../app/components/signin/Signin');
 var Signup = require('../app/components/signup/Signup');
 var Signout = require('../app/components/signout/Signout');
-var Lobby = require('../app/components/signout/Signout');
+var Lobby = require('../app/components/lobby/Lobby');
 var Gameview = require('../app/components/gameview/GameView');
 var Auth = require('./auth');
 
@@ -34,7 +34,8 @@ var App = React.createClass({
       username: username,
       loggedIn: Auth.loggedIn()
     })
-    this.context.router.replace(`/gameview/${this.state.active_game}`)
+    this.context.router.replace(`/lobby`)
+    // this.context.router.replace(`/gameview/${this.state.active_game}`)
   },
   logoutUser: function(){
     Auth.logout(); // log out on /signout

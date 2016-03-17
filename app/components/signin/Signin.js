@@ -89,7 +89,7 @@ module.exports = React.createClass({
     var loginMessage = this.state.loginErr ? this.state.loginMsg : null;
 
     return (
-      <div>
+      <div className="container">
         <h2>Signin Page</h2>
         <div><Link to="/">Home</Link></div>
         <br />

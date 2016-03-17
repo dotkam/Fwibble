@@ -49,7 +49,7 @@ module.exports = React.createClass({
   render: function() {
 
     return (
-      <div>
+      <div className="container">
         <h2>Signup Page</h2>
         <div><Link to="/">Home</Link></div>
         <br />
