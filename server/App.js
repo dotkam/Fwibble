@@ -51,7 +51,8 @@ var App = React.createClass({
         />
         {this.props.children && React.cloneElement(this.props.children, {
           setUser: this.setUser,
-          user: this.state.username
+          user: this.state.username,
+          logoutUser: this.logoutUser 
         })}
       </div>
     )
