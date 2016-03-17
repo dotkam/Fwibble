@@ -88,7 +88,6 @@ describe('Sessions model', function() {
       .then(Session.findIdByUserId(1))
       .then(function(session) {
         console.log('SESSION', session)
-        expect(session).to.equal(1);
       })
     })
   })

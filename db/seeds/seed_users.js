@@ -6,10 +6,12 @@ var seedUser = function() {
       return pg('users').insert([
         {
           username: 'Player1',
+          password: 'password',
           active_game: '458d21'
         },
         {
           username: 'Player2',
+          password: 'drowssap',
           active_game: '458d21'
         }
       ])

@@ -38,9 +38,7 @@ const pg     = require('knex')(config[env]);
 
 module.exports = pg;
 
-
-// require('../db/seeds/seed_users.js');
-// require('../db/seeds/seed_games.js');
-// require('../db/seeds/seed_user_game.js');
+require('../db/seeds/seed_games.js');
+require('../db/seeds/seed_users.js');
 require('../db/seeds/seed_fwibs.js');
 
