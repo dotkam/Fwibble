@@ -35,7 +35,7 @@ function signIn (req, res, err) {
     activeUser: null,
     activeGame: null,
     errMessage: null
-  }, uid;
+  }, uid; // can we remove this a la line 47?
 
   User.findIdByUsername(req.body.username)
   // catch unknown username
@@ -44,7 +44,7 @@ function signIn (req, res, err) {
     if (userId) {
       response.userStatus = true;
       response.activeUser = req.body.username;
-      uid = userId
+      uid = userId // is this necessary?
     } else {
       response.errMessage = '' + req.body.username + ' not found. Please create an account.'
       throw err
@@ -53,11 +53,11 @@ function signIn (req, res, err) {
   })
   // if username is valid, ask model if password is good
   .then(function() {
-    return User.checkPassword(uid, req.body.password)
+    return User.checkPassword(req.body.username, req.body.password)
   })
   // if password is incorrect, respond and throw error
   .then(function(bool) {
-    // console.log('bool', bool)
+    console.log('bool', bool)
     if (!bool) {
       response.errMessage = 'Password incorrect. Please try again.'
       console.log('password incorrect: ',response.errMessage)
