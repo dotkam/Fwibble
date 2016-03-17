@@ -13,7 +13,7 @@ var socket = io.connect();
 module.exports = React.createClass({
 
   getInitialState: function() {
-    return {users: [], fwibs:[], text: '', turn: 0, myTurn: undefined};
+    return {users: [], fwibs:[], text: '', turn: 0, myTurn: false};
   },
 
   componentDidMount: function() {
@@ -37,14 +37,15 @@ module.exports = React.createClass({
   },
 
   _userJoined: function(data) {
-    var {users, fwibs, turn} = this.state;
+    var {user, users, fwibs, turn, myTurn} = this.state;
     var {name, users} = data;
     fwibs.push({
       user: 'APPLICATION BOT',
       text : name +' Joined'
     });
+    if (user===users[0]) { myTurn = true };
     console.log('user joined:', name)
-    this.setState({users, fwibs});
+    this.setState({users, fwibs, myTurn});
   },
 
   _userLeft: function(data) {
@@ -66,7 +67,6 @@ module.exports = React.createClass({
       myTurn = true;
     }
     this.setState({turn, myTurn});
-    console.log("_setTurn just ran. myTurn: ", myTurn)
   },
 
   _changeTurn: function(){
@@ -84,7 +84,6 @@ module.exports = React.createClass({
       fwibs.push(fwib);
       turn = this._changeTurn();
       myTurn = false;
-      console.log('handleFwibSubmit just ran. myTurn: ', myTurn)
       this.setState({fwibs, turn, myTurn});
       socket.emit('change:turn', turn);
       socket.emit('send:fwib', fwib);
@@ -101,6 +100,8 @@ module.exports = React.createClass({
       console.log('user render', user)
       socket.emit('help', {user: user});
     }
+    var inputForm = this.state.myTurn ? (<StoryInput onFwibSubmit={this.handleFwibSubmit} user={this.state.user} />) : null;
+
 		return (
 			<div>
         <div className="container">
@@ -120,7 +121,7 @@ module.exports = React.createClass({
             </div>
           </div>
           <div className="col-md-9">
-            <StoryInput onFwibSubmit={this.handleFwibSubmit} user={this.state.user} />
+            {inputForm}
           </div>
         </div>
 			</div>
