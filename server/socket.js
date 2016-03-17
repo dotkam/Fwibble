@@ -55,10 +55,11 @@ var userNames = (function () {
 // export function for listening to the socket
 module.exports = function (socket) {
   var name;
+  
   socket.on('help', function(data){
     console.log('socket data', data.user)
     name = data.user;
-    userNames.claim(name);
+    userNames.claim(name); // Grab all users for room
 
     socket.emit('init', {
       name: data.user,

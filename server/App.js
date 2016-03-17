@@ -23,18 +23,16 @@ var App = React.createClass({
 
   getInitialState: function() {
 
-    return {username: null, loggedIn: Auth.loggedIn()}
+    return {username: null, loggedIn: Auth.loggedIn(), active_game: '458d21'} // Ask Gilbert if this belongs in the state
   },
-
   setUser: function(username) {
-    console.log("App setUser called with", username);
-    console.log("logged in?", Auth.loggedIn())
+
     Auth.login();
     this.setState({
       username: username,
       loggedIn: Auth.loggedIn()
     })
-    this.context.router.replace('/gameview')
+    this.context.router.replace(`/gameview/${this.state.active_game}`)
   },
   logoutUser: function(){
     Auth.logout();
@@ -50,7 +48,7 @@ var App = React.createClass({
           <div className='navbar'>
             <h1>Fwibble</h1>
             <ul className='nav-links'>
-              <li><Link to='/gameview' className='fa fa-pencil'>Game</Link></li>
+              <li><Link to={`/gameview/${this.state.active_game}`} className='fa fa-pencil'>Game</Link></li>
               <li>
                 { this.state.loggedIn ?
                   (<Link to='/signout' className='fa fa-user'>Sign Out</Link>)
@@ -80,7 +78,7 @@ ReactDOM.render(
             <Route path='signin' component={Signin}/>
             <Route path='signup' component={Signup}/>
             <Route path='signout' component={Signout}/>
-            <Route path='gameview' component={Gameview} onEnter={Auth.requireAuth}/>
+            <Route path='gameview/:game_hash' component={Gameview} onEnter={Auth.requireAuth}/>
           </Route>
         </Router>
   ), document.getElementById('app')
