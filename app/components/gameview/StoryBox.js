@@ -27,7 +27,6 @@ module.exports = React.createClass({
   return (
     <div className='fwibs'>
       <div className='storyBoxStyling'>
-        <h2> Story: </h2>
         {
           this.props.fwibs.map((fwib, i) => {
           return (

@@ -22,6 +22,10 @@ module.exports = React.createClass({
       console.log('Lobby socket hears data:', data)
       this.setState({openGames: data.games})
   },
+  generateGameRoom: function(){
+    console.log('Im clicked and it tickles');
+    // socket.emit('create:game_room', {});
+  },
   render: function() {
     socket.emit('lobby:games',this.state.openGames); // TODO fix me, I don't want to be in render
     return (
@@ -33,7 +37,7 @@ module.exports = React.createClass({
             </div>
           </div>
           <div className="col-md-8 col-offset-2">
-            <button type="button" className="btn btn-primary btn-lg btn-block">New Fwibble</button>
+            <Link to='#' className="btn btn-primary btn-lg btn-block" onClick={this.generateGameRoom}>New Fwibble</Link>
           </div>
           <br />
           <br />

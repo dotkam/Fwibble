@@ -41,11 +41,7 @@ module.exports = React.createClass({
   _userJoined: function(data) {
     var {user, users, fwibs, turn} = this.state;
     var {name, users} = data;
-    fwibs.push({
-      user: 'APPLICATION BOT',
-      text : name +' Joined'
-    });
-    console.log('user joined:', name)
+
     this.setState({users, fwibs});
     
     // TODO: put this logic in GO button function instead!
@@ -59,10 +55,7 @@ module.exports = React.createClass({
     var {name} = data;
     var index = users.indexOf(name);
     users.splice(index, 1);
-    fwibs.push({
-      user: 'APPLICATION BOT',
-      text : name +' Left'
-    });
+
     this.setState({users, fwibs});
   },
 
@@ -101,12 +94,12 @@ module.exports = React.createClass({
 
 
 	render: function() {
-    if(this.state.user === undefined){
+    if(this.state.users === undefined){ // change to find user in users array
       var {user} = this.props;
       console.log('user render', user)
       socket.emit('help', {user: user});
     }
-    var inputForm = this.state.myTurn ? (<StoryInput onFwibSubmit={this.handleFwibSubmit} user={this.state.user} />) : null;
+    var inputForm = this.state.users[this.state.turn] === this.props.user ? (<StoryInput onFwibSubmit={this.handleFwibSubmit} user={this.state.user} />) : null;
 
     var wordMeter = this.state.myTurn ? (<WordCountMeter onFwibSubmit={this.handleFwibSubmit} user={this.state.user} />) : null;
 
