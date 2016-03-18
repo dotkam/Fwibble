@@ -16,7 +16,6 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function(){
-    // TODO socket emit to find open games
     socket.on('update:games:joinable', this.updateOpenGames)
   },
   updateOpenGames: function(data){
