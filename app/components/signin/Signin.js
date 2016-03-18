@@ -70,11 +70,10 @@ module.exports = React.createClass({
         // Or set active user and route to game
         } else {
           this.setState({loginErr: false})
-          this.props.setUser(data.activeUser)
-          // TODO: route to game page
+          this.props.setUser({username: data.activeUser, active_game: data.activeGame}) // was data.activeUser
         }
 
-        console.log('props.user:',this.props.user)
+        console.log('props:',this.props)
 
 
       }.bind(this),

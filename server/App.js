@@ -17,7 +17,6 @@ var Lobby = require('../app/components/lobby/Lobby');
 var Gameview = require('../app/components/gameview/GameView');
 var Auth = require('./auth');
 
-
 var App = React.createClass({
   contextTypes: {
     router: React.PropTypes.object.isRequired
@@ -25,23 +24,45 @@ var App = React.createClass({
 
   getInitialState: function() {
 
-    return {username: null, loggedIn: Auth.loggedIn(), active_game: '458d21'} // Ask Gilbert if this belongs in the state
+    return {username: null, loggedIn: Auth.loggedIn(), active_game: null}
   },
-  setUser: function(username) {
+  setUser: function(data) {
 
     Auth.login();
+    console.log('App data', data)
     this.setState({
-      username: username,
-      loggedIn: Auth.loggedIn()
-    })
+      username: data.username,
+      loggedIn: Auth.loggedIn(),
+      active_game: data.active_game
+    });
+    // $.ajax({
+    //   type: 'POST',
+    //   url: '/user/game', //game
+    //   data: { username: username },
+    //   contentType: 'application/json',
+    //   success: function(data) {
+    //     // TODO update state based off of active_game response
+    //   },
+    //   error: function(data) {
+    //     console.error("Connection error:", data)
+    //   }
+    // });
+
     this.context.router.replace(`/lobby`)
     // this.context.router.replace(`/gameview/${this.state.active_game}`)
   },
+  getActiveGame: function(data){
+    Auth.login();
+    this.setState({
+      active_game: data.active_game
+    })
+  },
   logoutUser: function(){
-    Auth.logout(); // log out on /signout
+    Auth.logout();
     this.setState({
       username: null,
-      loggedIn: Auth.loggedIn()
+      loggedIn: Auth.loggedIn(),
+      active_game: null
     })
   },
   render: function() {

@@ -25,7 +25,7 @@ UserAPI.post('/signup', function(req, res) {
       return User.create([{
         username: req.body.username,
         password: req.body.password,
-        active_game: '458d21'
+        active_game: ''
       }])      
     }
   })
@@ -40,7 +40,8 @@ UserAPI.post('/signup', function(req, res) {
 
 
 function signIn (req, res, err) {
-
+  var username = req.body.username;
+  var password = req.body.password;
   var response = {
     userStatus: false,
     passStatus: false,
@@ -49,23 +50,23 @@ function signIn (req, res, err) {
     errMessage: null
   }, uid; // can we remove this a la line 47?
 
-  User.findIdByUsername(req.body.username)
+  User.findIdByUsername(username)
   // catch unknown username
   .then(function(userId) {
     console.log('user-api userId', userId)
     if (userId) {
       response.userStatus = true;
-      response.activeUser = req.body.username;
+      response.activeUser = username;
       uid = userId // is this necessary?
     } else {
-      response.errMessage = '' + req.body.username + ' not found. Please create an account.'
+      response.errMessage = '' + username + ' not found. Please create an account.'
       throw err
     }
     return
   })
   // if username is valid, ask model if password is good
   .then(function() {
-    return User.checkPassword(req.body.username, req.body.password)
+    return User.checkPassword(username, password)
   })
   // if password is incorrect, respond and throw error
   .then(function(bool) {
@@ -77,18 +78,18 @@ function signIn (req, res, err) {
     // otherwise, find active game
     } else {
       response.passStatus = true;
-      response.activeUser = req.body.username;
-      return User.findActiveGame(uid)
+      response.activeUser = username;
+      return User.findActiveGame(username)
     }
   })
   // translate GameHash to GameId
-  .then(function(array) {
-    return Game.findIdByHash(array[0].active_game)
-  })
+  // .then(function(array) {
+  //   return Game.findIdByHash(array[0].active_game)
+  // })
   // and send relevant response
   .then(function(array) {
-    response.activeGame = array[0].game_id;
-
+    response.activeGame = array//[0].game_id;
+    console.log('preload response', response)
     res.send(response)
   })
   // catch-all for thrown errors
