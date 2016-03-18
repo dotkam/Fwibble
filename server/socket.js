@@ -59,7 +59,7 @@ module.exports = function (socket) {
   socket.on('help', function(data){
     console.log('socket data', data.user)
     name = data.user;
-    userNames.claim(name); // Grab all users for room
+    userNames.claim(name); // Grab all users for room // Good lord please deprecate this
 
     socket.emit('init', {
       name: data.user,
@@ -99,7 +99,22 @@ module.exports = function (socket) {
         Fwib.create(fwibData)
       })
     });
-
+  // Broadcasts all open games to users
+  socket.on('lobby:games', function(){
+    var client = this;
+    console.log('got lobbyGames')
+    Game.allJoinable()
+      .then(function(res){
+        console.log('typeof All Joinable res:',  res instanceof Array)
+        socket.broadcast.emit('update:games:joinable', {
+          games: res
+        });
+        // quit talking to yourself
+        // client.emit('update:games:joinable', {
+        //   games: res
+        // });
+      })
+  })
   // Passes in updated turn counter and broadcasts it to other users
   socket.on('change:turn', function(turn){
     socket.broadcast.emit('update:turn', {

@@ -92,7 +92,6 @@ module.exports = React.createClass({
       this.setState({fwibs, turn, myTurn});
       socket.emit('change:turn', turn);
       socket.emit('send:fwib', fwib);
-      // send fwib to database // this happens on socket send:fwib
     }
     else {
       console.log('It\'s ' + users[turn] + '\'s turn!');

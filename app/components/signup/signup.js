@@ -22,7 +22,6 @@ module.exports = React.createClass({
 
   handleClick: function (e) {
     e.preventDefault()
-    console.log("username:", this.state.username, "\npassword:", this.state.password)
     
     var postData = JSON.stringify({
       "username": this.state.username,
@@ -42,8 +41,9 @@ module.exports = React.createClass({
           this.setState({loginError: (<div className="alert alert-danger"><strong>{data.error}</strong></div>)})
         } else {
           this.setState({loginError: (<div className="alert alert-success"><strong>Login Successful</strong></div>)})
-          var setUserClosure = this.props.setUser;
-          setTimeout(function(){setUserClosure(data.activeUser)}, 1000);
+          // var setUserClosure = this.props.setUser;
+          this.props.setUser({username: data.activeUser, active_game: data.activeGame});
+          // setTimeout(function(){setUserClosure(data.activeUser)}, 1000);
         }
       }.bind(this),
       error: function(data) {
