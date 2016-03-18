@@ -1,5 +1,6 @@
 var pg = require('../../db/db_setup');
 var sha1 = require('sha1');
+var Fwib = ('../fwibs');
 
 var Game = module.exports;
 
@@ -25,11 +26,13 @@ Game.generateHash = function(gameId) {
 /*
   create new game
   attrs: 
-    room_title: TBD
+    game_title: Fwib.starterFwib
+    game_creator: username
 */
 
 Game.create = function(attrs) {
-  return pg('games').insert(attrs, ['game_id', 'game_hash', 'game_title'])
+  attrs.game_title = Fwib.starterFwib();
+  return pg('games').insert(attrs, ['game_id', 'game_hash', 'game_title', 'turn_index', 'game_status', 'game_creator'])
     .catch(function(error) {
       console.error('error inserting game into db', error)
     })

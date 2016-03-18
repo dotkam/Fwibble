@@ -13,7 +13,8 @@ CREATE TABLE IF NOT EXISTS games (
   game_hash varchar UNIQUE,
   game_title varchar,
   turn_index INTEGER DEFAULT 0,
-  game_status varchar DEFAULT 'open'
+  game_status varchar DEFAULT 'open',
+  game_creator varchar REFERENCES users (username)
 );
 
 CREATE TABLE IF NOT EXISTS fwibs (
