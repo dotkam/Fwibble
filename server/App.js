@@ -31,11 +31,30 @@ var App = React.createClass({
 
     Auth.login();
     this.setState({
-      username: username,
-      loggedIn: Auth.loggedIn()
-    })
-    this.context.router.replace(`/lobby`)
-    // this.context.router.replace(`/gameview/${this.state.active_game}`)
+
+      username: data.username,
+      loggedIn: Auth.loggedIn(),
+      active_game: data.active_game
+    });
+    // $.ajax({
+    //   type: 'POST',
+    //   url: '/user/game', //game
+    //   data: { username: username },
+    //   contentType: 'application/json',
+    //   success: function(data) {
+    //     // TODO update state based off of active_game response
+    //   },
+    //   error: function(data) {
+    //     console.error("Connection error:", data)
+    //   }
+    // });
+    
+    if(this.state.active_game){
+      this.context.router.replace(`/gameview/${this.state.active_game}`)
+    }
+    else {
+      this.context.router.replace(`/lobby`)
+    }
   },
   logoutUser: function(){
     Auth.logout(); // log out on /signout
