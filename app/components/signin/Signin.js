@@ -104,12 +104,7 @@ module.exports = React.createClass({
           		      </form>
                     <p>{loginMessage}</p>
                     <div className="row">
-                      <div className="col-md-9">
-                        <p>Don't have an account yet?</p>
-                      </div>
-                      <div className="col-md-3">
-                        <a href="/signup">Sign up!</a>
-                      </div>
+                        <a href="/signup">Don't have an account yet? Sign up!</a>
           		      </div>
                   </div>    
               </div>
