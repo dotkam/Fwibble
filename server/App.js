@@ -28,7 +28,7 @@ var App = React.createClass({
   },
   setUser: function(data) {
 
-    Auth.login();
+    Auth.login(data.username);
     console.log('App data', data)
     this.setState({
       username: data.username,

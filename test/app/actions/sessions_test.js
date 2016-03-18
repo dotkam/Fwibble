@@ -16,13 +16,13 @@ describe('Sessions model', function() {
         .then(function() {
           return pg('users').insert([
             {
-              user_id: 1,
               username: 'Player1',
+              password: 'password',
               active_game: 22,
             },
             {
-              user_id: 2,
               username: 'Player2',
+              password: 'drowssap',
               active_game: 22,
             }
           ])
@@ -31,12 +31,12 @@ describe('Sessions model', function() {
           return pg('sessions').insert([
             {
               session_id: 33,
-              user_id: 1,
+              username: 'Player1',
               token: 'thisisntarealtoken'
             },
             {
               session_id: 37,
-              user_id: 2,
+              username: 'Player2',
               token: 'dontworryaboutititsallfine'
             }
           ])
@@ -46,7 +46,7 @@ describe('Sessions model', function() {
     it_('should create a session and token', function * () {
 
       let newSession = {
-        user_id: 1
+        username: 'Player1'
       }
        
       yield Session.create(newSession)
@@ -54,11 +54,11 @@ describe('Sessions model', function() {
           console.log('error inserting session', error);
         })
         .then(function(session) {
-          console.log(session);
-          expect(session.user_id).to.equal(1);
+          console.log('session created successfully', session);
+          expect(session.username).to.equal('Player1');
         })
       
-      Session.findTokenByUserId(1)
+      Session.findTokenByUsername('Player1')
         .catch(function(error) {
           console.log('error locating token', error);
         })
@@ -68,9 +68,9 @@ describe('Sessions model', function() {
         })
     })
 
-    it_('should find a session with user id', function * () {
+    it_('should find a session with username', function * () {
 
-      yield Session.findIdByUserId(2)
+      yield Session.findIdByUsername('Player2')
         .catch(function(error) {
           console.log('error retrieving session', error);
         })
@@ -81,11 +81,11 @@ describe('Sessions model', function() {
 
     it_('should delete a session', function * () {
 
-    yield Session.delete(33)
+    yield Session.deleteByUsername('Player1')
       .catch(function(error) {
         console.log('error retrieving session', error);
       })
-      .then(Session.findIdByUserId(1))
+      .then(Session.findIdByUsername('Player1'))
       .then(function(session) {
         console.log('SESSION', session)
       })
