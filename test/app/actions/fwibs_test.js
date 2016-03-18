@@ -80,25 +80,6 @@ describe('Fwibs model', function() {
         })
     })
 
-    it_('should insert a random fwib when prompted', function * () {
-
-      let newFwib = {
-        fwib_content: Fwib.starterFwib(),
-        game_hash: 'abc123',
-        username: 'Player1'
-      }
-
-      yield Fwib.create(newFwib)
-        .catch(function(error) {
-          console.error('error in inserting fwib', error);
-        })
-        .then(function(fwibs) {
-          expect(fwibs.fwib_content).to.exist;
-          expect(fwibs.game_hash).to.equal('abc123');
-          expect(fwibs.username).to.equal('Player1');
-        })      
-    })
-
     it_('should list all fwibs of a user', function * () {
 
       yield Fwib.allOfUser('abc123', 'Player1')

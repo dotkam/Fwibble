@@ -2,6 +2,7 @@
 require('../../test-helper.js') // <--- This must be at the top of every test file.
 
 const Game = require(__app + '/actions/games');
+const Fwib = require(__app + '/actions/fwibs');
 const pg      = require('../../../db/db_setup');
 const dbCleaner = require('knex-cleaner');
 
@@ -12,25 +13,6 @@ describe('Games model', function() {
       return dbCleaner.clean(pg, {mode: 'truncate'})
         .catch(function(error) {
           console.error('error inserting text', error)
-        })
-		.then(function() {
-          return pg('games').insert([
-            {
-              game_hash: 'abc123',
-              game_title: 'test',
-              game_status: 'open'
-            },
-            {
-              game_hash: 'ghi789',
-              game_title: 'yes, i am dog',
-              game_status: 'in progress'
-            },
-            {
-              game_hash: 'jkl000',
-              game_title: 'neuroplasticity lasts forever',
-              game_status: 'open'
-            }
-          ])
         })
         .then(function() {
           return pg('users').insert([
@@ -51,6 +33,28 @@ describe('Games model', function() {
             }
           ])
         })
+		    .then(function() {
+          return pg('games').insert([
+            {
+              game_hash: 'abc123',
+              game_title: 'test',
+              game_status: 'open',
+              game_creator: 'Player1'
+            },
+            {
+              game_hash: 'ghi789',
+              game_title: 'yes, i am dog',
+              game_status: 'in progress',
+              game_status: 'Player2'
+            },
+            {
+              game_hash: 'jkl000',
+              game_title: 'neuroplasticity lasts forever',
+              game_status: 'open',
+              game_creator: 'Player3'
+            }
+          ])
+        })
         .then(function(){
           return pg('fwibs').insert([
             {
@@ -63,10 +67,10 @@ describe('Games model', function() {
         })
 	})
   
-    it_('should create a new game and provide a hash', function * () {
+    it_('should create a new game and provide a title', function * () {
 
     let newGame = {
-      game_title: 'Neuroplasticity lasts forever'
+      game_creator: 'Player1'
     }
       
     yield Game.create(newGame)
@@ -74,7 +78,8 @@ describe('Games model', function() {
         console.error('error inserting game', error);
       })
       .then(function(game) {
-        expect(game.game_title).to.equal('Neuroplasticity lasts forever');
+        expect(game.game_creator).to.equal('Player1');
+        expect(game.game_title).to.exist;
       })
     })
 
@@ -129,9 +134,9 @@ describe('Games model', function() {
            console.error('error retrieving games', error);
          })
          .then(function(games) {
-           expect(games).to.have.length(2);
-           expect(games[1].game_hash).to.equal('abc123');
-           expect(games[1].game_title).to.equal('test');
+           expect(games).to.have.length(1);
+           expect(games[0].game_hash).to.equal('abc123');
+           expect(games[0].game_title).to.equal('test');
         })
       })
     })

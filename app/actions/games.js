@@ -1,6 +1,5 @@
 var pg = require('../../db/db_setup');
 var sha1 = require('sha1');
-var Fwib = ('../fwibs');
 
 var Game = module.exports;
 
@@ -22,6 +21,33 @@ Game.generateHash = function(gameId) {
       return res;
     })  
 }
+/*
+  fwibble title creator
+
+  when the function runs, first run a random number to determine the starter sentence
+  then when the starter sentence is chosen, the random generator in each will run and populate the words
+  then will start a fwib in db 
+
+*/
+
+Game.titleGenerator = function() {
+  var noun = ['cat', 'dog', 'elephant', 'child', 'dragon', 'witch', 'king', 'queen', 'flower', 'bird', 'kobold', 'gnome', 'elf', 'wizard', 'chess master', 'actor', 'teacher', 'artist', 'bus driver', 'golfer'];
+  var ptverb = ['ran', 'climbed', 'looked', 'exclaimed', 'jumped', 'flew', 'dug', 'fell', 'shouted', 'gave', 'rang', 'wrote', 'babysat', 'sat', 'napped', 'caught'];
+  var preposition = ['into', 'around', 'in', 'after', 'out of', 'beyond', 'down', 'from', 'through', 'up', 'over', 'off', 'onto', 'by'];
+  var adjective = ['purple', 'large', 'tiny', 'yellow', 'magnificent', 'calm', 'jolly', 'talented', 'witty', 'generous'];
+  var properNoun = ['Mr. Belvedere', 'President Obama', 'Jiggypuff', 'Spiderman', 'Captain Kirk', 'Aragorn', 'Oprah', 'Magneto', 'Big Bird', 'Kanye West', 'Vladimir Putin', 'Guy Fieri', 'Simon Cowell', 'David Bowie', 'Gloria Steinem', 'The Artist Formerly Known as and Currently Goes by Prince', 'Hulk Hogan', 'The Entire Cast of Cheers'];
+  var pluralNoun = ['cats', 'dogs', 'elephants', 'children', 'dragons', 'witches', 'kings', 'queens', 'flowers', 'birds', 'kobolds', 'gnomes', 'elves', 'wizards', 'chess masters', 'actors', 'teachers', 'artists', 'bus drivers', 'golfers'];
+
+  var randomer = function(array) {
+    return array[Math.floor(Math.random() * array.length)];
+  } 
+  var fwib = ['The ' + randomer(noun) + ' ' + randomer(ptverb) + ' ' + randomer(preposition) + ' the ' + randomer(noun), randomer(properNoun) + ' and the ' + randomer(adjective) + ' ' + randomer(pluralNoun) + ' ' + randomer(ptverb)];
+
+  var starter = randomer(fwib);
+  console.log(starter);
+
+  return starter;
+}
 
 /*
   create new game
@@ -31,7 +57,7 @@ Game.generateHash = function(gameId) {
 */
 
 Game.create = function(attrs) {
-  attrs.game_title = Fwib.starterFwib();
+  attrs.game_title = Game.titleGenerator();
   return pg('games').insert(attrs, ['game_id', 'game_hash', 'game_title', 'turn_index', 'game_status', 'game_creator'])
     .catch(function(error) {
       console.error('error inserting game into db', error)
