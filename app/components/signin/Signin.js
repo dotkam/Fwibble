@@ -30,7 +30,7 @@ module.exports = React.createClass({
   handleClick: function (e) {
     e.preventDefault()
     // console.log("username:", this.state.username, "\npassword:", this.state.password)
-    
+    console.log('userTrim', this.state.username === this.state.username.trim())
     var postData = JSON.stringify({
       "username": this.state.username,
       "password": this.state.password

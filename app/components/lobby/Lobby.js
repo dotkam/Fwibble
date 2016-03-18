@@ -16,11 +16,16 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function(){
-
+    // TODO socket emit to find open games
+    socket.on('update:games:joinable', this.updateOpenGames)
   },
-
-	render: function() {
-		return (
+  updateOpenGames: function(data){
+      console.log('Lobby socket hears data:', data)
+      this.setState({openGames: data.games})
+  },
+  render: function() {
+    socket.emit('lobby:games',this.state.openGames); // TODO fix me, I don't want to be in render
+    return (
 			<div>
         <div className="container">
           <div className="row">
