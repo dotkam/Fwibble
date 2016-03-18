@@ -1,12 +1,10 @@
 .navbar {
-  text-transform: uppercase;
   font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
   font-weight: 700;
 }
 
 .navbar-brand {
-  text-transform: uppercase;
-  font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: 'Pacifico', cursive;
   font-weight: 700; 
   font-size: 200%;
 }
@@ -20,6 +18,11 @@
   color: #00B343;
 }
 
+.display-3 {
+  font-family: 'Pacifico', cursive;
+  font-weight: 700;
+  color: #E40081;
+}
 
 
 

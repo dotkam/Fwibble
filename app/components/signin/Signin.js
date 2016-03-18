@@ -89,20 +89,33 @@ module.exports = React.createClass({
 
     return (
       <div className="container">
-        <h2>Signin Page</h2>
-        <div><Link to="/">Home</Link></div>
-        <br />
-        <div className="signInForm">
-	        <form onSubmit={this.trySignIn}>
-		        <input type="text" placeholder="username" value={this.state.username} onChange={this.handleUsername} />
-		        <br/>
-		        <input type="password" placeholder="password" value={this.state.password} onChange={this.handlePassword} />
-		        <br/>
-		        <input type="submit" name="signInSubmit" onClick={this.handleClick} /> 
-		      </form>
-          <p>{loginMessage}</p>
-          <div><Link to="/signup">Don't have an account yet? Sign up!</Link></div>
-		    </div>
+      <div className="text-center">
+        <div className="row">
+          <div className="col-md-6 col-md-offset-3">
+              <div className="jumbotron">
+                <h1 className="display-3">Fwibble</h1>
+                  <div className="signInForm">
+          	        <form onSubmit={this.trySignIn}>
+          		        <input type="text" placeholder="username" value={this.state.username} onChange={this.handleUsername} />
+          		        <br/>
+          		        <input type="password" placeholder="password" value={this.state.password} onChange={this.handlePassword} />
+          		        <br/>
+          		        <input type="submit" className="btn btn-success" name="signInSubmit" onClick={this.handleClick} /> 
+          		      </form>
+                    <p>{loginMessage}</p>
+                    <div className="row">
+                      <div className="col-md-9">
+                        <p>Don't have an account yet?</p>
+                      </div>
+                      <div className="col-md-3">
+                        <a href="/signup">Sign up!</a>
+                      </div>
+          		      </div>
+                  </div>    
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }
