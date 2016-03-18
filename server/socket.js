@@ -100,19 +100,20 @@ module.exports = function (socket) {
       })
     });
   // Broadcasts all open games to users
-  socket.on('lobby:games', function(){
+  socket.on('lobby:games', function(games){
     var client = this;
     console.log('got lobbyGames')
     Game.allJoinable()
       .then(function(res){
-        console.log('typeof All Joinable res:',  res instanceof Array)
         socket.broadcast.emit('update:games:joinable', {
           games: res
         });
         // quit talking to yourself
-        // client.emit('update:games:joinable', {
-        //   games: res
-        // });
+        if(res.length !== games.length){        
+          client.emit('update:games:joinable', {
+            games: res
+          });
+        }
       })
   })
   // Passes in updated turn counter and broadcasts it to other users

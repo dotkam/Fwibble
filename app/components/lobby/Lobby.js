@@ -24,7 +24,7 @@ module.exports = React.createClass({
       this.setState({openGames: data.games})
   },
   render: function() {
-    socket.emit('lobby:games',function(){}); // TODO fix me, I don't want to be in render
+    socket.emit('lobby:games',this.state.openGames); // TODO fix me, I don't want to be in render
     return (
 			<div>
         <div className="container">
