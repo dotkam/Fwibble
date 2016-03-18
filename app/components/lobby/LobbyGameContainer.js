@@ -10,11 +10,18 @@ module.exports = React.createClass({
     return (
       <div className="row">
         <ul className="list-unstyled">
-          <li><button type="button" className="btn btn-primary btn-lg btn-block">The Pumpkin that Ate the World and Then Was Very Lonely</button></li>
-          <br />
-          <li><button type="button" className="btn btn-primary btn-lg btn-block">The Day Batman Finally Just Had a Nice, Long Cry</button></li>
-          <br />
-          <li><button type="button" className="btn btn-primary btn-lg btn-block">Giggles the Clown Goes to Paris</button></li>
+            {
+            this.props.openGames.map((openGame, i) => {
+              return (
+                <div key={i}>
+                  <li>
+                    <Link to={`/gameview/${openGame.game_hash}`} className="btn btn-primary btn-lg btn-block">{openGame.game_title}</Link>
+                  </li>
+                  <br/>
+                </div>
+              );
+            })
+          }
         </ul>
       </div>
     );
@@ -25,7 +32,7 @@ module.exports = React.createClass({
             this.props.openGames.map((openGame, i) => {
               return (
                 <li key={i}>
-                  {openGame}
+                  <button type="button" className="btn btn-primary btn-lg btn-block">{openGame.game_title}</button>{openGame}
                 </li>
               );
             })
