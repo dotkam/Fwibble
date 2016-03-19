@@ -86,9 +86,6 @@ Session.userInnerJoin = function(username) {
 
 Session.tokenInnerJoin = function(token) {
   return pg('sessions').join('users', 'users.username', 'sessions.username').where('sessions.token', '=', token).select('sessions.username', 'users.active_game')
-    .catch(function(error) {
-      console.error('error retrieving join table', error)
-    })
     .then(function(res){
       console.log('successfully retrieved join table', res)
       return res[0];
