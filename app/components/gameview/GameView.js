@@ -116,7 +116,7 @@ module.exports = React.createClass({
           </div>
           <div>
             <div className="row">
-              <div className="col-md-8">
+              <div className="col-md-9">
                 <StoryBox fwibs={this.state.fwibs} />
                 <br />
                 {inputForm}
