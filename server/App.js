@@ -93,8 +93,8 @@ ReactDOM.render(
             <Route path='signin' component={Signin} />
             <Route path='signup' component={Signup} />
             <Route path='signout' component={Signout} />
-            <Route path='lobby' component={Lobby} onEnter={Auth.requireAuth}/>
-            <Route path='gameview/:game_hash' component={Gameview} onEnter={Auth.requireAuth}/>
+            <Route path='lobby' component={Lobby} onEnter={Auth.requireAuth} />
+            <Route path='gameview/:game_hash' component={Gameview} onEnter={Auth.requireAuth} />
           </Route>
         </Router>
   ), document.getElementById('app')

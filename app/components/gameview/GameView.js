@@ -27,8 +27,9 @@ module.exports = React.createClass({
   },
 
   _initialize: function(data) {
-    var {users, name} = data;
-    this.setState({users, user: name});
+    var {users, user} = data;
+    console.log('setting state INIT', users, user)
+    this.setState({users, user});
   },
 
   _fwibReceive: function(fwib) {
@@ -39,6 +40,7 @@ module.exports = React.createClass({
   },
 
   _userJoined: function(data) {
+    // Should just need to grab all data for this user - only broadcast 
     var {user, users, fwibs, turn} = this.state;
     var {name, users} = data;
 
@@ -50,7 +52,7 @@ module.exports = React.createClass({
     this.setState({myTurn});
   },
 
-  _userLeft: function(data) {
+  _userLeft: function(data) { // TODO: need Leave Room button
     var {users, fwibs} = this.state;
     var {name} = data;
     var index = users.indexOf(name);
@@ -79,7 +81,7 @@ module.exports = React.createClass({
 
   handleFwibSubmit: function(fwib) {
     var {fwibs, turn, users, user, myTurn} = this.state;
-    if(user === users[turn]){
+    if(user === users[turn]){ // This logic isn't necessary anymore
       fwibs.push(fwib);
       turn = this._changeTurn();
       myTurn = false;
@@ -94,16 +96,16 @@ module.exports = React.createClass({
 
 
   render: function() {
-    if(this.state.users === undefined){ // change to find user in users array
+    // Fetch all info for this gameroom this.params.url
+    if(this.state.user === undefined){ // change to find user in users array - Maybe not?
       var {user} = this.props;
-      console.log('user render', user)
-      socket.emit('help', {user: user});
+      var {users} = this.state;
+      console.log('user', user)
+      socket.emit('gameview:enter', {user: user, users: users, game_hash: this.props.params.game_hash});
     }
-    var inputForm = this.state.users[this.state.turn] === this.props.user ? (<StoryInput onFwibSubmit={this.handleFwibSubmit} user={this.state.user} />) : null;
-
+    var inputForm = this.state.myTurn ? (<StoryInput onFwibSubmit={this.handleFwibSubmit} user={this.state.user} />) : null;
     var wordMeter = this.state.myTurn ? (<WordCountMeter onFwibSubmit={this.handleFwibSubmit} user={this.state.user} />) : null;
-
-
+    // AJK
     return (
       <div>
         <div className="container">
@@ -122,9 +124,6 @@ module.exports = React.createClass({
                 {wordMeter}
               </div>
               <div className="col-md-2 col-md-offset-1">
-=======
-              <div className="col-md-2">
->>>>>>> committing for new word meter rebase
                 <UsersInRoom users={this.state.users} />
               </div>
             </div>

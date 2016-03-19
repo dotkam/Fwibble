@@ -75,7 +75,7 @@ Game.create = function(attrs) {
   Find all users in a game (where game is in progress)
 */
 Game.allUser = function(gamehash) {
-  return pg.select('username').from('games').where({'game_hash': gamehash})
+  return pg.select('username').from('users').where({'active_game': gamehash})
     .catch(function(error) {
       console.error('error retrieving users', error)
     })

@@ -57,20 +57,26 @@ var userNames = (function () {
 module.exports = function (socket) {
   var name;
   
-  socket.on('help', function(data){
-    console.log('socket data', data.user)
-    name = data.user;
-    userNames.claim(name); // Grab all users for room // Good lord please deprecate this
-
-    socket.emit('init', {
-      name: data.user,
-      users: userNames.get()
-    });
-    socket.broadcast.emit('user:join', {
-      name: data.user,
-      users: userNames.get()
-    });
-
+  socket.on('gameview:enter', function(data){ // Validate that user belongs in room
+    console.log('socket data', data.users)
+    // name = data.user; // May not need this
+    // userNames.claim(name); // Grab all users for room // Good lord please deprecate this
+    var client = this;
+    Game.allUser(data.game_hash)
+      .then(function(res){
+        console.log('res', res);
+        if( data.users.length !== res.length){
+          console.log('ALL USERS', res)
+          socket.emit('init', {
+            user: data.user,
+            users: res.users // userNames.get()
+          });
+          socket.broadcast.emit('user:join', {
+            name: data.user,
+            users: res.users // userNames.get()
+          });
+        };
+      })
   })
   // send the new user their name and a list of users
 
@@ -105,12 +111,11 @@ module.exports = function (socket) {
     var client = this;
     Game.allJoinable()
       .then(function(res){
-        // quit talking to yourself
         if(res.length !== games.length){
           client.emit('update:games:joinable', {
             games: res
           });
-          socket.broadcast.emit('update:games:joinable', {
+          socket.broadcast.emit('update:games:joinable', { // This may be unnecessary
             games: res
           });
         }
