@@ -28,6 +28,7 @@ module.exports = React.createClass({
 
   _initialize: function(data) {
     var {users, user} = data;
+    users = users.map((u) => u.username)
     console.log('setting state INIT', users, user)
     this.setState({users, user});
   },

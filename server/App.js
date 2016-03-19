@@ -25,7 +25,7 @@ var App = React.createClass({
 
   getInitialState: function() {
 
-    return {username: null, loggedIn: Auth.loggedIn(), active_game: '458d21'} // Ask Gilbert if this belongs in the state
+    return {username: null, loggedIn: Auth.loggedIn(), active_game: null} // Ask Gilbert if this belongs in the state
   },
 
   componentDidMount: function(){
@@ -65,7 +65,8 @@ var App = React.createClass({
     Auth.logout(); // log out on /signout
     this.setState({
       username: null,
-      loggedIn: Auth.loggedIn()
+      loggedIn: Auth.loggedIn(),
+      active_game: null
     })
   },
   render: function() {
