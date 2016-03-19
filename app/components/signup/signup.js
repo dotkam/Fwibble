@@ -41,9 +41,9 @@ module.exports = React.createClass({
           this.setState({loginError: (<div className="alert alert-danger"><strong>{data.error}</strong></div>)})
         } else {
           this.setState({loginError: (<div className="alert alert-success"><strong>Login Successful</strong></div>)})
-          // var setUserClosure = this.props.setUser;
-          this.props.setUser({username: data.activeUser, active_game: data.activeGame});
-          // setTimeout(function(){setUserClosure(data.activeUser)}, 1000);
+          var setUserClosure = this.props.setUser;
+          // this.props.setUser({username: data.activeUser, active_game: data.activeGame});
+          setTimeout(function(){setUserClosure(data.activeUser)}, 1000);
         }
       }.bind(this),
       error: function(data) {
