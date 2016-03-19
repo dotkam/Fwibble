@@ -128,7 +128,7 @@ module.exports = function (socket) {
         // TODO: socket.emit('PLAYER_X_HAS_ENTERED_THE_GAME')
         User.addActiveRoom(data.username, res.game_hash)
           .then(function(res2){
-            client.emit('PLAYER_X_HAS_ENTERED_THE_GAME', {username: data.username, active_game: res.game_hash})
+            client.emit('enter:game', {username: data.username, active_game: res.game_hash})
           })
       })
   })

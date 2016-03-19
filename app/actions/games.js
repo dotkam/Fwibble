@@ -102,7 +102,7 @@ Game.allJoinable = function() {
       console.error('error retrieving games', error)
     })
     .then(function(res){
-      console.log('successfully retrieved games', res)
+      console.log('successfully retrieved ' + res.length + ' games')
       return res;
     })	
 }

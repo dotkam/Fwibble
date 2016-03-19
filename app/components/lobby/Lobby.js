@@ -14,10 +14,9 @@ module.exports = React.createClass({
   getInitialState: function() {
     return {openGames: []};
   },
-
   componentDidMount: function(){
     socket.on('update:games:joinable', this.updateOpenGames);
-    socket.on('PLAYER_X_HAS_ENTERED_THE_GAME', this.props.setUser);
+    socket.on('enter:game', this.props.setUser);
   },
   updateOpenGames: function(data){
       console.log('Lobby socket hears data:', data)
@@ -42,7 +41,7 @@ module.exports = React.createClass({
             </div>
           </div>
           <div className="col-md-8 col-offset-2">
-            <button type="button" className="btn btn-primary btn-lg btn-block" onClick={this.generateGameRoom}>New Fwibble</button>
+            <button type="button" className="btn btn-primary btn-lg btn-block" onClick={this.props.generateGameRoom}>New Fwibble</button>
           </div>
           <br />
           <br />
@@ -56,7 +55,6 @@ module.exports = React.createClass({
             <div className="row">
               <LobbyGameContainer openGames={this.state.openGames} />
             </div>
-           
           </div>
         </div>
 		  </div>

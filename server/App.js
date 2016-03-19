@@ -35,7 +35,6 @@ var App = React.createClass({
     // THEN setState based on this info
   },
   setUser: function(data) {
-    console.log('setting TOP LEVEL', data)
     Auth.login();
     this.setState({
 
@@ -63,6 +62,11 @@ var App = React.createClass({
       this.context.router.replace(`/lobby`)
     }
   },
+  joinGame: function(){
+    // socket.emit('join:game', {username: this.state.user, game_hash:})
+    // TODO: update state
+    // AJK
+  },
   logoutUser: function(){
     socket.emit('logout', {username: this.state.username});
     Auth.logout(); // log out on /signout
@@ -87,7 +91,8 @@ var App = React.createClass({
         {this.props.children && React.cloneElement(this.props.children, {
           setUser: this.setUser,
           user: this.state.username,
-          logoutUser: this.logoutUser 
+          logoutUser: this.logoutUser,
+          joinGame: this.joinGame
         })}
       </div>
     )
