@@ -70,15 +70,15 @@ Session.findByToken = function(token) {
   inner join for session and users via username
 */
 
-Session.userInnerJoin = function(un) {
-  return pg.select('*').from('users').leftOuterJoin('sessions', 'sessions.username', pg.raw('?', [un]))
+Session.userInnerJoin = function(username) {
+  return pg('sessions').join('users', 'users.username', 'sessions.username').where('sessions.username', '=', username).select('sessions.token', 'users.active_game')
   // knex.select('*').from('users').join('accounts', 'accounts.type', knex.raw('?', ['admin']))  
     .catch(function(error) {
       console.error('error retrieving join table', error)
     })
     .then(function(res){
       console.log('successfully retrieved join table', res)
-      return res;
+      return res[0];
     })
 
 }

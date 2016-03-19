@@ -41,7 +41,7 @@ describe('Users model', function() {
         })
     })
 
-    xit_('should list the active game of a user', function * () {
+    it_('should list the active game of a user', function * () {
 
       yield User.findActiveGame('PlayerOne')
         .catch(function(error) {
@@ -52,7 +52,7 @@ describe('Users model', function() {
         })
     })
 
-    xit_('should create a new user', function * () {
+    it_('should create a new user', function * () {
       
       let newUser = {
         username: 'PlayerThree',
@@ -77,7 +77,7 @@ describe('Users model', function() {
         })
     })
 
-    xit_('should update an active room', function *() {
+    it_('should update an active room', function *() {
 
       yield User.addActiveRoom('PlayerTwo', 'ghi789')
         .catch(function(error) {
@@ -88,7 +88,7 @@ describe('Users model', function() {
         // })
     })
 
-    xit_('should delete an active room', function *() {
+    it_('should delete an active room', function *() {
 
       yield User.deleteActiveRoom('PlayerOne')
         .catch(function(error) {

@@ -36,7 +36,7 @@ describe('Fwib API', function() {
         })
     })
 
-  xit_('should post a new fwib to database', function * () {
+  it_('should post a new fwib to database', function * () {
    	
    	return request(app)
    	.post('/game/abc123/fwib')

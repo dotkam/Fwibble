@@ -18,12 +18,12 @@ describe('Sessions model', function() {
             {
               username: 'Player1',
               password: 'password',
-              active_game: 22,
+              active_game: 'abc123',
             },
             {
               username: 'Player2',
               password: 'drowssap',
-              active_game: 22,
+              active_game: 'abc123',
             }
           ])
         })
@@ -43,7 +43,7 @@ describe('Sessions model', function() {
         })
     })
 
-    xit_('should create a session and token', function * () {
+    it_('should create a session and token', function * () {
 
       let newSession = {
         username: 'Player1'
@@ -68,7 +68,7 @@ describe('Sessions model', function() {
         })
     })
 
-    xit_('should find a session with username', function * () {
+    it_('should find a session with username', function * () {
 
       yield Session.findIdByUsername('Player2')
         .catch(function(error) {
@@ -87,11 +87,12 @@ describe('Sessions model', function() {
         console.log('error retrieving join table', error);
       })
       .then(function(join) {
-        console.log('JOINED', join)
+        expect(join.token).to.equal('thisisntarealtoken');
+        expect(join.active_game).to.equal('abc123');
       })
     })
 
-    xit_('should delete a session', function * () {
+    it_('should delete a session', function * () {
 
     yield Session.deleteByUsername('Player1')
       .catch(function(error) {

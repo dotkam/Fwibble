@@ -49,7 +49,7 @@ describe('Fwibs model', function() {
     })
 
 
-    xit_('should list all fwibs of a game', function * () {
+    it_('should list all fwibs of a game', function * () {
       
       yield Fwib.allOfGame('abc123')
         .catch(function(error) {
@@ -61,7 +61,7 @@ describe('Fwibs model', function() {
         })
     })
 
-    xit_('should create a new fwib', function * () {
+    it_('should create a new fwib', function * () {
 
       let newFwib = {
         fwib_content: 'New Fwibble in the database word',
@@ -80,7 +80,7 @@ describe('Fwibs model', function() {
         })
     })
 
-    xit_('should list all fwibs of a user', function * () {
+    it_('should list all fwibs of a user', function * () {
 
       yield Fwib.allOfUser('abc123', 'Player1')
         .catch(function(error) {
@@ -93,7 +93,7 @@ describe('Fwibs model', function() {
         })
     })
 
-    xit_('should list no fwibs for a game that does not exist', function * () {
+    it_('should list no fwibs for a game that does not exist', function * () {
 
       yield Fwib.allOfGame('def456')
         .catch(function(error) {
