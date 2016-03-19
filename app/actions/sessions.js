@@ -83,6 +83,23 @@ Session.userInnerJoin = function(username) {
 
 }
 
+/*
+  inner join for session and users via username
+*/
+
+Session.tokenInnerJoin = function(token) {
+  return pg('sessions').join('users', 'users.username', 'sessions.username').where('sessions.token', '=', token).select('sessions.username', 'users.active_game')
+  // knex.select('*').from('users').join('accounts', 'accounts.type', knex.raw('?', ['admin']))  
+    .catch(function(error) {
+      console.error('error retrieving join table', error)
+    })
+    .then(function(res){
+      console.log('successfully retrieved join table', res)
+      return res[0];
+    })
+
+}
+
 /* 
   attrs: 
     username: username

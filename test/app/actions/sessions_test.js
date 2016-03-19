@@ -91,6 +91,18 @@ describe('Sessions model', function() {
       })
     })
 
+    it_('should return a join table with token input', function * () {
+      
+      yield Session.tokenInnerJoin('thisisntarealtoken')
+      .catch(function(error) {
+        console.log('error retrieving join table', error);
+      })
+      .then(function(join) {
+        expect(join.username).to.equal('Player1');
+        expect(join.active_game).to.equal('abc123');
+      })
+    })
+
     it_('should delete a session', function * () {
 
     yield Session.deleteByUsername('Player1')
