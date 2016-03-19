@@ -98,7 +98,7 @@ ReactDOM.render(
   (
         <Router history={browserHistory} >
           <Route path='/' component={App} >
-            <IndexRoute component={Lobby} onEnter={Auth.requireAuth}/>
+            <IndexRoute component={Lobby} onEnter={Auth.requireAuth} />
             <Route path='signin' component={Signin} />
             <Route path='signup' component={Signup} />
             <Route path='signout' component={Signout} />
