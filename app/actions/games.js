@@ -12,7 +12,7 @@ Game.generateHash = function(gameId) {
   var hash = sha1(gameId);
   hash = hash.slice(0, 15);
   console.log(hash)
-  return pg('games').where({'game_id': gameId}).update({'game_hash': hash}).returning(['game_id', 'game_hash', 'game_title'])
+  return pg('games').where({'game_id': gameId}).update({'game_hash': hash}).returning(['game_id', 'game_hash', 'game_title', 'turn_index', 'game_status', 'game_creator'])
     .catch(function(error) {
       console.error('error inserting hash into db', error)
     }) 
