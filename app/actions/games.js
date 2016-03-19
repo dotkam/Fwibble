@@ -59,15 +59,15 @@ Game.titleGenerator = function() {
 Game.create = function(attrs) {
   attrs.game_title = Game.titleGenerator();
   return pg('games').insert(attrs, ['game_id', 'game_hash', 'game_title', 'turn_index', 'game_status', 'game_creator'])
-    .catch(function(error) {
-      console.error('error inserting game into db', error)
-    })
     .then(function(res){
       console.log('successfully inserted game', res)
       var gameId = res[0].game_id;
       console.log("game id", gameId);
       Game.generateHash(gameId);
       return res[0];
+    })
+    .catch(function(error) {
+      console.error('error inserting game into db', error)
     })
 }
 

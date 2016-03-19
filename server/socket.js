@@ -103,18 +103,25 @@ module.exports = function (socket) {
   // Broadcasts all open games to users
   socket.on('lobby:games', function(games){
     var client = this;
-    console.log('got lobbyGames')
     Game.allJoinable()
       .then(function(res){
-        socket.broadcast.emit('update:games:joinable', {
-          games: res
-        });
         // quit talking to yourself
-        if(res.length !== games.length){        
+        if(res.length !== games.length){
           client.emit('update:games:joinable', {
             games: res
           });
+          socket.broadcast.emit('update:games:joinable', {
+            games: res
+          });
         }
+      })
+  });
+  // Creates game room and sends its hash back to creator
+  socket.on('create:game_room', function(data){
+    console.log('socket hears create:game_room');
+    Game.create({game_creator: data.username})
+      .then(function(res){
+        console.log('Game create res:', res);
       })
   })
   // Passes in updated turn counter and broadcasts it to other users

@@ -93,7 +93,7 @@ module.exports = React.createClass({
   },
 
 
-	render: function() {
+  render: function() {
     if(this.state.users === undefined){ // change to find user in users array
       var {user} = this.props;
       console.log('user render', user)
@@ -102,6 +102,7 @@ module.exports = React.createClass({
     var inputForm = this.state.users[this.state.turn] === this.props.user ? (<StoryInput onFwibSubmit={this.handleFwibSubmit} user={this.state.user} />) : null;
 
     var wordMeter = this.state.myTurn ? (<WordCountMeter onFwibSubmit={this.handleFwibSubmit} user={this.state.user} />) : null;
+
 
     return (
       <div>
@@ -121,6 +122,9 @@ module.exports = React.createClass({
                 {wordMeter}
               </div>
               <div className="col-md-2 col-md-offset-1">
+=======
+              <div className="col-md-2">
+>>>>>>> committing for new word meter rebase
                 <UsersInRoom users={this.state.users} />
               </div>
             </div>

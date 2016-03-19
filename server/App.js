@@ -27,7 +27,12 @@ var App = React.createClass({
 
     return {username: null, loggedIn: Auth.loggedIn(), active_game: '458d21'} // Ask Gilbert if this belongs in the state
   },
-  setUser: function(username) {
+
+  componentDidMount: function(){
+    // TODO grab user info based on session token
+    // THEN setState based on this info
+  },
+  setUser: function(data) {
 
     Auth.login();
     this.setState({
@@ -84,7 +89,7 @@ ReactDOM.render(
   (
         <Router history={browserHistory} >
           <Route path='/' component={App} >
-            <IndexRoute component={Index} onEnter={Auth.requireAuth} />
+            <IndexRoute component={Lobby} onEnter={Auth.requireAuth}/>
             <Route path='signin' component={Signin} />
             <Route path='signup' component={Signup} />
             <Route path='signout' component={Signout} />

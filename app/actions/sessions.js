@@ -19,7 +19,11 @@ Session.generateToken = function(sessionId, timestamp) {
       return res[0];
     })  
 }
+/*
+  Find username via existing session token
+*/
 
+  // TODO join to grab user info based on session token
 
 /* 
   find session token via existing user id
