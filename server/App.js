@@ -17,6 +17,8 @@ var Lobby = require('../app/components/lobby/Lobby');
 var Gameview = require('../app/components/gameview/GameView');
 var Auth = require('./auth');
 
+var io = require('socket.io-client');
+var socket = io.connect();
 
 var App = React.createClass({
   contextTypes: {
@@ -62,6 +64,7 @@ var App = React.createClass({
     }
   },
   logoutUser: function(){
+    socket.emit('logout', {username: this.state.username});
     Auth.logout(); // log out on /signout
     this.setState({
       username: null,

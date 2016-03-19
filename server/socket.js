@@ -140,7 +140,8 @@ module.exports = function (socket) {
   });
 
   // Runs session deletion when a user logs out
-  socket.on('signout', function(data){
+  socket.on('logout', function(data){
+    console.log('YOURE LOGGING OUT', data)
     Session.deleteByUsername(data.username);
   });
 
