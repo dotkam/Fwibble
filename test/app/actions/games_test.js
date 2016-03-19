@@ -67,7 +67,7 @@ describe('Games model', function() {
         })
 	})
   
-    it_('should create a new game and provide a title', function * () {
+    xit_('should create a new game and provide a title', function * () {
 
     let newGame = {
       game_creator: 'Player1'
@@ -83,7 +83,7 @@ describe('Games model', function() {
       })
     })
 
-    it_('should find all games', function * () {
+    xit_('should find all games', function * () {
 
     yield Game.all()
       .catch(function(error) {
@@ -97,7 +97,7 @@ describe('Games model', function() {
 		  })
     })
 
-    it_('should change status and find all open games', function * () {
+    xit_('should change status and find all open games', function * () {
 
     yield Game.updateToOpen('ghi789')
       .catch(function(error) {
@@ -121,7 +121,7 @@ describe('Games model', function() {
     })
     })
 
-    it_('should change status and find in progress games', function * () {
+    xit_('should change status and find in progress games', function * () {
 
     yield Game.updateToInProgress('abc123')
       .catch(function(error) {
@@ -141,7 +141,7 @@ describe('Games model', function() {
       })
     })
 
-   it_('should change status and find completed games', function * () {
+   xit_('should change status and find completed games', function * () {
 
     yield Game.updateToCompleted('abc123')
       .catch(function(error) {
@@ -162,7 +162,7 @@ describe('Games model', function() {
       })
     })
 
-    it_('should find games by hash value', function * () {
+    xit_('should find games by hash value', function * () {
 
     yield Game.findIdByHash('ghi789')
       .catch(function(error) {
@@ -173,7 +173,7 @@ describe('Games model', function() {
 		  })
     })
 
-    it_('should find and update turns correctly', function * () {
+    xit_('should find and update turns correctly', function * () {
 
     yield Game.findTurn('abc123')
       .catch(function(error) {

@@ -1,17 +1,8 @@
-var Session = require(__app + '/actions/sessions');
-var User = require(__app + '/actions/users');
-
 var loggedIn = function(){
-  
   return !!localStorage.fwibbleToken;
-
 };
-var login = function(username){
-  var attrs.username = username
-  Session.create(attrs) 
-  .then(function(res) {
-    localStorage.fwibbleToken = res.token;
-  })
+var login = function(){
+  console.log('token set')
 };
 var logout = function(){
   delete localStorage.fwibbleToken;

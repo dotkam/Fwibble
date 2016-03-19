@@ -43,7 +43,7 @@ describe('Sessions model', function() {
         })
     })
 
-    it_('should create a session and token', function * () {
+    xit_('should create a session and token', function * () {
 
       let newSession = {
         username: 'Player1'
@@ -68,7 +68,7 @@ describe('Sessions model', function() {
         })
     })
 
-    it_('should find a session with username', function * () {
+    xit_('should find a session with username', function * () {
 
       yield Session.findIdByUsername('Player2')
         .catch(function(error) {
@@ -79,16 +79,29 @@ describe('Sessions model', function() {
         })
     })
 
-    it_('should delete a session', function * () {
+
+    it_('should return a session-user join table', function * () {
+      
+      yield Session.userInnerJoin('Player1')
+      .catch(function(error) {
+        console.log('error retrieving join table', error);
+      })
+      .then(function(join) {
+        console.log('JOINED', join)
+      })
+    })
+
+    xit_('should delete a session', function * () {
 
     yield Session.deleteByUsername('Player1')
       .catch(function(error) {
         console.log('error retrieving session', error);
       })
-      .then(Session.findIdByUsername('Player1'))
       .then(function(session) {
         console.log('SESSION', session)
       })
     })
+
+
   })
 })

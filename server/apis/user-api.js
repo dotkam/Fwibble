@@ -2,6 +2,8 @@ var UserAPI = require('express').Router();
 
 var User = require('../../app/actions/users');
 var Game = require('../../app/actions/games');
+var Session = require('../../app/actions/sessions')
+
 
 module.exports = UserAPI;
 
@@ -47,7 +49,8 @@ function signIn (req, res, err) {
     passStatus: false,
     activeUser: null,
     activeGame: null,
-    errMessage: null
+    errMessage: null,
+    sessToken: null
   }, uid; // can we remove this a la line 47?
 
   User.findIdByUsername(username)
@@ -90,9 +93,32 @@ function signIn (req, res, err) {
   .then(function(array) {
     response.activeGame = array//[0].game_id;
     console.log('preload response', response)
-    res.send(response)
   })
   // catch-all for thrown errors
+  .catch(function(err) {
+    console.error('response.err', response.errMessage)
+    res.send(response)
+  })
+  //after user has authenticated, create session for user in db
+  .then(function() {
+    newSession = {
+      username: username
+      }
+    return Session.create(newSession)
+  })
+  //the creation of the token takes just a bit, so set a timeout for 1 second to handle the lookup and assignment
+  //to response object
+  .then(function(session) {
+    var token;
+    console.log('session created', session)
+    setTimeout(function(){ 
+      Session.findTokenByUsername(username)
+      .then(function(token) { 
+        response.sessToken = token 
+        res.send(response);   
+        })
+    }, 1000);
+  })
   .catch(function(err) {
     console.error('response.err', response.errMessage)
     res.send(response)

@@ -51,6 +51,38 @@ Session.findIdByUsername = function(username) {
     })
 }
 
+/*
+  find session id using the existing username
+*/
+
+Session.findByToken = function(token) {
+  return pg.select('*').from('sessions').where({'token': token})
+    .catch(function(error) {
+      console.error('error retrieving user', error)
+    })
+    .then(function(res){
+      console.log('successfully retrieved user', res)
+      return res[0].username;
+    })
+}
+
+/*
+  inner join for session and users via username
+*/
+
+Session.userInnerJoin = function(un) {
+  return pg.select('*').from('users').leftOuterJoin('sessions', 'sessions.username', pg.raw('?', [un]))
+  // knex.select('*').from('users').join('accounts', 'accounts.type', knex.raw('?', ['admin']))  
+    .catch(function(error) {
+      console.error('error retrieving join table', error)
+    })
+    .then(function(res){
+      console.log('successfully retrieved join table', res)
+      return res;
+    })
+
+}
+
 /* 
   attrs: 
     username: username
@@ -66,8 +98,10 @@ Session.create = function(attrs) {
       var sessionId = res[0].session_id;
       var timestamp = res[0].createdat;
       Session.generateToken(sessionId, timestamp)
-      console.log("create session after token creation", res);     
-      return res[0];
+      .then(function(res) {
+         console.log("create session after token creation", res);     
+         return res[0];
+      })
     })
 }
 

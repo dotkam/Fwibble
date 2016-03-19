@@ -24,7 +24,6 @@ User.encryptPassword = function(username, password) {
 
 /*
   Primary keys are arbitrarily assigned by PostgreSQL, this method gives us a way to find the ID based on username
-  **Depreciated**
 */
 
 User.findIdByUsername = function(username) {
