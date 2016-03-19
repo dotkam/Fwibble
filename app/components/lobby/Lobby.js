@@ -7,7 +7,7 @@ var LobbyGameContainer = require('./LobbyGameContainer.js');
 
 var io = require('socket.io-client');
 var socket = io.connect();
-
+var Auth = require('../../../server/auth')
 
 module.exports = React.createClass({
 
@@ -16,15 +16,24 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function(){
-    // TODO socket emit to find open games
-    socket.on('update:games:joinable', this.updateOpenGames)
+    socket.on('update:games:joinable', this.updateOpenGames);
+    socket.on('PLAYER_X_HAS_ENTERED_THE_GAME', this.props.setUser);
   },
   updateOpenGames: function(data){
       console.log('Lobby socket hears data:', data)
       this.setState({openGames: data.games})
   },
+  generateGameRoom: function(){
+    socket.emit('create:game_room', {username: this.props.user});
+    console.log('sent create:game_room', this.props.user);
+  },
+  enterGame: function(data){
+    // TODO: set active_game, redirect to active_game
+    this.setState({active_game: data.game_hash});
+    Auth.requireAuth();
+  },
   render: function() {
-    socket.emit('lobby:games',this.state.openGames); // TODO fix me, I don't want to be in render
+    socket.emit('lobby:games',this.state.openGames);
     return (
 			<div>
         <div className="container">
@@ -34,7 +43,7 @@ module.exports = React.createClass({
             </div>
           </div>
           <div className="col-md-8 col-offset-2">
-            <button type="button" className="btn btn-primary btn-lg btn-block">New Fwibble</button>
+            <button type="button" className="btn btn-primary btn-lg btn-block" onClick={this.generateGameRoom}>New Fwibble</button>
           </div>
           <br />
           <br />

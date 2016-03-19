@@ -25,25 +25,55 @@ var App = React.createClass({
 
   getInitialState: function() {
 
-    return {username: null, loggedIn: Auth.loggedIn(), active_game: '458d21'} // Ask Gilbert if this belongs in the state
+    return {username: null, loggedIn: Auth.loggedIn(), active_game: null} // Ask Gilbert if this belongs in the state
   },
-  setUser: function(username) {
+
+  componentDidMount: function(){
+    // TODO grab user info based on session token
+    // THEN setState based on this info
+  },
+  setUser: function(data) {
 
     Auth.login();
     this.setState({
-      username: username,
-      loggedIn: Auth.loggedIn()
-    })
-    this.context.router.replace(`/lobby`)
-    // this.context.router.replace(`/gameview/${this.state.active_game}`)
+
+      username: data.username,
+      loggedIn: Auth.loggedIn(),
+      active_game: data.active_game
+    });
+    // $.ajax({
+    //   type: 'POST',
+    //   url: '/user/game', //game
+    //   data: { username: username },
+    //   contentType: 'application/json',
+    //   success: function(data) {
+    //     // TODO update state based off of active_game response
+    //   },
+    //   error: function(data) {
+    //     console.error("Connection error:", data)
+    //   }
+    // });
+    
+    if(this.state.active_game){
+      this.context.router.replace(`/gameview/${this.state.active_game}`)
+    }
+    else {
+      this.context.router.replace(`/lobby`)
+    }
   },
   logoutUser: function(){
     Auth.logout(); // log out on /signout
     this.setState({
       username: null,
-      loggedIn: Auth.loggedIn()
+      loggedIn: Auth.loggedIn(),
+      active_game: null
     })
   },
+  // setActiveState: function(data){
+  //   this.setState({
+  //     activeGame
+  //   })
+  // }
   render: function() {
     return (
       <div>
@@ -65,12 +95,12 @@ ReactDOM.render(
   (
         <Router history={browserHistory} >
           <Route path='/' component={App} >
-            <IndexRoute component={Index} onEnter={Auth.requireAuth} />
+            <IndexRoute component={Lobby} onEnter={Auth.requireAuth}/>
             <Route path='signin' component={Signin} />
             <Route path='signup' component={Signup} />
             <Route path='signout' component={Signout} />
-            <Route path='lobby' component={Lobby} />
-            <Route path='gameview/:game_hash' component={Gameview} onEnter={Auth.requireAuth}/>
+            <Route path='lobby' component={Lobby} onEnter={Auth.requireAuth} />
+            <Route path='gameview/:game_hash' component={Gameview} onEnter={Auth.requireAuth} />
           </Route>
         </Router>
   ), document.getElementById('app')

@@ -57,24 +57,28 @@ var userNames = (function () {
 module.exports = function (socket) {
   var name;
   
-  socket.on('help', function(data){
-    console.log('socket data', data.user)
-    name = data.user;
-    userNames.claim(name); // Grab all users for room // Good lord please deprecate this
-
-    socket.emit('init', {
-      name: data.user,
-      users: userNames.get()
-    });
-    socket.broadcast.emit('user:join', {
-      name: data.user,
-      users: userNames.get()
-    });
-
-  })
   // send the new user their name and a list of users
-
   // notify other clients that a new user has joined
+  socket.on('gameview:enter', function(data){ // Validate that user belongs in room
+    console.log('socket data', data.users)
+    // name = data.user; // May not need this
+    // userNames.claim(name); // Grab all users for room // Good lord please deprecate this
+    var client = this;
+    Game.allUser(data.game_hash)
+      .then(function(res){
+        console.log('ALL USERS', res);
+        if( data.users.length !== res.length){
+          socket.emit('init', {
+            user: data.user,
+            users: res // userNames.get()
+          });
+          socket.broadcast.emit('user:join', {
+            name: data.user,
+            users: res // userNames.get()
+          });
+        };
+      })
+  });
 
   // broadcast a user's fwib to other users
   // and store in DB
@@ -103,18 +107,29 @@ module.exports = function (socket) {
   // Broadcasts all open games to users
   socket.on('lobby:games', function(games){
     var client = this;
-    console.log('got lobbyGames')
     Game.allJoinable()
       .then(function(res){
-        socket.broadcast.emit('update:games:joinable', {
-          games: res
-        });
-        // quit talking to yourself
-        if(res.length !== games.length){        
+        if(res.length !== games.length){
           client.emit('update:games:joinable', {
             games: res
           });
+          socket.broadcast.emit('update:games:joinable', { // This may be unnecessary
+            games: res
+          });
         }
+      })
+  });
+  // Creates game room and sends its hash back to creator
+  socket.on('create:game_room', function(data){
+    var client = this;
+    Game.create({game_creator: data.username})
+      .then(function(res){
+        console.log('Game create res:', res);
+        // TODO: socket.emit('PLAYER_X_HAS_ENTERED_THE_GAME')
+        User.addActiveRoom(data.username, res.game_hash)
+          .then(function(res2){
+            client.emit('PLAYER_X_HAS_ENTERED_THE_GAME', {game_hash: res.game_hash})
+          })
       })
   })
   // Passes in updated turn counter and broadcasts it to other users
