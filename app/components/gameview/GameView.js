@@ -100,12 +100,14 @@ module.exports = React.createClass({
     if(this.state.user === undefined){ // change to find user in users array - Maybe not?
       var {user} = this.props;
       var {users} = this.state;
-      console.log('user', user)
+      console.log('INSIDE RENDER users', users)
       socket.emit('gameview:enter', {user: user, users: users, game_hash: this.props.params.game_hash});
     }
+    console.log('OUTSIDE RENDER USER', this.state.user)    
+    console.log('OUTSIDE RENDER', this.state.users)
     var inputForm = this.state.myTurn ? (<StoryInput onFwibSubmit={this.handleFwibSubmit} user={this.state.user} />) : null;
     var wordMeter = this.state.myTurn ? (<WordCountMeter onFwibSubmit={this.handleFwibSubmit} user={this.state.user} />) : null;
-    // AJK
+
     return (
       <div>
         <div className="container">

@@ -57,6 +57,8 @@ var userNames = (function () {
 module.exports = function (socket) {
   var name;
   
+  // send the new user their name and a list of users
+  // notify other clients that a new user has joined
   socket.on('gameview:enter', function(data){ // Validate that user belongs in room
     console.log('socket data', data.users)
     // name = data.user; // May not need this
@@ -64,23 +66,19 @@ module.exports = function (socket) {
     var client = this;
     Game.allUser(data.game_hash)
       .then(function(res){
-        console.log('res', res);
+        console.log('ALL USERS', res);
         if( data.users.length !== res.length){
-          console.log('ALL USERS', res)
           socket.emit('init', {
             user: data.user,
-            users: res.users // userNames.get()
+            users: res // userNames.get()
           });
           socket.broadcast.emit('user:join', {
             name: data.user,
-            users: res.users // userNames.get()
+            users: res // userNames.get()
           });
         };
       })
-  })
-  // send the new user their name and a list of users
-
-  // notify other clients that a new user has joined
+  });
 
   // broadcast a user's fwib to other users
   // and store in DB
