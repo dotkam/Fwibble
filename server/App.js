@@ -35,7 +35,7 @@ var App = React.createClass({
     // THEN setState based on this info
   },
   setUser: function(data) {
-
+    console.log('setting TOP LEVEL', data)
     Auth.login();
     this.setState({
 

@@ -13,6 +13,7 @@ Game.generateHash = function(gameId) {
   hash = hash.slice(0, 15);
   console.log(hash)
   return pg('games').where({'game_id': gameId}).update({'game_hash': hash}).returning(['game_id', 'game_hash', 'game_title', 'turn_index', 'game_status', 'game_creator'])
+
     .catch(function(error) {
       console.error('error inserting hash into db', error)
     }) 
@@ -65,7 +66,6 @@ Game.create = function(attrs) {
       console.log("game id", gameId);
       return Game.generateHash(gameId)
         .then(function(res2){
-          console.log('res2', res2)
           return res2[0];
         })
     })
@@ -83,7 +83,7 @@ Game.allUser = function(gamehash) {
       console.error('error retrieving users', error)
     })
     .then(function(res){
-      console.log('successfully retrieved users', res)
+      // console.log('successfully retrieved users', res)
       return res;
     })
 }

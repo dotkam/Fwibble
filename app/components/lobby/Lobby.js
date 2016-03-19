@@ -30,7 +30,6 @@ module.exports = React.createClass({
   enterGame: function(data){
     // TODO: set active_game, redirect to active_game
     this.setState({active_game: data.game_hash});
-    Auth.requireAuth();
   },
   render: function() {
     socket.emit('lobby:games',this.state.openGames);
