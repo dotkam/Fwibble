@@ -82,7 +82,11 @@ function signIn (req, res, err) {
     } else {
       response.passStatus = true;
       response.activeUser = username;
-      return User.findActiveGame(username)
+      // return User.findActiveGame(username)
+      newSession = {
+      username: username
+      }
+      return Session.create(newSession)
     }
   })
   // translate GameHash to GameId
@@ -91,8 +95,9 @@ function signIn (req, res, err) {
   // })
   // and send relevant response
   .then(function(array) {
-    response.activeGame = array//[0].game_id;
-    console.log('preload response', response)
+    // response.activeGame = array//[0].game_id;
+    Session.userInnerJoin(username)
+    // console.log('preload response', response)
   })
   // catch-all for thrown errors
   .catch(function(err) {
@@ -100,27 +105,27 @@ function signIn (req, res, err) {
     res.send(response)
   })
   //after user has authenticated, create session for user in db
-  .then(function() {
-    newSession = {
-      username: username
-      }
-    return Session.create(newSession)
+  .then(function(join) {
+     response.activeGame = join.active_game || null;
+     response.sessToken = join.token;
+     console.log('RESPONSE', response)
+     res.send(response);
   })
   //the creation of the token takes just a bit, so set a timeout for 1 second to handle the lookup and assignment
   //to response object
-  .then(function(session) {
-    var token;
-    console.log('session created', session)
-    setTimeout(function(){ 
-      Session.findTokenByUsername(username)
-      .then(function(token) { 
-        response.sessToken = token 
-        res.send(response);   
-        })
-    }, 1000);
-  })
-  .catch(function(err) {
-    console.error('response.err', response.errMessage)
-    res.send(response)
-  })
+  // .then(function(session) {
+  //   var token;
+  //   console.log('session created', session)
+  //   setTimeout(function(){ 
+  //     Session.findTokenByUsername(username)
+  //     .then(function(token) { 
+  //       response.sessToken = token 
+  //       res.send(response);   
+  //       })
+  //   }, 1000);
+  // })
+  // .catch(function(err) {
+  //   console.error('response.err', response.errMessage)
+  //   res.send(response)
+  // })
 }
