@@ -44,6 +44,8 @@ module.exports = React.createClass({
           // var setUserClosure = this.props.setUser;
           this.props.setUser({username: data.activeUser, active_game: data.activeGame});
           // setTimeout(function(){setUserClosure(data.activeUser)}, 1000);
+          console.log("this is firing when you think it does", data.sessToken)
+          localStorage.fwibbleToken = data.sessToken;
         }
       }.bind(this),
       error: function(data) {

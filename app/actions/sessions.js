@@ -88,7 +88,7 @@ Session.userInnerJoin = function(username) {
 }
 
 /*
-  inner join for session and users via username
+  inner join for session and users via token lookup
 */
 
 Session.tokenInnerJoin = function(token) {

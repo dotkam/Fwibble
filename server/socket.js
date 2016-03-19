@@ -139,6 +139,12 @@ module.exports = function (socket) {
     });
   });
 
+  // Runs session deletion when a user logs out
+  socket.on('logout', function(data){
+    console.log('YOURE LOGGING OUT', data)
+    Session.deleteByUsername(data.username);
+  });
+
   // clean up when a user leaves, and broadcast it to other users
   socket.on('disconnect', function () {
     userNames.free(name);
