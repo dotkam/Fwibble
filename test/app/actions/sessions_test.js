@@ -16,14 +16,14 @@ describe('Sessions model', function() {
         .then(function() {
           return pg('users').insert([
             {
-              user_id: 1,
               username: 'Player1',
-              active_game: 22,
+              password: 'password',
+              active_game: 'abc123',
             },
             {
-              user_id: 2,
               username: 'Player2',
-              active_game: 22,
+              password: 'drowssap',
+              active_game: 'abc123',
             }
           ])
         })
@@ -31,12 +31,12 @@ describe('Sessions model', function() {
           return pg('sessions').insert([
             {
               session_id: 33,
-              user_id: 1,
+              username: 'Player1',
               token: 'thisisntarealtoken'
             },
             {
               session_id: 37,
-              user_id: 2,
+              username: 'Player2',
               token: 'dontworryaboutititsallfine'
             }
           ])
@@ -46,7 +46,7 @@ describe('Sessions model', function() {
     it_('should create a session and token', function * () {
 
       let newSession = {
-        user_id: 1
+        username: 'Player1'
       }
        
       yield Session.create(newSession)
@@ -54,11 +54,10 @@ describe('Sessions model', function() {
           console.log('error inserting session', error);
         })
         .then(function(session) {
-          console.log(session);
-          expect(session.user_id).to.equal(1);
+          console.log('session created successfully', session);
         })
       
-      Session.findTokenByUserId(1)
+      Session.findTokenByUsername('Player1')
         .catch(function(error) {
           console.log('error locating token', error);
         })
@@ -68,9 +67,9 @@ describe('Sessions model', function() {
         })
     })
 
-    it_('should find a session with user id', function * () {
+    it_('should find a session with username', function * () {
 
-      yield Session.findIdByUserId(2)
+      yield Session.findIdByUsername('Player2')
         .catch(function(error) {
           console.log('error retrieving session', error);
         })
@@ -79,16 +78,42 @@ describe('Sessions model', function() {
         })
     })
 
+
+    it_('should return a session-user join table', function * () {
+      
+      yield Session.userInnerJoin('Player1')
+      .catch(function(error) {
+        console.log('error retrieving join table', error);
+      })
+      .then(function(join) {
+        expect(join.token).to.equal('thisisntarealtoken');
+        expect(join.active_game).to.equal('abc123');
+      })
+    })
+
+    it_('should return a join table with token input', function * () {
+      
+      yield Session.tokenInnerJoin('thisisntarealtoken')
+      .catch(function(error) {
+        console.log('error retrieving join table', error);
+      })
+      .then(function(join) {
+        expect(join.username).to.equal('Player1');
+        expect(join.active_game).to.equal('abc123');
+      })
+    })
+
     it_('should delete a session', function * () {
 
-    yield Session.delete(33)
+    yield Session.deleteByUsername('Player1')
       .catch(function(error) {
         console.log('error retrieving session', error);
       })
-      .then(Session.findIdByUserId(1))
       .then(function(session) {
         console.log('SESSION', session)
       })
     })
+
+
   })
 })

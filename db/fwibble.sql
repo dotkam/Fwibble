@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS fwibs (
 
 CREATE TABLE IF NOT EXISTS sessions (
   session_id SERIAL NOT NULL PRIMARY KEY,
-  user_id INTEGER REFERENCES users (user_id),
+  username varchar REFERENCES users (username),
   createdat TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   token varchar
 );

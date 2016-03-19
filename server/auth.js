@@ -2,7 +2,7 @@ var loggedIn = function(){
   return !!localStorage.fwibbleToken;
 };
 var login = function(){
-  localStorage.fwibbleToken = 'Token';
+  console.log('token set')
 };
 var logout = function(){
   delete localStorage.fwibbleToken;

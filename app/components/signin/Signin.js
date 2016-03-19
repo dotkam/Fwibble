@@ -71,6 +71,7 @@ module.exports = React.createClass({
         } else {
           this.setState({loginErr: false})
           this.props.setUser({username: data.activeUser, active_game: data.activeGame}) // was data.activeUser
+          localStorage.fwibbleToken = data.sessToken;
         }
 
         console.log('props:',this.props)

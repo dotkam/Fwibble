@@ -10,7 +10,7 @@ var Session = module.exports;
 Session.generateToken = function(sessionId, timestamp) {
   var token = sha1(timestamp);
   console.log(token);
-  return pg('sessions').where({'session_id': sessionId}).update({'token': token}).returning(['session_id', 'user_id', 'createdat', 'token'])
+  return pg('sessions').where({'session_id': sessionId}).update({'token': token}).returning(['session_id', 'username', 'createdat', 'token'])
     .catch(function(error) {
       console.error('error inserting token into db', error)
     }) 
@@ -25,8 +25,8 @@ Session.generateToken = function(sessionId, timestamp) {
   find session token via existing user id
 */
 
-Session.findTokenByUserId = function(userId) {
-  return pg.select('token').from('sessions').where({'user_id': userId})
+Session.findTokenByUsername = function(username) {
+  return pg.select('token').from('sessions').where({'username': username})
     .catch(function(error) {
       console.error('error retrieving token', error)
     })
@@ -37,11 +37,11 @@ Session.findTokenByUserId = function(userId) {
 }
 
 /*
-  find session id using the existing user id
+  find session id using the existing username
 */
 
-Session.findIdByUserId = function(userId) {
-  return pg.select('session_id').from('sessions').where({'user_id': userId})
+Session.findIdByUsername = function(username) {
+  return pg.select('session_id').from('sessions').where({'username': username})
     .catch(function(error) {
       console.error('error retrieving session', error)
     })
@@ -51,13 +51,62 @@ Session.findIdByUserId = function(userId) {
     })
 }
 
+/*
+  find session id using the existing username
+*/
+
+Session.findByToken = function(token) {
+  return pg.select('*').from('sessions').where({'token': token})
+    .catch(function(error) {
+      console.error('error retrieving user', error)
+    })
+    .then(function(res){
+      console.log('successfully retrieved user', res)
+      return res[0].username;
+    })
+}
+
+/*
+  inner join for session and users via username
+*/
+
+Session.userInnerJoin = function(username) {
+  return pg('sessions').join('users', 'users.username', 'sessions.username').where('sessions.username', '=', username).select('sessions.token', 'users.active_game')
+  // knex.select('*').from('users').join('accounts', 'accounts.type', knex.raw('?', ['admin']))  
+    .catch(function(error) {
+      console.error('error retrieving join table', error)
+    })
+    .then(function(res){
+      console.log('successfully retrieved join table', res)
+      return res[0];
+    })
+
+}
+
+/*
+  inner join for session and users via username
+*/
+
+Session.tokenInnerJoin = function(token) {
+  return pg('sessions').join('users', 'users.username', 'sessions.username').where('sessions.token', '=', token).select('sessions.username', 'users.active_game')
+  // knex.select('*').from('users').join('accounts', 'accounts.type', knex.raw('?', ['admin']))  
+    .catch(function(error) {
+      console.error('error retrieving join table', error)
+    })
+    .then(function(res){
+      console.log('successfully retrieved join table', res)
+      return res[0];
+    })
+
+}
+
 /* 
   attrs: 
-    user_id 
+    username: username
 */
 
 Session.create = function(attrs) {
-  return pg('sessions').insert(attrs, ['session_id', 'user_id', 'createdat', 'token'])
+  return pg('sessions').insert(attrs, ['session_id', 'username', 'createdat', 'token'])
     .catch(function(error) {
       console.error('error inserting session', error)
     })
@@ -65,14 +114,20 @@ Session.create = function(attrs) {
       console.log('successfully inserted session', res)
       var sessionId = res[0].session_id;
       var timestamp = res[0].createdat;
-      console.log("sessionid", sessionId);
-      Session.generateToken(sessionId, timestamp);
-      return res[0];
+      Session.generateToken(sessionId, timestamp)
+      .then(function(res) {
+         console.log("create session after token creation", res);     
+         return res[0];
+      })
     })
 }
 
-Session.delete = function(sessionId) {
-  return pg('sessions').where({'session_id': sessionId}).del()
+/* 
+  Delete user's session via username
+*/
+
+Session.deleteByUsername = function(username) {
+  return pg('sessions').where({'username': username}).del()
     .catch(function(error) {
       console.error('error deleting session');
     })
