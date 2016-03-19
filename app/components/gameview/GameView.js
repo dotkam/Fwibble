@@ -29,7 +29,6 @@ module.exports = React.createClass({
   _initialize: function(data) {
     var {users, user} = data;
     users = users.map((u) => u.username)
-    console.log('setting state INIT', users, user)
     this.setState({users, user});
   },
 
@@ -104,8 +103,6 @@ module.exports = React.createClass({
       console.log('INSIDE RENDER users', users)
       socket.emit('gameview:enter', {user: user, users: users, game_hash: this.props.params.game_hash});
     }
-    console.log('OUTSIDE RENDER USER', this.state.user)    
-    console.log('OUTSIDE RENDER', this.state.users)
     var inputForm = this.state.myTurn ? (<StoryInput onFwibSubmit={this.handleFwibSubmit} user={this.state.user} />) : null;
     var wordMeter = this.state.myTurn ? (<WordCountMeter onFwibSubmit={this.handleFwibSubmit} user={this.state.user} />) : null;
 

@@ -69,6 +69,11 @@ var App = React.createClass({
       active_game: null
     })
   },
+  // setActiveState: function(data){
+  //   this.setState({
+  //     activeGame
+  //   })
+  // }
   render: function() {
     return (
       <div>

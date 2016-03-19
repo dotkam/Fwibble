@@ -63,8 +63,11 @@ Game.create = function(attrs) {
       console.log('successfully inserted game', res)
       var gameId = res[0].game_id;
       console.log("game id", gameId);
-      Game.generateHash(gameId);
-      return res[0];
+      return Game.generateHash(gameId)
+        .then(function(res2){
+          console.log('res2', res2)
+          return res2[0];
+        })
     })
     .catch(function(error) {
       console.error('error inserting game into db', error)

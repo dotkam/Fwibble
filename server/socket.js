@@ -121,10 +121,15 @@ module.exports = function (socket) {
   });
   // Creates game room and sends its hash back to creator
   socket.on('create:game_room', function(data){
-    console.log('socket hears create:game_room');
+    var client = this;
     Game.create({game_creator: data.username})
       .then(function(res){
         console.log('Game create res:', res);
+        // TODO: socket.emit('PLAYER_X_HAS_ENTERED_THE_GAME')
+        User.addActiveRoom(data.username, res.game_hash)
+          .then(function(res2){
+            client.emit('PLAYER_X_HAS_ENTERED_THE_GAME', {game_hash: res.game_hash})
+          })
       })
   })
   // Passes in updated turn counter and broadcasts it to other users
