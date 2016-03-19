@@ -3,6 +3,7 @@ var ReactDOM = require('react-dom');
 
 // var StoryContainer = require('./StoryContainer');
 var StoryTitle = require('./StoryTitle');
+var StoryContainer = require('./StoryContainer.js');
 var Fwib = require('./Fwib.js');
 var UsersInRoom = require('./UsersInRoom.js');
 var WordCountMeter = require('./WordCountMeter.js');
@@ -113,7 +114,7 @@ module.exports = React.createClass({
       socket.emit('gameview:enter', {user: user, users: users, game_hash: this.props.params.game_hash});
     }
 
-    var display = this.state.showStory ? (<StoryContainer fwibs={this.props.fwibs} onFwibSubmit={this.handleFwibSubmit} goButtonPush={this.onGo} gameStart={this.startUp} user={this.props.user} />) : <GoButton />;
+    var display = this.state.showStory ? (<StoryContainer fwibs={this.state.fwibs} onFwibSubmit={this.handleFwibSubmit} user={this.state.user} />) : (<GoButton goButtonPush={this.onGo} gameStart={this.startUp}/>);
    
     return (
       <div>

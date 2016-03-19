@@ -1,6 +1,5 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var StoryContainer = require('./StoryContainer.js');
 var GoButton = require('./GoButton.js');
 
 module.exports = React.createClass({
