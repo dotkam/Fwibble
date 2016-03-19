@@ -154,21 +154,4 @@ User.deleteActiveRoom = function(username) {
     })
 }
 
-/* 
-  Find all games user is a part of
-  ??need to find active rooms only?  or do we purge old games
-
-  **Depreciated** Use User.findActiveGame
-*/
-// User.allGame = function(username) {
-//   return pg.select('game_hash').from('user_game').where({'username': username})
-//     .catch(function(error) {
-//       console.error('error retrieving games', error)
-//     })
-//     .then(function(res){
-//       console.log('successfully retrieved games', res)
-//       return res[0].game_hash;
-//     })
-// }
-
 

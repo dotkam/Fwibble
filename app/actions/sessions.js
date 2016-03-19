@@ -19,11 +19,6 @@ Session.generateToken = function(sessionId, timestamp) {
       return res[0];
     })  
 }
-/*
-  Find username via existing session token
-*/
-
-  // TODO join to grab user info based on session token
 
 /* 
   find session token via existing user id
@@ -76,7 +71,6 @@ Session.findByToken = function(token) {
 
 Session.userInnerJoin = function(username) {
   return pg('sessions').join('users', 'users.username', 'sessions.username').where('sessions.username', '=', username).select('sessions.token', 'users.active_game')
-  // knex.select('*').from('users').join('accounts', 'accounts.type', knex.raw('?', ['admin']))  
     .catch(function(error) {
       console.error('error retrieving join table', error)
     })
@@ -84,7 +78,6 @@ Session.userInnerJoin = function(username) {
       console.log('successfully retrieved join table', res)
       return res[0];
     })
-
 }
 
 /*
@@ -93,7 +86,9 @@ Session.userInnerJoin = function(username) {
 
 Session.tokenInnerJoin = function(token) {
   return pg('sessions').join('users', 'users.username', 'sessions.username').where('sessions.token', '=', token).select('sessions.username', 'users.active_game')
-  // knex.select('*').from('users').join('accounts', 'accounts.type', knex.raw('?', ['admin']))  
+    .catch(function(error) {
+      console.error('error retrieving join table', error)
+    })
     .then(function(res){
       console.log('successfully retrieved join table', res)
       return res[0];
@@ -101,7 +96,6 @@ Session.tokenInnerJoin = function(token) {
     .catch(function(error) {
       console.error('error retrieving join table', error)
     })
-
 }
 
 /* 

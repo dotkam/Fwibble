@@ -228,44 +228,5 @@ Game.updateTurn = function(gamehash, newTurn) {
 }
 
 
-/*
-  Not implemented, placeholder for possible future implementation
-  List all rooms searching for players
-*/
-
-// Room.allSearching = function() {
-
-// }
-
-// /*
-//   Finds the active turn of game by game id
-// */
-// Game.findDrawTurn = function(gameId) {
-//   return pg.select('drawturn_index').from('games').where({'game_id': gameId})
-//     .catch(function(error) {
-//       console.error('error retrieving turn', error)
-//     })
-//     .then(function(res){
-//       console.log('successfully retrieved turn', res)
-//       return res;
-//     })
-// }
-
-
-//   Update the draw turn value inside the game to appropriately identify the active turn
-//   GameId: game_id
-//   newTurn: new value of turn to update in column
-
-
-// Game.updateDrawTurn = function(gameId, newTurn) {
-//   return pg('games').where({'game_id': gameId}).update({'drawturn_index': newTurn})
-//     .catch(function(error) {
-//       console.error('error updating turn', error)
-//     })
-//     .then(function(res){
-//       console.log('successfully updated turn', res)
-//       return res;
-//     })
-// }
 
 

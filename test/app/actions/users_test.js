@@ -83,9 +83,6 @@ describe('Users model', function() {
         .catch(function(error) {
           console.error('error updating active room', error);
         })
-        // .then(function(user) {
-        //   expect(user.active_game).to.equal('ghi789');
-        // })
     })
 
     it_('should delete an active room', function *() {
@@ -94,8 +91,5 @@ describe('Users model', function() {
         .catch(function(error) {
           console.error('error deleting active room', error);
         })
-        // .then(function(user) {
-        //   expect(user.active_game).to.equal(null);
-        // })
     })
 })
