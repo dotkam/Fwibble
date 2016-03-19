@@ -55,7 +55,6 @@ describe('Sessions model', function() {
         })
         .then(function(session) {
           console.log('session created successfully', session);
-          expect(session.username).to.equal('Player1');
         })
       
       Session.findTokenByUsername('Player1')
