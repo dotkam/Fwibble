@@ -1,12 +1,13 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var StoryTitle = require('./StoryTitle.js');
-var StoryBox = require('./StoryBox.js');
-var StoryInput = require('./StoryInput.js');
+// var StoryContainer = require('./StoryContainer');
+var StoryTitle = require('./StoryTitle');
+var StoryContainer = require('./StoryContainer.js');
 var Fwib = require('./Fwib.js');
 var UsersInRoom = require('./UsersInRoom.js');
 var WordCountMeter = require('./WordCountMeter.js');
+var GoButton = require('./GoButton.js')
 
 var io = require('socket.io-client');
 var socket = io.connect();
@@ -15,7 +16,7 @@ var socket = io.connect();
 module.exports = React.createClass({
 
   getInitialState: function() {
-    return {users: [], fwibs:[], text: '', turn: 0, myTurn: false};
+    return {users: [], fwibs:[], text: '', turn: 0, myTurn: false, showStory: false, active: false};
   },
 
   componentDidMount: function() {
@@ -94,6 +95,15 @@ module.exports = React.createClass({
     }
   },
 
+  onGo: function() {
+    this.setState({ showStory: true});
+  },
+
+  startUp: function() {
+    this.setState({ active: true});
+  },
+
+
 
   render: function() {
     // Fetch all info for this gameroom this.params.url
@@ -103,9 +113,9 @@ module.exports = React.createClass({
       console.log('INSIDE RENDER users', users)
       socket.emit('gameview:enter', {user: user, users: users, game_hash: this.props.params.game_hash});
     }
-    var inputForm = this.state.myTurn ? (<StoryInput onFwibSubmit={this.handleFwibSubmit} user={this.state.user} />) : null;
-    var wordMeter = this.state.myTurn ? (<WordCountMeter onFwibSubmit={this.handleFwibSubmit} user={this.state.user} />) : null;
 
+    var display = this.state.showStory ? (<StoryContainer fwibs={this.state.fwibs} onFwibSubmit={this.handleFwibSubmit} user={this.state.user} />) : (<GoButton goButtonPush={this.onGo} gameStart={this.startUp}/>);
+   
     return (
       <div>
         <div className="container">
@@ -113,23 +123,13 @@ module.exports = React.createClass({
             <div className="col-md-9">
               <StoryTitle />
             </div>
+            {display}
           </div>
-          <div>
-            <div className="row">
-              <div className="col-md-8">
-                <StoryBox fwibs={this.state.fwibs} />
-                <br />
-                {inputForm}
-                <br />
-                {wordMeter}
-              </div>
-              <div className="col-md-2 col-md-offset-1">
-                <UsersInRoom users={this.state.users} />
-              </div>
-            </div>
+          <div className="col-md-2 col-md-offset-1">
+            <UsersInRoom users={this.state.users} />
           </div>
         </div>
       </div>
     );
   }
-});
+}); 

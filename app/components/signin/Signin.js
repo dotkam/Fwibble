@@ -17,6 +17,8 @@ module.exports = React.createClass({
       loginErr: false,
       loginMsg: null
     }
+
+    return { showStory: false };
   },
 
   handleUsername: function (e) {
