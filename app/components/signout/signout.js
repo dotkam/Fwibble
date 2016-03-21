@@ -15,8 +15,7 @@ module.exports = React.createClass({
     return (
       <div className="container">
         <p>Successfully logged out</p>
-        <p>Need more Fwibbles in your life?</p>
-        <button type="button" className="btn btn-primary btn-md" a href='/signin'>Sign In</button>
+        <a href="/signin">Need more Fwibbles in your life? Sign back in!</a>
       </div>
     );
   }
