@@ -105,8 +105,12 @@ module.exports = React.createClass({
 
 
   render: function() {
-    // Fetch all info for this gameroom this.params.url
+    // Add user to this game if they are not already
+    if(!this.props.active_game){
+      this.props.joinGame({user: this.props.user, game_hash: this.props.params.game_hash});
+    }
     if(this.state.user === undefined){ // change to find user in users array - Maybe not?
+    // Fetch all info for this gameroom this.params.url
       var {user} = this.props;
       var {users} = this.state;
       console.log('INSIDE RENDER users', users)

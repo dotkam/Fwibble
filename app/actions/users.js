@@ -115,7 +115,7 @@ User.findActiveGame = function(username) {
     **Depreciated**
 */
 
-User.joinGame = function(attrs) {
+User.joinGame = function(attrs) { // May not need this anymore
   return pg('user_game').insert(attrs, ['user_id', 'game_id'])
     .catch(function(error) {
       console.error('error inserting user into game', error)

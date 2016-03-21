@@ -94,12 +94,12 @@ Session.userInnerJoin = function(username) {
 Session.tokenInnerJoin = function(token) {
   return pg('sessions').join('users', 'users.username', 'sessions.username').where('sessions.token', '=', token).select('sessions.username', 'users.active_game')
   // knex.select('*').from('users').join('accounts', 'accounts.type', knex.raw('?', ['admin']))  
-    .catch(function(error) {
-      console.error('error retrieving join table', error)
-    })
     .then(function(res){
       console.log('successfully retrieved join table', res)
       return res[0];
+    })
+    .catch(function(error) {
+      console.error('error retrieving join table', error)
     })
 
 }
@@ -111,9 +111,6 @@ Session.tokenInnerJoin = function(token) {
 
 Session.create = function(attrs) {
   return pg('sessions').insert(attrs, ['session_id', 'username', 'createdat', 'token'])
-    .catch(function(error) {
-      console.error('error inserting session', error)
-    })
     .then(function(res){
       console.log('successfully inserted session', res)
       var sessionId = res[0].session_id;
@@ -121,8 +118,11 @@ Session.create = function(attrs) {
       Session.generateToken(sessionId, timestamp)
       .then(function(res) {
          console.log("create session after token creation", res);     
-         return res[0];
+         return res[0]; // returning 'null' as string instead of object
       })
+    })
+    .catch(function(error) {
+      console.error('error inserting session', error) // Error Cannot read property '0' of undefined
     })
 }
 

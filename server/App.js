@@ -15,6 +15,7 @@ var Signup = require('../app/components/signup/Signup');
 var Signout = require('../app/components/signout/Signout');
 var Lobby = require('../app/components/lobby/Lobby');
 var Gameview = require('../app/components/gameview/GameView');
+//var userActions = //
 var Auth = require('./auth');
 
 var io = require('socket.io-client');
@@ -35,7 +36,6 @@ var App = React.createClass({
     // THEN setState based on this info
   },
   setUser: function(data) {
-
     Auth.login();
     this.setState({
 
@@ -63,6 +63,10 @@ var App = React.createClass({
       this.context.router.replace(`/lobby`)
     }
   },
+  joinGame: function(data){
+    socket.emit('join:game', {username: data.user, game_hash: data.game_hash})
+    this.setState({active_game: data.game_hash});
+  },
   logoutUser: function(){
     socket.emit('logout', {username: this.state.username});
     Auth.logout(); // log out on /signout
@@ -88,7 +92,9 @@ var App = React.createClass({
         {this.props.children && React.cloneElement(this.props.children, {
           setUser: this.setUser,
           user: this.state.username,
-          logoutUser: this.logoutUser 
+          logoutUser: this.logoutUser,
+          joinGame: this.joinGame,
+          active_game: this.state.active_game
         })}
       </div>
     )
@@ -99,7 +105,7 @@ ReactDOM.render(
   (
         <Router history={browserHistory} >
           <Route path='/' component={App} >
-            <IndexRoute component={Lobby} onEnter={Auth.requireAuth}/>
+            <IndexRoute component={Lobby} onEnter={Auth.requireAuth} />
             <Route path='signin' component={Signin} />
             <Route path='signup' component={Signup} />
             <Route path='signout' component={Signout} />
