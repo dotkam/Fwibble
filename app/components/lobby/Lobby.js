@@ -41,7 +41,7 @@ module.exports = React.createClass({
             </div>
           </div>
           <div className="col-md-8 col-offset-2">
-            <button type="button" className="btn btn-primary btn-lg btn-block" onClick={this.props.generateGameRoom}>New Fwibble</button>
+            <button type="button" className="btn btn-primary btn-lg btn-block" onClick={this.generateGameRoom}>New Fwibble</button>
           </div>
           <br />
           <br />

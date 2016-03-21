@@ -131,7 +131,14 @@ module.exports = function (socket) {
             client.emit('enter:game', {username: data.username, active_game: res.game_hash})
           })
       })
-  })
+  });
+  // Adds active_game to user
+  socket.on('join:game', function(data){
+    User.addActiveRoom(data.username, data.game_hash)
+      .then(function(res){
+        
+      })
+  });
   // Passes in updated turn counter and broadcasts it to other users
   socket.on('change:turn', function(turn){
     socket.broadcast.emit('update:turn', {
