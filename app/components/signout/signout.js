@@ -9,7 +9,14 @@ module.exports = React.createClass({
   	// socket.on('logout', this._logout);
     this.props.logoutUser();
   },
+
   render: function(){
-    return <p>Successfully logged out</p>
+    
+    return (
+      <div className="container">
+        <p>Successfully logged out</p>
+        <a href="/signin">Need more Fwibbles in your life? Sign back in!</a>
+      </div>
+    );
   }
-})
+});
