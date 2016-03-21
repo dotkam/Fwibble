@@ -5,6 +5,7 @@ var StoryBox = require('./StoryBox.js');
 var StoryInput = require('./StoryInput.js');
 var WordCountMeter = require('./WordCountMeter.js');
 var GoButton = require('./GoButton.js');
+var LeaveGameButton = require('./LeaveGameButton.js');
 
 var io = require('socket.io-client');
 var socket = io.connect();
@@ -26,9 +27,12 @@ module.exports = React.createClass({
             {inputForm}
             <br />
             {wordMeter}
+            <br />
+            <LeaveGameButton />
           </div>
         </div>
       </div>
     )
   }
 });
+

@@ -6,8 +6,7 @@ var StoryTitle = require('./StoryTitle');
 var StoryContainer = require('./StoryContainer.js');
 var Fwib = require('./Fwib.js');
 var UsersInRoom = require('./UsersInRoom.js');
-var WordCountMeter = require('./WordCountMeter.js');
-var GoButton = require('./GoButton.js')
+var GoButton = require('./GoButton.js');
 
 var io = require('socket.io-client');
 var socket = io.connect();
