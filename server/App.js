@@ -34,7 +34,7 @@ var App = React.createClass({
     // THEN setState based on this info
   },
   getInitialState: function() {
-    return {username: null, loggedIn: Auth.loggedIn(), active_game: null} // Ask Gilbert if this belongs in the state
+    return {username: null, loggedIn: Auth.loggedIn(), active_game: null, openGames: []} // Ask Gilbert if this belongs in the state
   },
   loginUser: Auth.login,
   logoutUser: function(){
@@ -95,6 +95,7 @@ var App = React.createClass({
           users: this.state.users,
           fwibs: this.state.fwibs,
           turn: this.state.turn,
+          openGames: this.state.openGames,
           loginUser: this.loginUser,
           setUser: this.setUser,
           logoutUser: this.logoutUser,

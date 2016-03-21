@@ -15,6 +15,7 @@ module.exports = React.createClass({
     return {openGames: []};
   },
   componentDidMount: function(){
+    console.log('this.props.openGames', this.props.openGames)
     socket.on('update:games:joinable', this.updateOpenGames);
     socket.on('enter:game', this.props.setUser);
   },
