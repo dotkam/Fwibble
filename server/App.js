@@ -25,16 +25,50 @@ var App = React.createClass({
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
-
-  getInitialState: function() {
-
-    return {username: null, loggedIn: Auth.loggedIn(), active_game: null} // Ask Gilbert if this belongs in the state
-  },
-
   componentDidMount: function(){
     // TODO grab user info based on session token
     // THEN setState based on this info
   },
+  getInitialState: function() {
+    return {username: null, loggedIn: Auth.loggedIn(), active_game: null} // Ask Gilbert if this belongs in the state
+  },
+  loginUser: function(){
+  },
+  logoutUser: function(){
+    socket.emit('logout', {username: this.state.username});
+    Auth.logout(); // log out on /signout
+    this.setState({
+      username: null,
+      loggedIn: Auth.loggedIn(),
+      active_game: null
+    })
+  },
+  getActiveGame: function(){
+  },
+  getUsers: function(){
+  },
+  getFwibs: function(){
+  },
+  getTurn: function(){
+  },
+  createSession: function(){
+  },
+  deleteSession: function(){
+  },
+  createGame: function(){
+  },
+  joinGame: function(data){
+    socket.emit('join:game', {username: data.user, game_hash: data.game_hash})
+    this.setState({active_game: data.game_hash});
+  },
+  leaveGame: function(){
+  },
+  createUser: function(){
+  },
+  userJoined: function(){},
+  userLeft: function(){},
+  sendFwib: function(){},
+  receivedFwib: function(){},
   setUser: function(data) {
     Auth.login();
     this.setState({
@@ -62,19 +96,6 @@ var App = React.createClass({
     else {
       this.context.router.replace(`/lobby`)
     }
-  },
-  joinGame: function(data){
-    socket.emit('join:game', {username: data.user, game_hash: data.game_hash})
-    this.setState({active_game: data.game_hash});
-  },
-  logoutUser: function(){
-    socket.emit('logout', {username: this.state.username});
-    Auth.logout(); // log out on /signout
-    this.setState({
-      username: null,
-      loggedIn: Auth.loggedIn(),
-      active_game: null
-    })
   },
   // setActiveState: function(data){
   //   this.setState({
