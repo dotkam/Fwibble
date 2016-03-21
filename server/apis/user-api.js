@@ -35,7 +35,7 @@ UserAPI.post('/signup', function(req, res) {
     console.log('User.create: ', response)
     setTimeout(function(){ 
        signIn(req, res)
-     }, 1000);
+     }, 750);
  })
  .catch(function() {
   res.send({error: errMsg})
@@ -101,7 +101,7 @@ function signIn (req, res, err) {
          console.log('RESPONSE', response)
          res.send(response);
        })
-     }, 1000);
+     }, 750);
   })
   .catch(function(err) {
     console.error('response.err', response.errMessage)
