@@ -77,13 +77,14 @@ var App = React.createClass({
   //     activeGame
   //   })
   // }
+
   render: function() {
+
+  var navBarShow = this.state.loggedIn ? (<NavBar active_game={this.state.active_game} loggedIn={this.state.loggedIn} />) : null;
+
     return (
       <div>
-        <NavBar 
-        active_game={this.state.active_game} 
-        loggedIn={this.state.loggedIn}
-        />
+        {navBarShow}
         {this.props.children && React.cloneElement(this.props.children, {
           setUser: this.setUser,
           user: this.state.username,
