@@ -44,6 +44,8 @@ module.exports = React.createClass({
           // var setUserClosure = this.props.setUser;
           this.props.setUser({username: data.activeUser, active_game: data.activeGame});
           // setTimeout(function(){setUserClosure(data.activeUser)}, 1000);
+          console.log("this is firing when you think it does", data.sessToken)
+          localStorage.fwibbleToken = data.sessToken;
         }
       }.bind(this),
       error: function(data) {
@@ -58,19 +60,28 @@ module.exports = React.createClass({
 
     return (
       <div className="container">
-        <h2>Signup Page</h2>
-        <div><Link to="/">Home</Link></div>
-        <br />
-        <div className="signUpForm">
-	        <form>
-		        <input type="text" placeholder="username" value={this.state.username} onChange={this.handleUsername} />
-		        <br/>
-		        <input type="password" placeholder="password" value={this.state.password} onChange={this.handlePassword} />
-		        <br/>
-		        <input type="submit" name="signUpSubmit" onClick={this.handleClick} />
-            {this.state.loginError}
-		      </form>
-		    </div>
+        <div className="text-center">
+          <div className="row">
+            <div className="col-md-6 col-md-offset-3">
+                <div className="jumbotron">
+                  <h1 className="display-3">Fwibble</h1>
+                    <div className="signUpForm">
+            	        <form>
+            		        <input type="text" placeholder="username" value={this.state.username} onChange={this.handleUsername} />
+            		        <br/>
+            		        <input type="password" placeholder="password" value={this.state.password} onChange={this.handlePassword} />
+            		        <br/>
+            		        <input type="submit" name="signUpSubmit" onClick={this.handleClick} />
+                        {this.state.loginError}
+            		      </form>
+                      <div className="row">
+                          <a href="/signup">Already have an account? Sign in!</a>
+                      </div>
+            		    </div>
+                </div>
+              </div>
+          </div>
+        </div>
       </div>
     )
   }

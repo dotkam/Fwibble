@@ -12,7 +12,7 @@ Game.generateHash = function(gameId) {
   var hash = sha1(gameId);
   hash = hash.slice(0, 15);
   console.log(hash)
-  return pg('games').where({'game_id': gameId}).update({'game_hash': hash}).returning(['game_id', 'game_hash', 'game_title'])
+  return pg('games').where({'game_id': gameId}).update({'game_hash': hash}).returning(['game_id', 'game_hash', 'game_title', 'turn_index', 'game_status', 'game_creator'])
     .catch(function(error) {
       console.error('error inserting hash into db', error)
     }) 
@@ -59,15 +59,18 @@ Game.titleGenerator = function() {
 Game.create = function(attrs) {
   attrs.game_title = Game.titleGenerator();
   return pg('games').insert(attrs, ['game_id', 'game_hash', 'game_title', 'turn_index', 'game_status', 'game_creator'])
-    .catch(function(error) {
-      console.error('error inserting game into db', error)
-    })
     .then(function(res){
       console.log('successfully inserted game', res)
       var gameId = res[0].game_id;
       console.log("game id", gameId);
-      Game.generateHash(gameId);
-      return res[0];
+      return Game.generateHash(gameId)
+        .then(function(res2){
+          console.log('res2', res2)
+          return res2[0];
+        })
+    })
+    .catch(function(error) {
+      console.error('error inserting game into db', error)
     })
 }
 
@@ -75,7 +78,7 @@ Game.create = function(attrs) {
   Find all users in a game (where game is in progress)
 */
 Game.allUser = function(gamehash) {
-  return pg.select('username').from('games').where({'game_hash': gamehash})
+  return pg.select('username').from('users').where({'active_game': gamehash})
     .catch(function(error) {
       console.error('error retrieving users', error)
     })

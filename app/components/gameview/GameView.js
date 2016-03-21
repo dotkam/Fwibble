@@ -1,12 +1,12 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var StoryTitle = require('./StoryTitle.js');
-var StoryBox = require('./StoryBox.js');
-var StoryInput = require('./StoryInput.js');
+// var StoryContainer = require('./StoryContainer');
+var StoryTitle = require('./StoryTitle');
+var StoryContainer = require('./StoryContainer.js');
 var Fwib = require('./Fwib.js');
 var UsersInRoom = require('./UsersInRoom.js');
-var WordCountMeter = require('./WordCountMeter.js');
+var GoButton = require('./GoButton.js');
 
 var io = require('socket.io-client');
 var socket = io.connect();
@@ -15,7 +15,7 @@ var socket = io.connect();
 module.exports = React.createClass({
 
   getInitialState: function() {
-    return {users: [], fwibs:[], text: '', turn: 0, myTurn: false};
+    return {users: [], fwibs:[], text: '', turn: 0, myTurn: false, showStory: false, active: false};
   },
 
   componentDidMount: function() {
@@ -27,8 +27,9 @@ module.exports = React.createClass({
   },
 
   _initialize: function(data) {
-    var {users, name} = data;
-    this.setState({users, user: name});
+    var {users, user} = data;
+    users = users.map((u) => u.username)
+    this.setState({users, user});
   },
 
   _fwibReceive: function(fwib) {
@@ -39,13 +40,10 @@ module.exports = React.createClass({
   },
 
   _userJoined: function(data) {
+    // Should just need to grab all data for this user - only broadcast 
     var {user, users, fwibs, turn} = this.state;
     var {name, users} = data;
-    fwibs.push({
-      user: 'APPLICATION BOT',
-      text : name +' Joined'
-    });
-    console.log('user joined:', name)
+
     this.setState({users, fwibs});
     
     // TODO: put this logic in GO button function instead!
@@ -54,15 +52,12 @@ module.exports = React.createClass({
     this.setState({myTurn});
   },
 
-  _userLeft: function(data) {
+  _userLeft: function(data) { // TODO: need Leave Room button
     var {users, fwibs} = this.state;
     var {name} = data;
     var index = users.indexOf(name);
     users.splice(index, 1);
-    fwibs.push({
-      user: 'APPLICATION BOT',
-      text : name +' Left'
-    });
+
     this.setState({users, fwibs});
   },
 
@@ -86,7 +81,7 @@ module.exports = React.createClass({
 
   handleFwibSubmit: function(fwib) {
     var {fwibs, turn, users, user, myTurn} = this.state;
-    if(user === users[turn]){
+    if(user === users[turn]){ // This logic isn't necessary anymore
       fwibs.push(fwib);
       turn = this._changeTurn();
       myTurn = false;
@@ -99,17 +94,27 @@ module.exports = React.createClass({
     }
   },
 
+  onGo: function() {
+    this.setState({ showStory: true});
+  },
 
-	render: function() {
-    if(this.state.user === undefined){
+  startUp: function() {
+    this.setState({ active: true});
+  },
+
+
+
+  render: function() {
+    // Fetch all info for this gameroom this.params.url
+    if(this.state.user === undefined){ // change to find user in users array - Maybe not?
       var {user} = this.props;
-      console.log('user render', user)
-      socket.emit('help', {user: user});
+      var {users} = this.state;
+      console.log('INSIDE RENDER users', users)
+      socket.emit('gameview:enter', {user: user, users: users, game_hash: this.props.params.game_hash});
     }
-    var inputForm = this.state.myTurn ? (<StoryInput onFwibSubmit={this.handleFwibSubmit} user={this.state.user} />) : null;
 
-    var wordMeter = this.state.myTurn ? (<WordCountMeter onFwibSubmit={this.handleFwibSubmit} user={this.state.user} />) : null;
-
+    var display = this.state.showStory ? (<StoryContainer fwibs={this.state.fwibs} onFwibSubmit={this.handleFwibSubmit} user={this.state.user} />) : (<GoButton goButtonPush={this.onGo} gameStart={this.startUp}/>);
+   
     return (
       <div>
         <div className="container">
@@ -117,23 +122,13 @@ module.exports = React.createClass({
             <div className="col-md-9">
               <StoryTitle />
             </div>
+            {display}
           </div>
-          <div>
-            <div className="row">
-              <div className="col-md-8">
-                <StoryBox fwibs={this.state.fwibs} />
-                <br />
-                {inputForm}
-                <br />
-                {wordMeter}
-              </div>
-              <div className="col-md-2 col-md-offset-1">
-                <UsersInRoom users={this.state.users} />
-              </div>
-            </div>
+          <div className="col-md-2 col-md-offset-1">
+            <UsersInRoom users={this.state.users} />
           </div>
         </div>
       </div>
     );
   }
-});
+}); 

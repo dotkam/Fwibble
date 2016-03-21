@@ -17,6 +17,8 @@ module.exports = React.createClass({
       loginErr: false,
       loginMsg: null
     }
+
+    return { showStory: false };
   },
 
   handleUsername: function (e) {
@@ -30,7 +32,6 @@ module.exports = React.createClass({
   handleClick: function (e) {
     e.preventDefault()
     // console.log("username:", this.state.username, "\npassword:", this.state.password)
-    console.log('userTrim', this.state.username === this.state.username.trim())
     var postData = JSON.stringify({
       "username": this.state.username,
       "password": this.state.password
@@ -90,29 +91,29 @@ module.exports = React.createClass({
 
     return (
       <div className="container">
-      <div className="text-center">
-        <div className="row">
-          <div className="col-md-6 col-md-offset-3">
-              <div className="jumbotron">
-                <h1 className="display-3">Fwibble</h1>
-                  <div className="signInForm">
-          	        <form onSubmit={this.trySignIn}>
-          		        <input type="text" placeholder="username" value={this.state.username} onChange={this.handleUsername} />
-          		        <br/>
-          		        <input type="password" placeholder="password" value={this.state.password} onChange={this.handlePassword} />
-          		        <br/>
-          		        <input type="submit" className="btn btn-success" name="signInSubmit" onClick={this.handleClick} /> 
-          		      </form>
-                    <p>{loginMessage}</p>
-                    <div className="row">
-                        <a href="/signup">Don't have an account yet? Sign up!</a>
-          		      </div>
-                  </div>    
+        <div className="text-center">
+          <div className="row">
+            <div className="col-md-6 col-md-offset-3">
+                <div className="jumbotron">
+                  <h1 className="display-3">Fwibble</h1>
+                    <div className="signInForm">
+            	        <form onSubmit={this.trySignIn}>
+            		        <input type="text" placeholder="username" value={this.state.username} onChange={this.handleUsername} />
+            		        <br/>
+            		        <input type="password" placeholder="password" value={this.state.password} onChange={this.handlePassword} />
+            		        <br/>
+            		        <input type="submit" className="btn btn-success" name="signInSubmit" onClick={this.handleClick} /> 
+            		      </form>
+                      <p>{loginMessage}</p>
+                      <div className="row">
+                          <a href="/signup">Don't have an account yet? Sign up!</a>
+            		      </div>
+                    </div>    
+                </div>
               </div>
             </div>
           </div>
-        </div>
       </div>
-    )
+    );
   }
-})
+});

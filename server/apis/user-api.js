@@ -33,7 +33,9 @@ UserAPI.post('/signup', function(req, res) {
   })
  .then(function(response) {
     console.log('User.create: ', response)
-    signIn(req, res)
+    setTimeout(function(){ 
+       signIn(req, res)
+     }, 1000);
  })
  .catch(function() {
   res.send({error: errMsg})
@@ -82,42 +84,24 @@ function signIn (req, res, err) {
     } else {
       response.passStatus = true;
       response.activeUser = username;
-      return User.findActiveGame(username)
+      // return User.findActiveGame(username)
+      newSession = {
+        username: username
+      }
+      return Session.create(newSession)
     }
-  })
-  // translate GameHash to GameId
-  // .then(function(array) {
-  //   return Game.findIdByHash(array[0].active_game)
-  // })
-  // and send relevant response
-  .then(function(array) {
-    response.activeGame = array//[0].game_id;
-    console.log('preload response', response)
-  })
-  // catch-all for thrown errors
-  .catch(function(err) {
-    console.error('response.err', response.errMessage)
-    res.send(response)
   })
   //after user has authenticated, create session for user in db
   .then(function() {
-    newSession = {
-      username: username
-      }
-    return Session.create(newSession)
-  })
-  //the creation of the token takes just a bit, so set a timeout for 1 second to handle the lookup and assignment
-  //to response object
-  .then(function(session) {
-    var token;
-    console.log('session created', session)
     setTimeout(function(){ 
-      Session.findTokenByUsername(username)
-      .then(function(token) { 
-        response.sessToken = token 
-        res.send(response);   
-        })
-    }, 1000);
+      Session.userInnerJoin(username)
+       .then(function(join) {
+         response.activeGame = join.active_game || null;
+         response.sessToken = join.token;
+         console.log('RESPONSE', response)
+         res.send(response);
+       })
+     }, 1000);
   })
   .catch(function(err) {
     console.error('response.err', response.errMessage)
