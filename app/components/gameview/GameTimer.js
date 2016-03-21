@@ -1,14 +1,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var StoryInput = require('./StoryInput.js');
-var GoButton = require('./GoButton.js');
-
-var io = require('socket.io-client');
-var socket = io.connect();
-
 module.exports = React.createClass({
-
+  
   getInitialState: function() {
     return {secondsElapsed: 600};
   },
@@ -20,27 +14,24 @@ module.exports = React.createClass({
   componentWillUnmount: function() {
     clearInterval(this.interval);
   },
-
+  //sets interval to one second again
   startTimer: function() {
   	if (!this.interval) {
-      this.interval = setInterval(this.update, this.props.options.delay); // 100 is delay
+      this.interval = setInterval(this.tick, 1000);
     }
   },
-
+  //normal tick of one second
   tick: function() {
-    this.setState({secondsElapsed: this.state.secondsElapsed - 1});
+    if (this.state.secondsElapsed > 0){
+      this.setState({secondsElapsed: this.state.secondsElapsed - 1});
+    }
   },
-
+  //sets this interval to nothing, pausing timer
   pauseTimer: function() {
   	 if (this.interval) {
       clearInterval(this.interval);
       this.interval = null;
     }
-
-  },
-
-  endTimer: function() {
-
   },
 
   render: function() {
