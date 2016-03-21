@@ -1,8 +1,13 @@
 // Keep track of which names are used so that there are no duplicates
-var Fwib = require('../app/actions/fwibs.js')
-var User = require('../app/actions/users.js')
-var Game = require('../app/actions/games.js')
-var Session = require('../app/actions/sessions.js')
+// var Fwib = require('../app/actions/fwibs.js')
+// var User = require('../app/actions/users.js')
+// var Game = require('../app/actions/games.js')
+// var Session = require('../app/actions/sessions.js')
+
+var Fwib = require('./models/fwibModel.js')
+var User = require('./models/userModel.js')
+var Game = require('./models/gameModel.js')
+var Session = require('./models/sessionModel.js')
 
 var userNames = (function () {
   var names = {};
