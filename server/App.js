@@ -15,8 +15,12 @@ var Signup = require('../app/components/signup/Signup');
 var Signout = require('../app/components/signout/Signout');
 var Lobby = require('../app/components/lobby/Lobby');
 var Gameview = require('../app/components/gameview/GameView');
-//var userActions = //
+
 var Auth = require('./auth');
+var Users = require('../app/actions/users');
+var Games = require('../app/actions/games');
+var Sessions = require('../app/actions/sessions');
+var Fwibs = require('../app/actions/fwibs');
 
 var io = require('socket.io-client');
 var socket = io.connect();
@@ -25,48 +29,14 @@ var App = React.createClass({
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
-
-  getInitialState: function() {
-
-    return {username: null, loggedIn: Auth.loggedIn(), active_game: null} // Ask Gilbert if this belongs in the state
-  },
-
   componentDidMount: function(){
     // TODO grab user info based on session token
     // THEN setState based on this info
   },
-  setUser: function(data) {
-    Auth.login();
-    this.setState({
-
-      username: data.username,
-      loggedIn: Auth.loggedIn(),
-      active_game: data.active_game
-    });
-    // $.ajax({
-    //   type: 'POST',
-    //   url: '/user/game', //game
-    //   data: { username: username },
-    //   contentType: 'application/json',
-    //   success: function(data) {
-    //     // TODO update state based off of active_game response
-    //   },
-    //   error: function(data) {
-    //     console.error("Connection error:", data)
-    //   }
-    // });
-    
-    if(this.state.active_game){
-      this.context.router.replace(`/gameview/${this.state.active_game}`)
-    }
-    else {
-      this.context.router.replace(`/lobby`)
-    }
+  getInitialState: function() {
+    return {username: null, loggedIn: Auth.loggedIn(), active_game: null, openGames: []} // Ask Gilbert if this belongs in the state
   },
-  joinGame: function(data){
-    socket.emit('join:game', {username: data.user, game_hash: data.game_hash})
-    this.setState({active_game: data.game_hash});
-  },
+  loginUser: Auth.login,
   logoutUser: function(){
     socket.emit('logout', {username: this.state.username});
     Auth.logout(); // log out on /signout
@@ -76,12 +46,42 @@ var App = React.createClass({
       active_game: null
     })
   },
-  // setActiveState: function(data){
-  //   this.setState({
-  //     activeGame
-  //   })
-  // }
-
+  getActiveGame: function(){
+  },
+  getUsers: function(){
+  },
+  getFwibs: function(){
+  },
+  getTurn: function(){
+  },
+  createSession: function(){
+  },
+  deleteSession: function(){
+  },
+  createGame: function(){
+  },
+  joinGame: function(data){
+    socket.emit('join:game', {username: data.user, game_hash: data.game_hash})
+    this.setState({active_game: data.game_hash});
+  },
+  leaveGame: function(){
+  },
+  createUser: function(){
+  },
+  userJoined: function(){},
+  userLeft: function(){},
+  sendFwib: function(){},
+  receivedFwib: function(){},
+  setUser: function(data) {
+    Auth.login();
+    this.setState({
+      username: data.username,
+      loggedIn: Auth.loggedIn(),
+      active_game: data.active_game
+    });
+    var next = this.state.active_game ? `/gameview/${this.state.active_game}` : `/lobby`;
+    this.context.router.replace(next)
+  },
   render: function() {
 
   var navBarShow = this.state.loggedIn ? (<NavBar active_game={this.state.active_game} loggedIn={this.state.loggedIn} />) : null;
@@ -90,11 +90,16 @@ var App = React.createClass({
       <div>
         {navBarShow}
         {this.props.children && React.cloneElement(this.props.children, {
-          setUser: this.setUser,
           user: this.state.username,
+          active_game: this.state.active_game,
+          users: this.state.users,
+          fwibs: this.state.fwibs,
+          turn: this.state.turn,
+          openGames: this.state.openGames,
+          loginUser: this.loginUser,
+          setUser: this.setUser,
           logoutUser: this.logoutUser,
-          joinGame: this.joinGame,
-          active_game: this.state.active_game
+          joinGame: this.joinGame
         })}
       </div>
     )

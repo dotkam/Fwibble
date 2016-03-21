@@ -15,6 +15,7 @@ module.exports = React.createClass({
     return {openGames: []};
   },
   componentDidMount: function(){
+    console.log('this.props.openGames', this.props.openGames)
     socket.on('update:games:joinable', this.updateOpenGames);
     socket.on('enter:game', this.props.setUser);
   },
@@ -41,7 +42,7 @@ module.exports = React.createClass({
             </div>
           </div>
           <div className="col-md-8 col-offset-2">
-            <button type="button" className="btn btn-primary btn-lg btn-block" onClick={this.generateGameRoom}>New Fwibble</button>
+            <button type="button" className="btn btn-primary btn-lg btn-block" onClick={this.props.generateGameRoom}>New Fwibble</button>
           </div>
           <br />
           <br />
