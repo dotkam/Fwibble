@@ -1,8 +1,8 @@
 var UserAPI = require('express').Router();
 
-var User = require('../../app/actions/users');
-var Game = require('../../app/actions/games');
-var Session = require('../../app/actions/sessions')
+var User = require('../models/userModel');
+var Game = require('../models/gameModel');
+var Session = require('../models/sessionModel');
 
 
 module.exports = UserAPI;

@@ -1,7 +1,7 @@
 "use strict"
 require('../../test-helper.js') // <--- This must be at the top of every test file.
 
-const Fwib = require(__app + '/actions/fwibs');
+const Fwib = require(__server + '/models/fwibs');
 const pg      = require('../../../db/db_setup');
 const dbCleaner = require('knex-cleaner');
 
