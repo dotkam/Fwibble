@@ -6,6 +6,7 @@ var StoryInput = require('./StoryInput.js');
 var WordCountMeter = require('./WordCountMeter.js');
 var GoButton = require('./GoButton.js');
 var LeaveGameButton = require('./LeaveGameButton.js');
+var GameTimer = require('./GameTimer.js')
 
 var io = require('socket.io-client');
 var socket = io.connect();
@@ -30,6 +31,9 @@ module.exports = React.createClass({
             <br />
             <LeaveGameButton />
           </div>
+        </div>
+        <div>
+          <GameTimer />
         </div>
       </div>
     )
