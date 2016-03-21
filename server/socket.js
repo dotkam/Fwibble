@@ -152,6 +152,13 @@ module.exports = function (socket) {
     Session.deleteByUsername(data.username);
   });
 
+  //When game timer ends, changes game status to completed
+  socket.on('endtimer', function(data){
+    console.log('GAME OVER', data)
+    Game.updateToCompleted(data.gamehash);
+    User.deleteActiveRoom(data.username);
+  });
+
   // clean up when a user leaves, and broadcast it to other users
   socket.on('disconnect', function () {
     userNames.free(name);

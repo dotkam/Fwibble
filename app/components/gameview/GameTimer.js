@@ -1,10 +1,13 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+var io = require('socket.io-client');
+var socket = io.connect();
+
 module.exports = React.createClass({
   
   getInitialState: function() {
-    return {secondsElapsed: 600};
+    return {secondsLeft: 6, };
   },
 
   componentDidMount: function() {
@@ -22,8 +25,12 @@ module.exports = React.createClass({
   },
   //normal tick of one second
   tick: function() {
-    if (this.state.secondsElapsed > 0){
-      this.setState({secondsElapsed: this.state.secondsElapsed - 1});
+    if (this.state.secondsLeft > 0){
+      this.setState({secondsLeft: this.state.secondsLeft - 1});
+    } else {
+      console.log('seconds have ended!', this.props.active_game, this.props.user)
+      clearInterval(this.interval);    
+      socket.emit('endtimer', {username: this.props.user, gamehash: this.props.active_game});
     }
   },
   //sets this interval to nothing, pausing timer
@@ -37,7 +44,7 @@ module.exports = React.createClass({
   render: function() {
   	return (
       <div className='gameTimer'>
-      Seconds Elapsed: {this.state.secondsElapsed}
+      Seconds Left: {this.state.secondsLeft}
       </div>
     );
   }
