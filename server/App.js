@@ -81,6 +81,11 @@ var App = React.createClass({
   //     activeGame
   //   })
   // }
+  endTimer: function(){
+    if(this.state.secondsLeft === 0){
+    socket.emit('endtimer', {gamehash: this.state.active_game});
+    }
+  },
 
   render: function() {
 

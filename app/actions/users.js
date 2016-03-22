@@ -153,5 +153,3 @@ User.deleteActiveRoom = function(username) {
       return res;
     })
 }
-
-

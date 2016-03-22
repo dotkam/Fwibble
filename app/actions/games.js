@@ -226,7 +226,3 @@ Game.updateTurn = function(gamehash, newTurn) {
       return res;
     })
 }
-
-
-
-

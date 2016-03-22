@@ -117,7 +117,7 @@ module.exports = React.createClass({
       socket.emit('gameview:enter', {user: user, users: users, game_hash: this.props.params.game_hash});
     }
 
-    var display = this.state.showStory ? (<StoryContainer fwibs={this.state.fwibs} onFwibSubmit={this.handleFwibSubmit} user={this.state.user} />) : (<GoButton goButtonPush={this.onGo} gameStart={this.startUp}/>);
+    var display = this.state.showStory ? (<StoryContainer fwibs={this.state.fwibs} onFwibSubmit={this.handleFwibSubmit} user={this.state.user} active_game={this.props.active_game} />) : (<GoButton goButtonPush={this.onGo} gameStart={this.startUp}/>);
    
     return (
       <div>

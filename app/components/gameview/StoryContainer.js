@@ -33,7 +33,7 @@ module.exports = React.createClass({
           </div>
         </div>
         <div>
-          <GameTimer />
+          <GameTimer active_game={this.props.active_game} user={this.props.user} />
         </div>
       </div>
     )
