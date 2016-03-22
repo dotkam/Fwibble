@@ -36,6 +36,7 @@ var App = React.createClass({
     // THEN setState based on this info
   },
   setUser: function(data) {
+    console.log('setUser data', data)
     Auth.login();
     this.setState({
 
@@ -55,13 +56,16 @@ var App = React.createClass({
     //     console.error("Connection error:", data)
     //   }
     // });
-    
+    console.log('setUser active_game', this.state.active_game)
     if(this.state.active_game){
-      this.context.router.replace(`/gameview/${this.state.active_game}`)
+      this.context.router.replace(`/gameview/${data.active_game}`)
     }
     else {
       this.context.router.replace(`/lobby`)
     }
+  },
+  setActiveGame: function(data){
+    this.setState({active_game: data.game_hash});
   },
   joinGame: function(data){
     socket.emit('join:game', {username: data.user, game_hash: data.game_hash})

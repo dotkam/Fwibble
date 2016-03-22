@@ -139,7 +139,7 @@ User.addActiveRoom = function(username, gamehash) {
     })
     .then(function(res){
       console.log('successfully updated active game', res)
-      return res;
+      return res[0];
     })
 }
 
