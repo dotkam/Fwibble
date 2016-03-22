@@ -71,7 +71,6 @@ var App = React.createClass({
     socket.emit('join:game', {username: data.user, game_hash: data.game_hash})
     this.setState({active_game: data.game_hash});
   },
-
   fetchUsers: function(gamehash){
     socket.emit('fetch:users', {active_game: gamehash});
   },

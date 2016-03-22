@@ -155,6 +155,7 @@ module.exports = function (socket) {
       })
   });
   socket.on('leave:game', function(data){
+    var client = this;
     User.deleteActiveRoom(data.username)
       .then(function(res){
         Game.allUser(data.game_hash)
