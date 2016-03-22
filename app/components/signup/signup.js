@@ -62,7 +62,8 @@ module.exports = React.createClass({
       <div className="container">
         <div className="text-center">
           <div className="row">
-            <div className="col-md-6 col-md-offset-3">
+            <div className="signupBox">
+              <div className="col-md-6 col-md-offset-3">
                 <div className="jumbotron">
                   <h1 className="display-3">Fwibble</h1>
                     <div className="signUpForm">
@@ -71,15 +72,17 @@ module.exports = React.createClass({
             		        <br/>
             		        <input type="password" placeholder="password" value={this.state.password} onChange={this.handlePassword} />
             		        <br/>
-            		        <input type="submit" name="signUpSubmit" onClick={this.handleClick} />
+            		        <input type="submit" className="btn btn-success" name="signUpSubmit" onClick={this.handleClick} /> 
                         {this.state.loginError}
             		      </form>
                       <div className="row">
-                          <a href="/signup">Already have an account? Sign in!</a>
+                      <br/>
+                        <a href="/signin">Already have an account? Sign in!</a>
                       </div>
-            		    </div>
+          		      </div>
                 </div>
               </div>
+            </div>  
           </div>
         </div>
       </div>
