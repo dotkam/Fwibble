@@ -42,7 +42,7 @@ module.exports = React.createClass({
   _userJoined: function(data) {
     // Should just need to grab all data for this user - only broadcast 
     var {user, users, fwibs, turn} = this.state;
-    var {name, users} = data;
+    var {name} = data;
 
     this.setState({users, fwibs});
     
