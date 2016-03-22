@@ -142,7 +142,7 @@ module.exports = function (socket) {
   socket.on('join:game', function(data){
     User.addActiveRoom(data.username, data.game_hash)
       .then(function(res){
-        
+        socket.broadcast.emit('user:join', {user: data.username});
       })
   });
   // Passes in updated turn counter and broadcasts it to other users
