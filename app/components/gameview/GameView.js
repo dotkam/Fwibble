@@ -7,6 +7,7 @@ var StoryContainer = require('./StoryContainer.js');
 var Fwib = require('./Fwib.js');
 var UsersInRoom = require('./UsersInRoom.js');
 var GoButton = require('./GoButton.js');
+var LeaveGameButton = require('./LeaveGameButton.js');
 
 var io = require('socket.io-client');
 var socket = io.connect();
@@ -118,7 +119,8 @@ module.exports = React.createClass({
     }
 
     var display = this.state.showStory ? (<StoryContainer fwibs={this.state.fwibs} onFwibSubmit={this.handleFwibSubmit} user={this.state.user} active_game={this.props.active_game} />) : (<GoButton goButtonPush={this.onGo} gameStart={this.startUp}/>);
-   
+    var leave = this.state.showStory ? null : (<LeaveGameButton />);
+
     return (
       <div>
         <div className="container">
@@ -127,9 +129,10 @@ module.exports = React.createClass({
               <StoryTitle />
             </div>
             {display}
-          </div>
-          <div className="col-md-2 col-md-offset-1">
-            <UsersInRoom users={this.state.users} />
+            {leave}
+            <div className="col-md-2 col-md-offset-1">
+              <UsersInRoom users={this.state.users} />
+            </div>
           </div>
         </div>
       </div>
