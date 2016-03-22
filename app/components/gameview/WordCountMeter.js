@@ -23,16 +23,23 @@ module.exports = React.createClass({
         user : this.props.user,
         text : trimmedWord
       }
-      this.props.onFwibSubmit(fwib); 
-    }
-    
-    this.setState({ text: '' });
-  },
-  */
+    */
 
-  // changeHandler: function(e) {
-  //   this.setState({ text : e.target.value });
-  // },
+  render: function() {
+    return (
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow={} aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+          <span class="sr-only">{}</span>
+        </div>
+      </div>
+
+    )
+  }
+});
+
+
+/* 
+// old stacked version - was partially working but not hooked up to anything:
 
   render: function() {
     return(
