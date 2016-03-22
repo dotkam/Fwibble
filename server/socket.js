@@ -140,9 +140,28 @@ module.exports = function (socket) {
   });
   // Adds active_game to user
   socket.on('join:game', function(data){
+    var client = this;
     User.addActiveRoom(data.username, data.game_hash)
       .then(function(res){
-        socket.broadcast.emit('user:join', {user: data.username});
+
+        Game.allUser(data.game_hash)
+          .then(function(res2){
+            console.log('SENDING OUT AN SOS', res2)
+            socket.broadcast.emit('update:users', {users: res2});
+            client.emit('update:users', {users: res2});
+          })
+
+
+      })
+  });
+  socket.on('leave:game', function(data){
+    User.deleteActiveRoom(data.username)
+      .then(function(res){
+        Game.allUser(data.game_hash)
+          .then(function(res2){
+            socket.broadcast.emit('update:users', {users: res2});
+            client.emit('update:users', {users: res2});
+          })
       })
   });
   // Passes in updated turn counter and broadcasts it to other users
