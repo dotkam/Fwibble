@@ -37,19 +37,21 @@ module.exports = React.createClass({
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-      				<h3>Greetings, Fwibbler! You can create your own new Fwibble now or join an existing Fwibble below.</h3>
+      				<h2>Greetings, Fwibbler!</h2><h4>You can create your own new Fwibble now or join an existing Fwibble below.</h4>
             </div>
           </div>
-          <div className="col-md-8 col-offset-2">
-            <button type="button" className="btn btn-primary btn-lg btn-block" onClick={this.generateGameRoom}>New Fwibble</button>
-          </div>
+          <br />
+            <div className="text-center">
+              <button type="button" className="btn btn-primary btn-lg btn-block" onClick={this.generateGameRoom}>New Fwibble</button>
+            </div>
           <br />
           <br />
           <div className="row">
             <div className="col-md-8 col-offset-4">
-              <h3>Existing Fwibbles</h3>
+              <h3>Existing Fwibbles to Join:</h3>
             </div>
           </div>
+          <br />
           <br />
           <div>
             <div className="row">
