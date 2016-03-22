@@ -26,10 +26,6 @@ module.exports = React.createClass({
     socket.emit('create:game_room', {username: this.props.user});
     console.log('sent create:game_room', this.props.user);
   },
-  // enterGame: function(data){
-  //   // TODO: set active_game, redirect to active_game
-  //   this.setState({active_game: data.game_hash});
-  // },
   render: function() {
     socket.emit('lobby:games',this.state.openGames);
     return (
