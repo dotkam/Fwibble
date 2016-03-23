@@ -15,7 +15,7 @@ module.exports = React.createClass({
 
   render: function() {
     console.log('myTurn', this.props.myTurn)
-    var inputForm = this.props.myTurn && this.props.gameState === 'In Progress' ? (<StoryInput onFwibSubmit={this.props.onFwibSubmit} user={this.props.user} />) : null;
+    var inputForm = this.props.myTurn && this.props.gameState === 'in progress' ? (<StoryInput onFwibSubmit={this.props.onFwibSubmit} user={this.props.user} />) : null;
     var wordMeter = this.props.myTurn ? (<WordCountMeter onFwibSubmit={this.props.onFwibSubmit} user={this.props.user} />) : null;
     console.log('afterMyTirn', this.props.myTurn)
 
