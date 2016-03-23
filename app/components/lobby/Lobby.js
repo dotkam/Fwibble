@@ -39,7 +39,7 @@ module.exports = React.createClass({
           <br />
             <div className="text-center">
               <div className="newFwibble">
-                <button type="button" className="btn btn-lg btn-block" onClick={this.generateGameRoom}>New Fwibble</button>
+                <button type="button" className="btn btn-primary-outline" onClick={this.generateGameRoom}>New Fwibble</button>
               </div>
             </div>
           <br />
