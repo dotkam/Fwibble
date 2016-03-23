@@ -187,8 +187,8 @@ module.exports = function (socket) {
   //When game timer ends, changes game status to completed
   socket.on('endtimer', function(data){
     console.log('GAME OVER', data)
+    socket.broadcast.emit('game:end',{})
     Game.updateToCompleted(data.gamehash);
-    User.deleteActiveRoom(data.username);
   });
 
   // clean up when a user leaves, and broadcast it to other users

@@ -19,7 +19,7 @@ module.exports = React.createClass({
     router: React.PropTypes.object.isRequired
   },
   getInitialState: function() {
-    return {users: [], fwibs:[], text: '', turn: 0, myTurn: true, gameState: 'Open', active: false};
+    return {users: [], fwibs:[], text: '', turn: 0, myTurn: true, gameState: 'open', active: false};
   },
   componentWillMount: function(){
   },
@@ -32,6 +32,7 @@ module.exports = React.createClass({
    socket.on('update:users', this._updateUsers);
    socket.on('update:active_game', this.props.setActiveGame);
    socket.on('game:start', this.startUp);
+   socket.on('game:end', this.gameEnd);
     if(!this.props.active_game){
       console.log('this.params.game_hash', this.props.params.game_hash)
       this.props.joinGame({user: this.props.user, game_hash: this.props.params.game_hash});
@@ -123,11 +124,14 @@ module.exports = React.createClass({
   },
 
   onGo: function() {
-    this.setState({ gameState: 'In Progress' });
+    this.setState({ gameState: 'in progress' });
     socket.emit('update:game:inprogress', {game_hash: this.props.params.game_hash})
   },
   startUp: function() {
-    this.setState({ gameState: 'In Progress' });
+    this.setState({ gameState: 'in progress' });
+  },
+  gameEnd: function() {
+    this.setState({ gameState: 'completed' });
   },
   render: function() {
     // Add user to this game if they are not already
@@ -142,8 +146,8 @@ module.exports = React.createClass({
     //   socket.emit('fetch:users', {user: user, users: users, game_hash: this.props.params.game_hash});
     // }
     console.log('gameState', this.state.gameState)
-    var display = this.state.gameState === 'In Progress' ? (<StoryContainer fwibs={this.state.fwibs} onFwibSubmit={this.handleFwibSubmit} user={this.state.user} active_game={this.state.active_game} myTurn={this.state.myTurn} />) : (<GoButton goButtonPush={this.onGo} gameStart={this.startUp}/>);
-    var leave = this.state.gameState === 'Open' ? (<LeaveGameButton leaveGame={this.leaveGame} />) : null;
+    var display = this.state.gameState !== 'open' ? (<StoryContainer fwibs={this.state.fwibs} onFwibSubmit={this.handleFwibSubmit} user={this.state.user} active_game={this.state.active_game} myTurn={this.state.myTurn} gameState={this.state.gameState} />) : (<GoButton goButtonPush={this.onGo} gameStart={this.startUp}/>);
+    var leave = this.state.gameState === 'open' || this.state.gameState === 'completed' ? (<LeaveGameButton leaveGame={this.leaveGame} />) : null;
     console.log('after', this.state.gameState)
 
     return (
