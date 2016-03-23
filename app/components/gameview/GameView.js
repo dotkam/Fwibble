@@ -19,9 +19,10 @@ module.exports = React.createClass({
     router: React.PropTypes.object.isRequired
   },
   getInitialState: function() {
-    return {users: [], fwibs:[], text: '', turn: 0, myTurn: false, showStory: false, active: false};
+    return {users: [], fwibs:[], text: '', turn: 0, myTurn: true, showStory: false, active: false};
   },
-
+  componentWillMount: function(){
+  },
   componentDidMount: function() {
    socket.on('init', this._initialize);
    socket.on('send:fwib', this._fwibReceive);
@@ -30,7 +31,17 @@ module.exports = React.createClass({
    socket.on('update:turn', this._setTurn);
    socket.on('update:users', this._updateUsers);
    socket.on('update:active_game', this.props.setActiveGame);
-
+   socket.on('game:start', this.startUp);
+    if(!this.props.active_game){
+      console.log('this.params.game_hash', this.props.params.game_hash)
+      this.props.joinGame({user: this.props.user, game_hash: this.props.params.game_hash});
+    }
+    if(this.state.user === undefined){ // change to find user in users array - Maybe not?
+    // Fetch all info for this gameroom this.params.url
+      var {user} = this.props;
+      var {users} = this.state;
+      socket.emit('fetch:users', {user: user, users: users, game_hash: this.props.params.game_hash});
+    }
   },
 
   _initialize: function(data) {
@@ -112,30 +123,28 @@ module.exports = React.createClass({
   },
 
   onGo: function() {
-    this.setState({ showStory: true});
+    this.setState({ showStory: true });
+    socket.emit('update:game:inprogress', {game_hash: this.props.params.game_hash})
   },
-
   startUp: function() {
-    this.setState({ active: true});
+    this.setState({ showStory: true });
   },
-
-
   render: function() {
     // Add user to this game if they are not already
-    if(!this.props.active_game){
-      console.log('this.params.game_hash', this.props.params.game_hash)
-      this.props.joinGame({user: this.props.user, game_hash: this.props.params.game_hash});
-    }
-    if(this.state.user === undefined){ // change to find user in users array - Maybe not?
-    // Fetch all info for this gameroom this.params.url
-      var {user} = this.props;
-      var {users} = this.state;
-      console.log('INSIDE RENDER users', users)
-      socket.emit('gameview:enter', {user: user, users: users, game_hash: this.props.params.game_hash});
-    }
-
-    var display = this.state.showStory ? (<StoryContainer fwibs={this.state.fwibs} onFwibSubmit={this.handleFwibSubmit} user={this.state.user} active_game={this.props.active_game} />) : (<GoButton goButtonPush={this.onGo} gameStart={this.startUp}/>);
+    // if(!this.props.active_game){
+    //   console.log('this.params.game_hash', this.props.params.game_hash)
+    //   this.props.joinGame({user: this.props.user, game_hash: this.props.params.game_hash});
+    // }
+    // if(this.state.user === undefined){ // change to find user in users array - Maybe not?
+    // // Fetch all info for this gameroom this.params.url
+    //   var {user} = this.props;
+    //   var {users} = this.state;
+    //   socket.emit('fetch:users', {user: user, users: users, game_hash: this.props.params.game_hash});
+    // }
+    console.log('showstory', this.state.showStory)
+    var display = this.state.showStory ? (<StoryContainer fwibs={this.state.fwibs} onFwibSubmit={this.handleFwibSubmit} user={this.state.user} active_game={this.state.active_game} myTurn={this.state.myTurn} />) : (<GoButton goButtonPush={this.onGo} gameStart={this.startUp}/>);
     var leave = this.state.showStory ? null : (<LeaveGameButton leaveGame={this.leaveGame} />);
+    console.log('after', this.state.showStory)
 
     return (
       <div>

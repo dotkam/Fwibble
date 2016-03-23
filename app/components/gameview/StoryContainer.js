@@ -14,9 +14,10 @@ var socket = io.connect();
 module.exports = React.createClass({
 
   render: function() {
-  
-    var inputForm = this.props.myTurn ? (<StoryInput onFwibSubmit={this.handleFwibSubmit} user={this.props.user} />) : null;
-    var wordMeter = this.props.myTurn ? (<WordCountMeter onFwibSubmit={this.handleFwibSubmit} user={this.props.user} />) : null;
+    console.log('myTurn', this.props.myTurn)
+    var inputForm = this.props.myTurn ? (<StoryInput onFwibSubmit={this.props.onFwibSubmit} user={this.props.user} />) : null;
+    var wordMeter = this.props.myTurn ? (<WordCountMeter onFwibSubmit={this.props.onFwibSubmit} user={this.props.user} />) : null;
+    console.log('afterMyTirn', this.props.myTurn)
 
     return (
       <div>

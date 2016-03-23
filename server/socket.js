@@ -64,7 +64,7 @@ module.exports = function (socket) {
   
   // send the new user their name and a list of users
   // notify other clients that a new user has joined
-  socket.on('gameview:enter', function(data){ // Validate that user belongs in room
+  socket.on('fetch:users', function(data){ // Validate that user belongs in room
     console.log('socket data', data.users)
     // name = data.user; // May not need this
     // userNames.claim(name); // Grab all users for room // Good lord please deprecate this
@@ -177,6 +177,12 @@ module.exports = function (socket) {
     console.log('YOURE LOGGING OUT', data)
     Session.deleteByUsername(data.username);
   });
+
+  // Updates game state for users in game
+  socket.on('update:game:inprogress', function(data){
+    socket.broadcast.emit('game:start',{})
+    Game.updateToInProgress(data.game_hash)
+  })
 
   //When game timer ends, changes game status to completed
   socket.on('endtimer', function(data){
