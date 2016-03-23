@@ -19,7 +19,7 @@ module.exports = React.createClass({
     router: React.PropTypes.object.isRequired
   },
   getInitialState: function() {
-    return {users: [], fwibs:[], text: '', turn: 0, myTurn: true, showStory: false, active: false};
+    return {users: [], fwibs:[], text: '', turn: 0, myTurn: true, gameState: 'Open', active: false};
   },
   componentWillMount: function(){
   },
@@ -123,11 +123,11 @@ module.exports = React.createClass({
   },
 
   onGo: function() {
-    this.setState({ showStory: true });
+    this.setState({ gameState: 'In Progress' });
     socket.emit('update:game:inprogress', {game_hash: this.props.params.game_hash})
   },
   startUp: function() {
-    this.setState({ showStory: true });
+    this.setState({ gameState: 'In Progress' });
   },
   render: function() {
     // Add user to this game if they are not already
@@ -141,10 +141,10 @@ module.exports = React.createClass({
     //   var {users} = this.state;
     //   socket.emit('fetch:users', {user: user, users: users, game_hash: this.props.params.game_hash});
     // }
-    console.log('showstory', this.state.showStory)
-    var display = this.state.showStory ? (<StoryContainer fwibs={this.state.fwibs} onFwibSubmit={this.handleFwibSubmit} user={this.state.user} active_game={this.state.active_game} myTurn={this.state.myTurn} />) : (<GoButton goButtonPush={this.onGo} gameStart={this.startUp}/>);
-    var leave = this.state.showStory ? null : (<LeaveGameButton leaveGame={this.leaveGame} />);
-    console.log('after', this.state.showStory)
+    console.log('gameState', this.state.gameState)
+    var display = this.state.gameState === 'In Progress' ? (<StoryContainer fwibs={this.state.fwibs} onFwibSubmit={this.handleFwibSubmit} user={this.state.user} active_game={this.state.active_game} myTurn={this.state.myTurn} />) : (<GoButton goButtonPush={this.onGo} gameStart={this.startUp}/>);
+    var leave = this.state.gameState === 'Open' ? (<LeaveGameButton leaveGame={this.leaveGame} />) : null;
+    console.log('after', this.state.gameState)
 
     return (
       <div>
