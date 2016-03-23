@@ -68,6 +68,7 @@ var App = React.createClass({
     this.setState({active_game: data.game_hash});
   },
   joinGame: function(data){
+    console.log("calling joingame:", data)
     socket.emit('join:game', {username: data.user, game_hash: data.game_hash})
     this.setState({active_game: data.game_hash});
   },
@@ -107,6 +108,7 @@ var App = React.createClass({
           logoutUser: this.logoutUser,
           joinGame: this.joinGame,
           leaveGame: this.leaveGame,
+          setActiveGame: this.setActiveGame,
           active_game: this.state.active_game
         })}
       </div>

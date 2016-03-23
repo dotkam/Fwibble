@@ -29,6 +29,8 @@ module.exports = React.createClass({
    socket.on('user:left', this._userLeft);
    socket.on('update:turn', this._setTurn);
    socket.on('update:users', this._updateUsers);
+   socket.on('update:active_game', this.props.setActiveGame);
+
   },
 
   _initialize: function(data) {
@@ -58,8 +60,8 @@ module.exports = React.createClass({
   leaveGame: function() {
     // on clicking leave room button, 
     // change game state from active to ?????
-    console.log('IM FIRING')
-    socket.emit('leave:game', {username: this.state.user, game_hash: this.state.active_game});
+    console.log('IM LEAVING', this.props.user, this.props.active_game);
+    socket.emit('leave:game', {username: this.props.user, game_hash: this.props.active_game});
     this.context.router.replace(`/lobby`);
   },
   _userLeft: function(data) { // TODO: need Leave Room button
@@ -121,6 +123,7 @@ module.exports = React.createClass({
   render: function() {
     // Add user to this game if they are not already
     if(!this.props.active_game){
+      console.log('this.params.game_hash', this.props.params.game_hash)
       this.props.joinGame({user: this.props.user, game_hash: this.props.params.game_hash});
     }
     if(this.state.user === undefined){ // change to find user in users array - Maybe not?

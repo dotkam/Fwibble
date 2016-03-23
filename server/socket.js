@@ -134,7 +134,7 @@ module.exports = function (socket) {
           .then(function(res2){
             console.log('res', res)
             console.log('res2', res2)
-            client.emit('enter:game', {username: data.username, active_game: res.game_hash})
+            // client.emit('enter:game', {username: data.username, active_game: res.game_hash})
           })
       })
   });
@@ -150,14 +150,14 @@ module.exports = function (socket) {
             socket.broadcast.emit('update:users', {users: res2});
             client.emit('update:users', {users: res2});
           })
-
-
       })
   });
   socket.on('leave:game', function(data){
     var client = this;
+    console.log('LEAVING FROM THE SERVER', data)
     User.deleteActiveRoom(data.username)
       .then(function(res){
+        socket.emit('update:active_game', {game_hash: ''});
         Game.allUser(data.game_hash)
           .then(function(res2){
             socket.broadcast.emit('update:users', {users: res2});
