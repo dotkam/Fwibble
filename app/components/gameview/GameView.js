@@ -19,11 +19,13 @@ module.exports = React.createClass({
     router: React.PropTypes.object.isRequired
   },
   getInitialState: function() {
-    return {users: [], fwibs:[], text: '', turn: 0, myTurn: true, gameState: 'open', active: false};
+    return {users: [], fwibs:[], text: '', turn: 0, myTurn: true, gameState: 'open', active: false, title: ''};
   },
   componentWillMount: function(){
   },
   componentDidMount: function() {
+   socket.emit('title', {gamehash: this.props.params.game_hash});
+   socket.on('title:update', this._setTitle)
    socket.on('init', this._initialize);
    socket.on('send:fwib', this._fwibReceive);
    socket.on('user:join', this._userJoined);
@@ -94,6 +96,10 @@ module.exports = React.createClass({
     this.setState({turn, myTurn});
   },
 
+  _setTitle: function(data) {
+    this.setState({title: data.title});
+  },
+
   _changeTurn: function(){
     var {turn, users} = this.state;
     turn++;
@@ -155,7 +161,7 @@ module.exports = React.createClass({
         <div className="container">
           <div className="row">
             <div className="col-md-9">
-              <StoryTitle />
+              <StoryTitle title={this.state.title} />
               {display}
               {leave}
               </div>
