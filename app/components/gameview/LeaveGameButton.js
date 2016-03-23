@@ -13,7 +13,10 @@ module.exports = React.createClass({
 
     return(
       <div className="col-md-9">
-        <button type="button" className="btn btn-primary btn-md" onClick={this.props.leaveGame}>Leave Game</button>
+        <br />
+        <div className="text-center">
+          <button type="button" className="btn btn-danger btn-lg btn-block" onClick={this.props.leaveGame}>Leave Game</button>
+        </div>
       </div>
     );
   }
