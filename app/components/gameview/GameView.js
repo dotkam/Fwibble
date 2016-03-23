@@ -19,7 +19,7 @@ module.exports = React.createClass({
     router: React.PropTypes.object.isRequired
   },
   getInitialState: function() {
-    
+
     return {users: [], fwibs:[], text: '', turn: 0, myTurn: true, gameState: 'open', active: false, title: ''};
 
   },
@@ -133,7 +133,6 @@ module.exports = React.createClass({
   },
 
   onGo: function() {
-<<<<<<< b93f920dfb1962d2fb2b66ef8fc43bc59efecf90
     this.setState({ gameState: 'in progress' });
     socket.emit('update:game:inprogress', {game_hash: this.props.params.game_hash})
   },
@@ -142,13 +141,6 @@ module.exports = React.createClass({
   },
   gameEnd: function() {
     this.setState({ gameState: 'completed' });
-=======
-    this.setState({ showStory: true });
-    socket.emit('update:game:inprogress', {game_hash: this.props.params.game_hash})
-  },
-  startUp: function() {
-    this.setState({ showStory: true });
->>>>>>> go button changes game state
   },
   render: function() {
     // Add user to this game if they are not already
@@ -162,17 +154,11 @@ module.exports = React.createClass({
     //   var {users} = this.state;
     //   socket.emit('fetch:users', {user: user, users: users, game_hash: this.props.params.game_hash});
     // }
-<<<<<<< b93f920dfb1962d2fb2b66ef8fc43bc59efecf90
     console.log('gameState', this.state.gameState)
     var display = this.state.gameState !== 'open' ? (<StoryContainer fwibs={this.state.fwibs} onFwibSubmit={this.handleFwibSubmit} user={this.state.user} active_game={this.state.active_game} myTurn={this.state.myTurn} gameState={this.state.gameState} />) : (<GoButton goButtonPush={this.onGo} gameStart={this.startUp}/>);
     var leave = this.state.gameState === 'open' || this.state.gameState === 'completed' ? (<LeaveGameButton leaveGame={this.leaveGame} />) : null;
     console.log('after', this.state.gameState)
-=======
-    console.log('showstory', this.state.showStory)
-    var display = this.state.showStory ? (<StoryContainer fwibs={this.state.fwibs} onFwibSubmit={this.handleFwibSubmit} user={this.state.user} active_game={this.state.active_game} myTurn={this.state.myTurn} />) : (<GoButton goButtonPush={this.onGo} gameStart={this.startUp}/>);
-    var leave = this.state.showStory ? null : (<LeaveGameButton leaveGame={this.leaveGame} />);
-    console.log('after', this.state.showStory)
->>>>>>> go button changes game state
+
 
     return (
       <div>
