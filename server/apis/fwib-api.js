@@ -1,8 +1,8 @@
 var FwibAPI    = require('express').Router();
 
-var Fwib = require('../../app/actions/fwibs');
-var User = require('../../app/actions/users');
-var Game = require('../../app/actions/games');
+var Fwib = require('../models/fwibModel');
+var User = require('../models/userModel');
+var Game = require('../models/gameModel');
 
 module.exports = FwibAPI;
 

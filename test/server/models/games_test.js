@@ -1,8 +1,8 @@
 "use strict"
 require('../../test-helper.js') // <--- This must be at the top of every test file.
 
-const Game = require(__app + '/actions/games');
-const Fwib = require(__app + '/actions/fwibs');
+const Game = require(__server + '/models/gameModel');
+const Fwib = require(__server + '/models/fwibModel');
 const pg      = require('../../../db/db_setup');
 const dbCleaner = require('knex-cleaner');
 
@@ -171,6 +171,17 @@ describe('Games model', function() {
 		  .then(function(games) {
 		    expect(games).to.exist;
 		  })
+    })
+
+    it_('should find game titles by hash value', function * () {
+
+    yield Game.titleByHash('jkl000')
+      .catch(function(error) {
+        console.error('error retrieving games', error);
+      })
+      .then(function(games) {
+        expect(games).to.equal('neuroplasticity lasts forever');
+      })
     })
 
     it_('should find and update turns correctly', function * () {
