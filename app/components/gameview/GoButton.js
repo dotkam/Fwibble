@@ -19,7 +19,11 @@ startGame: function() {
 
     return(
       <div className="col-md-9">
-        <button type="button" className="btn btn-primary btn-lg" onClick={this.startGame}>Go</button>
+        <br />
+        <br />
+        <div className="text-center">
+          <button type="button" className="btn btn-success btn-lg btn-block" onClick={this.startGame}>Go</button>
+        </div>
       </div>
     );
   }

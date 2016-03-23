@@ -3,45 +3,6 @@ var ReactDOM = require('react-dom');
 
 module.exports = React.createClass({
 
-  // getInitialState: function() {
-  //   ....
-  // },
-
-  // countWords: function(e) {
-  //   e.preventDefault();
-    //we'll only want to show this when it's your turn...
-    // this will be handled with a function in gameview
-
-
-
-    /*
-    var trimmedWord = this.state.text.trim();
-    var trimmedWordLength = trimmedWord.split(' ').length;
-
-    if(trimmedWordLength === 6){    
-      var fwib = {
-        user : this.props.user,
-        text : trimmedWord
-      }
-    */
-
-/*
-  render: function() {
-    return (
-      <div class="progress">
-        <div class="progress-bar" role="progressbar" aria-valuenow={} aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-          <span class="sr-only">{}</span>
-        </div>
-      </div>
-
-    )
-  }
-});
-*/
-
-
-// old stacked version - was partially working but not hooked up to anything:
-
   render: function() {
     return(
       <div className="progress">
