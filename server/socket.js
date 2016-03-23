@@ -134,7 +134,7 @@ module.exports = function (socket) {
           .then(function(res2){
             console.log('res', res)
             console.log('res2', res2)
-            // client.emit('enter:game', {username: data.username, active_game: res.game_hash})
+            client.emit('enter:game', {username: data.username, active_game: res.game_hash})
           })
       })
   });
