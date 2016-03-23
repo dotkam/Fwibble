@@ -14,7 +14,10 @@ var socket = io.connect();
 
 
 module.exports = React.createClass({
-
+  
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
   getInitialState: function() {
     return {users: [], fwibs:[], text: '', turn: 0, myTurn: false, showStory: false, active: false};
   },
@@ -25,6 +28,9 @@ module.exports = React.createClass({
    socket.on('user:join', this._userJoined);
    socket.on('user:left', this._userLeft);
    socket.on('update:turn', this._setTurn);
+   socket.on('update:users', this._updateUsers);
+   socket.on('update:active_game', this.props.setActiveGame);
+
   },
 
   _initialize: function(data) {
@@ -44,7 +50,6 @@ module.exports = React.createClass({
     // Should just need to grab all data for this user - only broadcast 
     var {user, users, fwibs, turn} = this.state;
     var {name} = data;
-
     this.setState({users, fwibs});
     
     // TODO: put this logic in GO button function instead!
@@ -52,7 +57,13 @@ module.exports = React.createClass({
     if (user===users[0]) { myTurn = true };
     this.setState({myTurn});
   },
-
+  leaveGame: function() {
+    // on clicking leave room button, 
+    // change game state from active to ?????
+    console.log('IM LEAVING', this.props.user, this.props.active_game);
+    socket.emit('leave:game', {username: this.props.user, game_hash: this.props.active_game});
+    this.context.router.replace(`/lobby`);
+  },
   _userLeft: function(data) { // TODO: need Leave Room button
     var {users, fwibs} = this.state;
     var {name} = data;
@@ -79,7 +90,12 @@ module.exports = React.createClass({
     }
     return turn;
   },
-
+  _updateUsers: function(data){
+    console.log('update users:', data)
+    var {users} = data
+    users = users.map((u)=>u.username);
+    this.setState({users: users});
+  },
   handleFwibSubmit: function(fwib) {
     var {fwibs, turn, users, user, myTurn} = this.state;
     if(user === users[turn]){ // This logic isn't necessary anymore
@@ -104,10 +120,10 @@ module.exports = React.createClass({
   },
 
 
-
   render: function() {
     // Add user to this game if they are not already
     if(!this.props.active_game){
+      console.log('this.params.game_hash', this.props.params.game_hash)
       this.props.joinGame({user: this.props.user, game_hash: this.props.params.game_hash});
     }
     if(this.state.user === undefined){ // change to find user in users array - Maybe not?
@@ -119,7 +135,7 @@ module.exports = React.createClass({
     }
 
     var display = this.state.showStory ? (<StoryContainer fwibs={this.state.fwibs} onFwibSubmit={this.handleFwibSubmit} user={this.state.user} active_game={this.props.active_game} />) : (<GoButton goButtonPush={this.onGo} gameStart={this.startUp}/>);
-    var leave = this.state.showStory ? null : (<LeaveGameButton />);
+    var leave = this.state.showStory ? null : (<LeaveGameButton leaveGame={this.leaveGame} />);
 
     return (
       <div>

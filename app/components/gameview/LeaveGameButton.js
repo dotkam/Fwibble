@@ -2,14 +2,10 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var GoButton = require('./GoButton.js');
 
+var io = require('socket.io-client');
+var socket = io.connect();
+
 module.exports = React.createClass({
-
-leaveGame: function() {
-  // on clicking leave room button, 
-  // change game state from active to ?????
-
-},
-
 
   render: function() {
 
@@ -17,7 +13,7 @@ leaveGame: function() {
 
     return(
       <div className="col-md-9">
-        <button type="button" className="btn btn-primary btn-md" onClick={this.leaveGame}>Leave Game</button>
+        <button type="button" className="btn btn-primary btn-md" onClick={this.props.leaveGame}>Leave Game</button>
       </div>
     );
   }
