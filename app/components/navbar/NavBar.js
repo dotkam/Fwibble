@@ -18,7 +18,7 @@ module.exports = React.createClass({
               <li>
                 { this.props.loggedIn ? (<Link to='/signout'>SIGN OUT</Link>) : (<Link to='/signin'>SIGN IN</Link>)}
               </li>
-              <li><Link to={`/gameview/${this.props.active_game}`} className="menuOptions">MY GAME</Link><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></li>
+              <li><Link to={`/gameview/${this.props.active_game}`} className="menuOptions">MY GAME</Link><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></li>
             </ul>
           </div>
         </div>
