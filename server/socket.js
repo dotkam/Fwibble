@@ -191,6 +191,15 @@ module.exports = function (socket) {
     Game.updateToCompleted(data.gamehash);
   });
 
+  //Query game title when game room is entered
+  socket.on('title', function(data){
+    Game.titleByHash(data.gamehash)
+      .then(function(res) {
+        console.log("title.res", res)
+        socket.emit('title:update', {title: res})
+      });
+  });
+
   // clean up when a user leaves, and broadcast it to other users
   socket.on('disconnect', function () {
     userNames.free(name);

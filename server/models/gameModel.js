@@ -74,6 +74,18 @@ Game.create = function(attrs) {
     })
 }
 
+Game.titleByHash = function(gamehash) {
+  return pg.select('game_title').from('games').where({'game_hash': gamehash})
+    .catch(function(error) {
+      console.error('error retrieving game', error)
+    })
+    .then(function(res){
+      console.log('successfully retrieved game', res)
+      return res[0].game_title;
+    })  
+}
+
+
 /* 
   Find all users in a game (where game is in progress)
 */
