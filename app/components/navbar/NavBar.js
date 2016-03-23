@@ -16,19 +16,15 @@ module.exports = React.createClass({
           </div>
             <ul className="nav navbar-nav navbar-right">
               <li>
-                { this.props.loggedIn ?
-                  (<Link to='/signout'>Sign Out</Link>)
-                  :(<Link to='/signin'>Sign In</Link>)
-                }
+                { this.props.loggedIn ? (<Link to='/signout'>SIGN OUT</Link>) : (<Link to='/signin'>SIGN IN</Link>)}
               </li>
-              <li><Link to={`/gameview/${this.props.active_game}`} className="menuOptions">Game</Link></li>
+              <li><Link to={`/gameview/${this.props.active_game}`} className="menuOptions">MY GAME</Link><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></li>
             </ul>
           </div>
         </div>
     )
   }
 });
-
 
 
 

@@ -43,9 +43,7 @@ module.exports = React.createClass({
 
   render: function() {
   	return (
-      <div className='gameTimer'>
-      Seconds Left: {this.state.secondsLeft}
-      </div>
+      <div className='gameTimer'>Seconds Left: {this.state.secondsLeft}</div>
     );
   }
 });

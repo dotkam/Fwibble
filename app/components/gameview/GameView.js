@@ -127,10 +127,10 @@ module.exports = React.createClass({
           <div className="row">
             <div className="col-md-9">
               <StoryTitle />
-            </div>
-            {display}
-            {leave}
-            <div className="col-md-2 col-md-offset-1">
+              {display}
+              {leave}
+              </div>
+            <div className="col-md-3">
               <UsersInRoom users={this.state.users} />
             </div>
           </div>
