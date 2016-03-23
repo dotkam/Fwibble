@@ -20,15 +20,13 @@ module.exports = React.createClass({
 
     return (
       <div>
-        <div className="col-md-8">
+        <div className="col-md-12">
           <StoryBox fwibs={this.props.fwibs} />
           <br />
           {inputForm}
           <br />
           {wordMeter}
           <br />
-        </div>
-        <div>
           <GameTimer active_game={this.props.active_game} user={this.props.user} />
         </div>
       </div>

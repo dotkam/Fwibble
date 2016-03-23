@@ -25,6 +25,7 @@ module.exports = React.createClass({
       }
     */
 
+/*
   render: function() {
     return (
       <div class="progress">
@@ -36,9 +37,9 @@ module.exports = React.createClass({
     )
   }
 });
+*/
 
 
-/* 
 // old stacked version - was partially working but not hooked up to anything:
 
   render: function() {

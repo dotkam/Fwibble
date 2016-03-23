@@ -1,3 +1,11 @@
+.body {
+  background-image: url("http://s1074.photobucket.com/user/natalieweb/media/sunset_zps79ybtgzp.jpg.html" target="_blank"><img src="http://i1074.photobucket.com/albums/w404/natalieweb/sunset_zps79ybtgzp.jpg") !important;
+  background-color: none;
+  background-repeat: no-repeat;
+  font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+
+}
+
 .navbar {
   font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
   font-weight: 700;
@@ -32,7 +40,9 @@
   margin-top: 20px;
 }
 
-
+.signoutBox {
+  margin-top: 20px;
+}
 
 
 

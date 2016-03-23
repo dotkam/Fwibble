@@ -10,8 +10,19 @@ module.exports = React.createClass({
     
     return (
       <div className="container">
-        <p>Successfully logged out</p>
-        <a href="/signin">Need more Fwibbles in your life? Sign back in!</a>
+        <div className="text-center">
+          <div className="row">
+            <div className="signoutBox">
+              <div className="col-md-6 col-md-offset-3">
+                <div className="jumbotron">
+                  <h1 className="display-3">Fwibble</h1>
+                  <p>You have successfully logged out.</p>
+                  <a href="/signin">Need more Fwibbles in your life? Sign back in!</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
