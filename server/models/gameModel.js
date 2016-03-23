@@ -42,7 +42,7 @@ Game.titleGenerator = function() {
   var randomer = function(array) {
     return array[Math.floor(Math.random() * array.length)];
   } 
-  var fwib = ['The ' + randomer(noun) + ' ' + randomer(ptverb) + ' ' + randomer(preposition) + ' the ' + randomer(noun), randomer(properNoun) + ' and the ' + randomer(adjective) + ' ' + randomer(pluralNoun) + ' ' + randomer(ptverb)];
+  var fwib = ['The ' + randomer(noun) + ' ' + randomer(ptverb) + ' ' + randomer(preposition) + ' the ' + randomer(noun), randomer(properNoun) + ' and the ' + randomer(adjective) + ' ' + randomer(pluralNoun)];// + ' ' + randomer(ptverb)];
 
   var starter = randomer(fwib);
   console.log(starter);

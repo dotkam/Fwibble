@@ -9,10 +9,10 @@ module.exports = React.createClass({
   render: function() {
 
     return (
-      <div className="navbar navbar-default navbar-static-top">
-        <div className="container-fluid">
-          <div className="navbar-header">
-            <a className="navbar-brand" href="/">Fwibble</a>
+      <div className='navbar navbar-default navbar-static-top'>
+        <div className='container-fluid'>
+          <div className='navbar-header'>
+            <Link to='/' className='navbar-brand' >Fwibble</Link>
           </div>
             <ul className="nav navbar-nav navbar-right">
               <li>
