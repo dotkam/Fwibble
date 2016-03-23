@@ -18,7 +18,11 @@ module.exports = React.createClass({
               <li>
                 { this.props.loggedIn ? (<Link to='/signout'>SIGN OUT</Link>) : (<Link to='/signin'>SIGN IN</Link>)}
               </li>
+<<<<<<< 60848f79b4643eadef0513bd6f8ac610fa6339bc
               <li><Link to={`/gameview/${this.props.active_game}`} className="menuOptions">MY GAME</Link></li>
+=======
+              <li><Link to={`/gameview/${this.props.active_game}`} className="menuOptions">MY GAME</Link><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></li>
+>>>>>>> go button changes game state
             </ul>
           </div>
         </div>
