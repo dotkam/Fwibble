@@ -39,7 +39,11 @@ module.exports = React.createClass({
           <br />
             <div className="text-center">
               <div className="newFwibble">
+<<<<<<< 8e8a85efcee686a1750bf7abf0a72d2a5cb7ff04
                 <button type="button" className="btn btn-success btn-lg btn-block" onClick={this.generateGameRoom}><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span> New Fwibble</button>
+=======
+                <button type="button" className="btn btn-success btn-lg btn-block" onClick={this.generateGameRoom}>New Fwibble</button>
+>>>>>>> lobby button styling, fixed className bug
               </div>
             </div>
           <br />
