@@ -55,14 +55,15 @@
 }
 
 .jumbotron {
-  background-color: #24C9C9;
-  opacity: .5;
+  background-color: RGBa(36, 201, 201, .4);
+  // border-style: solid;
+  // border-radius: 1px;
+  // border-color: rgb(36, 201, 201);
 }
 
 .jumbotron h1,
 .jumbotron .h1 {
   color: #ED5160;
-  opacity: 1.0;
 }
 
 .btn-outline {
