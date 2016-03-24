@@ -4,32 +4,32 @@ var ReactDOM = require('react-dom');
 module.exports = React.createClass({
 
   getInitialState: function() {
-    return {text: ''};
+    return { text: '', trimmedWordLength: 0 };
   },
 
   handleSubmit: function(e) {
     e.preventDefault();
-    var trimmedWord = this.state.text.trim();
-    var trimmedWordLength = trimmedWord.split(' ').length;
 
-    if(trimmedWordLength === 6){    
+    if(this.state.trimmedWordLength === 6){    
       var fwib = {
         user : this.props.user,
-        text : trimmedWord
+        text : this.state.text
       }
       this.props.onFwibSubmit(fwib); 
+      this.setState({ text: '', trimmedWordLength: 0 });
     }
     else {
       console.log('Not 6 words!'); // Change to alert/flash
     }
-    this.setState({ text: '' });
   },
 
   changeHandler: function(e) {
-    this.setState({ text : e.target.value });
-
-    var targetLength = e.target.value.split(' ').length;
-    this.props.updateWordCount(targetLength)
+    var text = e.target.value;
+    var trimmedWordLength = text.trim().split(' ').length;
+    this.setState({ text : text, trimmedWordLength: trimmedWordLength });
+    
+    // send length up to StoryContainer then down to WordCountMeter
+    this.props.updateWordCount(trimmedWordLength);
   },
 
   render: function() {
