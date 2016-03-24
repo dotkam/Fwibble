@@ -38,14 +38,18 @@ module.exports = React.createClass({
           </div>
           <br />
             <div className="text-center">
-              <div className="newFwibble">
-                <button type="button" className="btn btn-success btn-outline btn-lg" onClick={this.generateGameRoom}><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span> New Fwibble</button>
+              <div className="row">
+                <div className="col-md-8 col-md-offset-2">
+                  <div className="newFwibble">
+                    <button type="button" className="btn btn-success btn-outline btn-lg btn-block" onClick={this.generateGameRoom}><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span> New Fwibble</button>
+                  </div>
+                </div>
               </div>
             </div>
           <br />
           <br />
           <div className="row">
-            <div className="col-md-8 col-offset-4">
+            <div className="col-md-12">
               <h3>Existing Fwibbles to Join:</h3>
             </div>
           </div>

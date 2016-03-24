@@ -99,11 +99,11 @@ module.exports = React.createClass({
                     <h1 className="display-3">Fwibble</h1>
                       <div className="signInForm">
               	        <form onSubmit={this.trySignIn}>
-              		        <input type="text" placeholder="username" value={this.state.username} onChange={this.handleUsername} />
+              		        <input type="text" className="form-control" placeholder="username" value={this.state.username} onChange={this.handleUsername} />
               		        <br/>
-              		        <input type="password" placeholder="password" value={this.state.password} onChange={this.handlePassword} />
+              		        <input type="password" className="form-control" placeholder="password" value={this.state.password} onChange={this.handlePassword} />
               		        <br/>
-              		        <input type="submit" className="btn btn-success" name="signInSubmit" onClick={this.handleClick} /> 
+              		          <input type="submit" className="btn btn-success" onClick={this.handleClick} /> 
               		      </form>
                         <p>{loginMessage}</p>
                         <div className="row">
