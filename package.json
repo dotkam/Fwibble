@@ -7,8 +7,8 @@
     "node": "5.6"
   },
   "scripts": {
-    "start": "webpack-dev-server --content-base --history-api-fallback --hot --inline",
-    "dev": "node server/server.js",
+    "start": "node server/server.js",
+    "dev": "webpack-dev-server --content-base --history-api-fallback --hot --inline",
     "test": "mocha test/*/*"
   },
   "license": "MIT",
