@@ -32,12 +32,12 @@ Game.generateHash = function(gameId) {
 */
 
 Game.titleGenerator = function() {
-  var noun = ['cat', 'dog', 'elephant', 'child', 'dragon', 'witch', 'king', 'queen', 'flower', 'bird', 'kobold', 'gnome', 'elf', 'wizard', 'chess master', 'actor', 'teacher', 'artist', 'bus driver', 'golfer'];
-  var ptverb = ['ran', 'climbed', 'looked', 'exclaimed', 'jumped', 'flew', 'dug', 'fell', 'shouted', 'gave', 'rang', 'wrote', 'babysat', 'sat', 'napped', 'caught'];
-  var preposition = ['into', 'around', 'in', 'after', 'out of', 'beyond', 'down', 'from', 'through', 'up', 'over', 'off', 'onto', 'by'];
-  var adjective = ['purple', 'large', 'tiny', 'yellow', 'magnificent', 'calm', 'jolly', 'talented', 'witty', 'generous'];
+  var noun = ['Cat', 'Dog', 'Elephant', 'Child', 'Dragon', 'Witch', 'King', 'Queen', 'Flower', 'Bird', 'Kobold', 'Gnome', 'Elf', 'Wizard', 'Chess Master', 'Actor', 'Teacher', 'Artist', 'Bus Driver', 'Golfer'];
+  var ptverb = ['Ran', 'Climbed', 'Looked', 'Exclaimed', 'Jumped', 'Flew', 'Dug', 'Fell', 'Shouted', 'Gave', 'Rang', 'Wrote', 'Babysat', 'Sat', 'Napped', 'Caught'];
+  var preposition = ['Into', 'Around', 'Into and Around', 'In', 'After', 'Out of', 'Beyond', 'Down', 'From', 'Through', 'Up', 'Over', 'Off', 'Onto', 'By'];
+  var adjective = ['Purple', 'Large', 'Tiny', 'Yellow', 'Magnificent', 'Calm', 'Jolly', 'Talented', 'Witty', 'Generous', 'Dirty, Dirty'];
   var properNoun = ['Mr. Belvedere', 'President Obama', 'Jiggypuff', 'Spiderman', 'Captain Kirk', 'Aragorn', 'Oprah', 'Magneto', 'Big Bird', 'Kanye West', 'Vladimir Putin', 'Guy Fieri', 'Simon Cowell', 'David Bowie', 'Gloria Steinem', 'The Artist Formerly Known as and Who Currently Goes by Prince', 'Hulk Hogan', 'The Entire Cast of Cheers'];
-  var pluralNoun = ['cats', 'dogs', 'elephants', 'children', 'dragons', 'witches', 'kings', 'queens', 'flowers', 'birds', 'kobolds', 'gnomes', 'elves', 'wizards', 'chess masters', 'actors', 'teachers', 'artists', 'bus drivers', 'golfers'];
+  var pluralNoun = ['Cats', 'Dogs', 'Elephants', 'Children', 'Dragons', 'Witches', 'Kings', 'Queens', 'Flowers', 'Birds', 'Kobolds', 'Gnomes', 'Elves', 'Wizards', 'Chess Masters', 'Actors', 'Teachers', 'Artists', 'Bus Drivers', 'Golfers'];
 
   var randomer = function(array) {
     return array[Math.floor(Math.random() * array.length)];
