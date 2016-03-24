@@ -1,6 +1,10 @@
+html {
+font-family: 'Slabo 27px', serif;
+}
+
 .navbar {
   font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 .navbar-brand {
@@ -77,12 +81,26 @@
   border-color: rgb(125, 163, 9);
 }
 
+.btn-success:focus,
+.btn-success.focus {
+  color: #fff;
+  background-color: rgba(130, 170, 6, .75);
+  border-color: rgb(125, 163, 9);
+}
+
 .btn-primary {
   background-color: rgb(36, 201, 201);
   border-color: rgb(26, 218, 218);
 }
 
 .btn-primary:hover {
+  color: #fff;
+  background-color: rgba(0, 166, 166, .60);
+  border-color: rgb(0, 166, 166);
+}
+
+.btn-primary:focus,
+.btn-primary.focus {
   color: #fff;
   background-color: rgba(0, 166, 166, .60);
   border-color: rgb(0, 166, 166);
