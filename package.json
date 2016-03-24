@@ -8,6 +8,7 @@
   },
   "scripts": {
     "start": "node server/server.js",
+    "postinstall": "webpack --config ./webpack-producion.config.js --progress --colors",
     "dev": "webpack-dev-server --content-base --history-api-fallback --hot --inline",
     "test": "mocha test/*/*"
   },
