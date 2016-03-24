@@ -5,8 +5,8 @@ module.exports = React.createClass({
   
   render: function (){
     return (
-      <div className='users'>
-        <h3> Users in Room: </h3>
+      <div className='users panel panel-info'>
+        <h3 className='usersTitle'> Users in Room: </h3>
         <ul>
           {
             this.props.users.map((user, i) => {
