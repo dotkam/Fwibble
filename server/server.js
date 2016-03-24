@@ -14,7 +14,7 @@ var server = http.createServer(app);
 
 var routes = express.Router();
 
-var port = 3000;
+var port = process.env.PORT || 3000;
 var assetFolder = Path.resolve(__dirname + '/../dist');
 var bodyParser = require('body-parser');
 
