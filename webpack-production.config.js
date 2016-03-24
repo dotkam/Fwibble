@@ -10,7 +10,7 @@ var webpack = require('webpack');
 module.exports = {
   devtool: 'source-map',
   entry: [
-    './App.js'
+    '../server/App.js'
   ],
 
   output: {
