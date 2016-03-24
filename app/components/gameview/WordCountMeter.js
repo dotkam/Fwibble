@@ -4,6 +4,8 @@ var ReactDOM = require('react-dom');
 module.exports = React.createClass({
 
   render: function() {
+    console.log('wordCountMeter reading:', this.props.wordCount)
+
     return(
       <div className="progress">
         <div className="progress-bar progress-bar-warning" style={{width: "15%"}}>
