@@ -180,7 +180,7 @@ module.exports = function (socket) {
 
   // Updates game state for users in game
   socket.on('update:game:inprogress', function(data){
-    socket.broadcast.emit('game:start',{})
+    socket.broadcast.emit('game:start',{}) // data.to //=> channel id //=> socket.broadcast.to.to(game_hash).
     Game.updateToInProgress(data.game_hash)
   })
 
