@@ -20,7 +20,7 @@ module.exports = React.createClass({
   },
   getInitialState: function() {
 
-    return {users: [], fwibs:[], text: '', turn: 0, myTurn: true, gameState: 'open', active: false, title: ''};
+    return {users: [], fwibs:[], text: '', turn: 0, myTurn: false, gameState: 'open', active: false, title: ''};
 
   },
   componentWillMount: function(){
@@ -133,7 +133,8 @@ module.exports = React.createClass({
   },
 
   onGo: function() {
-    this.setState({ gameState: 'in progress' });
+    this.setState({ gameState: 'in progress'});
+    this._setTurn({turn: this.state.turn});
     socket.emit('update:game:inprogress', {game_hash: this.props.params.game_hash})
   },
   startUp: function() {
