@@ -11,7 +11,6 @@ var mainPath = path.resolve(__dirname, 'server', 'App.js');
 
 
 module.exports = {
-  devtool: 'source-map',
   entry: [
     mainPath
   ],
