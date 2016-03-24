@@ -155,7 +155,7 @@ module.exports = React.createClass({
     //   socket.emit('fetch:users', {user: user, users: users, game_hash: this.props.params.game_hash});
     // }
     console.log('gameState', this.state.gameState)
-    var display = this.state.gameState !== 'open' ? (<StoryContainer fwibs={this.state.fwibs} onFwibSubmit={this.handleFwibSubmit} user={this.state.user} active_game={this.state.active_game} myTurn={this.state.myTurn} gameState={this.state.gameState} />) : (<GoButton goButtonPush={this.onGo} gameStart={this.startUp}/>);
+    var display = this.state.gameState !== 'open' ? (<StoryContainer fwibs={this.state.fwibs} onFwibSubmit={this.handleFwibSubmit} user={this.state.user} active_game={this.props.params.game_hash} myTurn={this.state.myTurn} gameState={this.state.gameState} />) : (<GoButton goButtonPush={this.onGo} gameStart={this.startUp}/>);
     var leave = this.state.gameState === 'open' || this.state.gameState === 'completed' ? (<LeaveGameButton leaveGame={this.leaveGame} />) : null;
     console.log('after', this.state.gameState)
 
