@@ -1,49 +1,55 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+var WordCountMeter = require('./WordCountMeter.js');
 
 module.exports = React.createClass({
 
   getInitialState: function() {
-    return {text: ''};
+    return { text: '', trimmedWordLength: 0 };
   },
 
   handleSubmit: function(e) {
     e.preventDefault();
-    var trimmedWord = this.state.text.trim();
-    var trimmedWordLength = trimmedWord.split(' ').length;
 
-    if(trimmedWordLength === 6){    
+    if(this.state.trimmedWordLength === 6){    
       var fwib = {
         user : this.props.user,
-        text : trimmedWord
+        text : this.state.text
       }
       this.props.onFwibSubmit(fwib); 
+      this.setState({ text: '', trimmedWordLength: 0 });
     }
     else {
       console.log('Not 6 words!'); // Change to alert/flash
     }
-    this.setState({ text: '' });
   },
 
   changeHandler: function(e) {
-    this.setState({ text : e.target.value });
-
-    var targetLength = e.target.value.split(' ').length;
-    this.props.updateWordCount(targetLength)
+    var text = e.target.value;
+    var trimmedWordLength = text.trim().split(/\s+/).length;
+    this.setState({ text : text, trimmedWordLength: trimmedWordLength });
   },
 
   render: function() {
+    var wordMeter = (<WordCountMeter wordCount={this.state.trimmedWordLength} />)
+
     return(
-      <div className='storyInput_form'>
-        <form  className="form-inline" onSubmit={this.handleSubmit}>
-          <input
-            className="form-control"
-            placeholder="Enter 6 words"
-            onChange={this.changeHandler}
-            value={this.state.text}></input>
-          <button type="submit" className="btn btn-primary">Submit</button>
-        </form>
+      <div>
+        <div className='storyInput_form'>
+          <form  className="form-inline" onSubmit={this.handleSubmit}>
+            <input
+              className="form-control"
+              placeholder="Enter 6 words"
+              onChange={this.changeHandler}
+              value={this.state.text}></input>
+            <button type="submit" className="btn btn-primary">Submit</button>
+          </form>
+        </div>
+        <br />
+        {wordMeter}
       </div>
+
+
     );
   }
 });
