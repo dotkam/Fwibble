@@ -12,12 +12,19 @@ var socket = io.connect();
 
 
 module.exports = React.createClass({
+  getInitialState: function() {
+    return{wordCount:0}
+  },
+
+  updateWordCount: function(count) {
+    this.setState({wordCount: count})
+  },
 
   render: function() {
     console.log('myTurn', this.props.myTurn)
 
-    var inputForm = this.props.myTurn ? (<StoryInput onFwibSubmit={this.props.onFwibSubmit} user={this.props.user} />) : null;
-    var wordMeter = this.props.myTurn ? (<WordCountMeter onFwibSubmit={this.props.onFwibSubmit} user={this.props.user} />) : null;
+    var inputForm = this.props.myTurn ? (<StoryInput onFwibSubmit={this.props.onFwibSubmit} user={this.props.user} updateWordCount={this.updateWordCount} />) : null;
+    var wordMeter = this.props.myTurn ? (<WordCountMeter onFwibSubmit={this.props.onFwibSubmit} user={this.props.user} wordCount={this.state.wordCount} />) : null;
     console.log('afterMyTirn', this.props.myTurn)
 
     return (

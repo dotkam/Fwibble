@@ -27,6 +27,9 @@ module.exports = React.createClass({
 
   changeHandler: function(e) {
     this.setState({ text : e.target.value });
+
+    var targetLength = e.target.value.split(' ').length;
+    this.props.updateWordCount(targetLength)
   },
 
   render: function() {
