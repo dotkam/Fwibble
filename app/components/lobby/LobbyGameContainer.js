@@ -8,20 +8,24 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div className="row">
-        <ul className="list-unstyled">
-            {
-            this.props.openGames.map((openGame, i) => {
-              return (
-                <div key={i}>
-                  <li>
-                    <Link to={`/gameview/${openGame.game_hash}`} className="btn btn-primary btn-outline btn-lg">{openGame.game_title} - {openGame.game_creator}</Link>
-                  </li>
-                  <br/>
-                </div>
-              );
-            })
-          }
-        </ul>
+        <div className="col-md-8 col-md-offset-2">
+          <div className="text-center">
+            <ul className="list-unstyled">
+              {
+              this.props.openGames.map((openGame, i) => {
+                return (
+                  <div key={i}>
+                    <li>
+                      <Link to={`/gameview/${openGame.game_hash}`} className="btn btn-primary btn-outline btn-lg btn-block">{openGame.game_title} - {openGame.game_creator}</Link>
+                    </li>
+                    <br/>
+                  </div>
+                );
+              })
+              }
+            </ul>
+          </div>
+        </div>
       </div>
     );
   }
