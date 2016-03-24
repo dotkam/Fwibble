@@ -14,7 +14,7 @@ module.exports = React.createClass({
               return (
                 <div key={i}>
                   <li>
-                    <Link to={`/gameview/${openGame.game_hash}`} className="btn btn-primary btn-lg btn-block">{openGame.game_title} - {openGame.game_creator}</Link>
+                    <Link to={`/gameview/${openGame.game_hash}`} className="btn btn-primary btn-outline btn-lg">{openGame.game_title} - {openGame.game_creator}</Link>
                   </li>
                   <br/>
                 </div>
@@ -31,7 +31,7 @@ module.exports = React.createClass({
             this.props.openGames.map((openGame, i) => {
               return (
                 <li key={i}>
-                  <button type="button" className="btn btn-secondary btn-lg btn-block">{openGame.game_title}</button>{openGame}
+                  <button type="button" className="btn btn-secondary">{openGame.game_title}</button>{openGame}
                 </li>
               );
             })
