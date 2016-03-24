@@ -1,6 +1,17 @@
-html {
-font-family: 'Slabo 27px', serif;
-}
+/* 
+
+// APP COLOR SCHEME:
+
+PINK:   rgb(249, 9, 110)
+  hex:  #F9096E
+
+LIGHT BLUE: rgb(36, 201, 201)
+  hex:      #24C9C9
+
+GREEN: rgb(154, 204, 0)
+  hex: #9ACC00
+
+*/
 
 .navbar {
   font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -70,24 +81,6 @@ font-family: 'Slabo 27px', serif;
   color: rgb(249, 9, 110);
 }
 
-.btn-success {
-  background-color: rgb(154, 204, 0);
-  border-color: rgb(142, 188, 0);
-}
-
-.btn-success:hover {
-  color: #fff;
-  background-color: rgba(130, 170, 6, .75);
-  border-color: rgb(125, 163, 9);
-}
-
-.btn-success:focus,
-.btn-success.focus {
-  color: #fff;
-  background-color: rgba(130, 170, 6, .75);
-  border-color: rgb(125, 163, 9);
-}
-
 .btn-primary {
   background-color: rgb(36, 201, 201);
   border-color: rgb(26, 218, 218);
@@ -106,6 +99,42 @@ font-family: 'Slabo 27px', serif;
   border-color: rgb(0, 166, 166);
 }
 
+.btn-success {
+  background-color: rgb(154, 204, 0);
+  border-color: rgb(142, 188, 0);
+}
+
+.btn-success:hover {
+  color: #fff;
+  background-color: rgba(130, 170, 6, .75);
+  border-color: rgb(125, 163, 9);
+}
+
+.btn-success:focus,
+.btn-success.focus {
+  color: #fff;
+  background-color: rgba(130, 170, 6, .75);
+  border-color: rgb(125, 163, 9);
+}
+
+.btn-danger {
+  background-color: rgb(249, 9, 110);
+  border-color: rgb(241, 0, 101);
+}
+
+.btn-danger:hover {
+  color: #fff;
+  background-color: ;
+  border-color: ;
+}
+
+.btn-danger:focus,
+.btn-danger.focus {
+  color: #fff;
+  background-color: ;
+  border-color: ;
+}
+
 .btn-outline {
     background-color: transparent;
     color: inherit;
@@ -114,14 +143,16 @@ font-family: 'Slabo 27px', serif;
 
 .panel-info {
     float: left;
-    margin: 0 15px;
+    margin: 15px;
     padding: 0px;
-    border-color: orange;
+    border-color: #00B343;
+    color: black;
 }
 
 .usersTitle {
     margin-top: 0px;
     margin-bottom: 5px;
+    color: black;
 }
 
 .usersList {

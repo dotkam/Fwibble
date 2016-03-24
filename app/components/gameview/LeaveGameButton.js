@@ -15,7 +15,7 @@ module.exports = React.createClass({
       <div className="col-md-9">
         <br />
         <div className="text-center">
-          <button type="button" className="btn btn-danger btn-lg btn-block" onClick={this.props.leaveGame}>Leave Game</button>
+          <button type="button" className="btn btn-primary btn-lg btn-block" onClick={this.props.leaveGame}>Leave Game</button>
         </div>
       </div>
     );
