@@ -5,17 +5,20 @@ var HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   inject: 'body'
 });
 var webpack = require('webpack');
+var path = require('path');
+var buildPath = path.resolve(__dirname, 'dist');
+var mainPath = path.resolve(__dirname, 'server', 'App.js');
 
 
 module.exports = {
   devtool: 'source-map',
   entry: [
-    '../server/App.js'
+    mainPath
   ],
 
   output: {
     filename: 'bundle.js',
-    path: __dirname + '/dist'
+    path: buildPath
   },
   
   module: {
