@@ -65,6 +65,25 @@
     transition: all .5s;
 }
 
+.panel-info {
+    float: left;
+    margin: 0 15px;
+    padding: 0px;
+    border-color: orange;
+}
+
+.usersTitle {
+    margin-top: 0px;
+    margin-bottom: 5px;
+}
+
+.usersList {
+  -webkit-padding-start: 10px;
+  padding: 5px;
+  background: lightgrey;
+  margin-bottom: 0px;
+}
+
 /*.titleBackground {
   background-image: -webkit-linear-gradient(top, #e8e8e8 0%, #f5f5f5 100%);
   background-image:      -o-linear-gradient(top, #e8e8e8 0%, #f5f5f5 100%);
