@@ -103,7 +103,9 @@ module.exports = React.createClass({
               		        <br/>
               		        <input type="password" placeholder="password" value={this.state.password} onChange={this.handlePassword} />
               		        <br/>
-              		        <input type="submit" className="btn btn-success" name="signInSubmit" onClick={this.handleClick} /> 
+                          <div className="signInUpSubmit">
+              		          <input type="submit" className="btn" onClick={this.handleClick} /> 
+                          </div>
               		      </form>
                         <p>{loginMessage}</p>
                         <div className="row">
