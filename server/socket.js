@@ -77,44 +77,46 @@ module.exports = function (socket) {
             user: data.user,
             users: res // userNames.get()
           });
-          socket.broadcast.emit('user:join', {
+          socket.broadcast.to(data.game_hash).emit('user:join', {
             name: data.user,
             users: res // userNames.get()
           });
         };
       })
   });
-
+  // Subscribe a user to a room's socket channel
+  socket.on('subscribe', function(room){
+    console.log('SUBSCRIBED TO ROOM:', room);
+    socket.join(room);
+  });
+  // Unsubscribe a user from a room's socket channel
+  socket.on('unsubscribe', function(room){
+    console.log('UNSUBSCRIBED FROM  ROOM:', room);
+    socket.leave(room);
+  });  
   // broadcast a user's fwib to other users
   // and store in DB
   socket.on('send:fwib', function (data) {
     var fwib_content = data.text;
     var gamehash;
 
-    socket.broadcast.emit('send:fwib', {
+    socket.broadcast.to(data.game_hash).emit('send:fwib', {
       user: data.user,
       text: data.text
-    })
-    User.findActiveGame(data.user)
-      .then(function(res){
-        game_hash = res;
-        console.log('sendFwib got game_hash', game_hash)
-      })
-      .then(function(){
-        var fwibData = {
-          fwib_content: data.text,
-          game_hash: game_hash,
-          username: data.user
-        }
-        Fwib.create(fwibData)
-      })
     });
-  // Broadcasts all open games to users
+    var fwibData = {
+      fwib_content: data.text,
+      game_hash: data.game_hash,
+      username: data.user
+    }
+    Fwib.create(fwibData);
+  })
+  // Fetch open games and broadcast to users
   socket.on('lobby:games', function(games){
     var client = this;
     Game.allJoinable()
       .then(function(res){
-        if(res.length !== games.length){
+        if(res.length !== games.length){ // need better logic to check that games are different
           client.emit('update:games:joinable', {
             games: res
           });
@@ -132,8 +134,7 @@ module.exports = function (socket) {
         console.log('Game create res:', res);
         User.addActiveRoom(data.username, res.game_hash)
           .then(function(res2){
-            console.log('res', res)
-            console.log('res2', res2)
+            console.log('CREATE CHANNEL:', res.game_hash) 
             client.emit('enter:game', {username: data.username, active_game: res.game_hash})
           })
       })
@@ -146,8 +147,7 @@ module.exports = function (socket) {
 
         Game.allUser(data.game_hash)
           .then(function(res2){
-            console.log('SENDING OUT AN SOS', res2)
-            socket.broadcast.emit('update:users', {users: res2});
+            socket.broadcast.to(data.game_hash).emit('update:users', {users: res2}); // CHANNEL EMIT USER JOIN
             client.emit('update:users', {users: res2});
           })
       })
@@ -160,15 +160,15 @@ module.exports = function (socket) {
         socket.emit('update:active_game', {game_hash: ''});
         Game.allUser(data.game_hash)
           .then(function(res2){
-            socket.broadcast.emit('update:users', {users: res2});
+            socket.broadcast.to(data.game_hash).emit('update:users', {users: res2}); // CHANNEL EMIT USER LEAVE
             client.emit('update:users', {users: res2});
           })
       })
   });
   // Passes in updated turn counter and broadcasts it to other users
-  socket.on('change:turn', function(turn){
-    socket.broadcast.emit('update:turn', {
-      turn:turn
+  socket.on('change:turn', function(data){
+    socket.broadcast.to(data.game_hash).emit('update:turn', {
+      turn: data.turn
     });
   });
 
@@ -180,14 +180,14 @@ module.exports = function (socket) {
 
   // Updates game state for users in game
   socket.on('update:game:inprogress', function(data){
-    socket.broadcast.emit('game:start',{}) // data.to //=> channel id //=> socket.broadcast.to.to(game_hash).
+    socket.broadcast.to(data.game_hash).emit('game:start',{}) // data.to //=> channel id //=> socket.broadcast.to(game_hash).
     Game.updateToInProgress(data.game_hash)
   })
 
   //When game timer ends, changes game status to completed
   socket.on('endtimer', function(data){
     console.log('GAME OVER', data)
-    socket.broadcast.emit('game:end',{})
+    socket.broadcast.to(data.gamehash).emit('game:end',{})
     Game.updateToCompleted(data.gamehash);
   });
 

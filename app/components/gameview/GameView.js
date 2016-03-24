@@ -37,7 +37,7 @@ module.exports = React.createClass({
    socket.on('update:active_game', this.props.setActiveGame);
    socket.on('game:start', this.startUp);
    socket.on('game:end', this.gameEnd);
-
+   socket.emit('subscribe', this.props.params.game_hash);
     if(!this.props.active_game){
       console.log('this.params.game_hash', this.props.params.game_hash)
       this.props.joinGame({user: this.props.user, game_hash: this.props.params.game_hash});
@@ -77,8 +77,8 @@ module.exports = React.createClass({
   leaveGame: function() {
     // on clicking leave room button, 
     // change game state from active to ?????
-    console.log('IM LEAVING', this.props.user, this.props.active_game);
     socket.emit('leave:game', {username: this.props.user, game_hash: this.props.active_game});
+    socket.emit('unsubscribe', this.props.params.game_hash);
     this.context.router.replace(`/lobby`);
   },
   _userLeft: function(data) { // TODO: need Leave Room button
@@ -123,8 +123,9 @@ module.exports = React.createClass({
       fwibs.push(fwib);
       turn = this._changeTurn();
       myTurn = false;
+      fwib.game_hash = this.props.params.game_hash;
       this.setState({fwibs, turn, myTurn});
-      socket.emit('change:turn', turn);
+      socket.emit('change:turn', {turn: turn, game_hash: this.props.params.game_hash});
       socket.emit('send:fwib', fwib);
     }
     else {
