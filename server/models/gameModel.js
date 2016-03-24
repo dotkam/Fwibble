@@ -32,12 +32,12 @@ Game.generateHash = function(gameId) {
 */
 
 Game.titleGenerator = function() {
-  var noun = ['Cat', 'Dog', 'Elephant', 'Child', 'Dragon', 'Witch', 'King', 'Queen', 'Flower', 'Bird', 'Kobold', 'Gnome', 'Elf', 'Wizard', 'Chess Master', 'Actor', 'Teacher', 'Artist', 'Bus Driver', 'Golfer'];
-  var ptverb = ['Ran', 'Climbed', 'Looked', 'Exclaimed', 'Jumped', 'Flew', 'Dug', 'Fell', 'Shouted', 'Gave', 'Rang', 'Wrote', 'Babysat', 'Sat', 'Napped', 'Caught'];
-  var preposition = ['Into', 'Around', 'Into and Around', 'In', 'After', 'Out of', 'Beyond', 'Down', 'From', 'Through', 'Up', 'Over', 'Off', 'Onto', 'By'];
-  var adjective = ['Purple', 'Large', 'Tiny', 'Yellow', 'Magnificent', 'Calm', 'Jolly', 'Talented', 'Witty', 'Generous', 'Dirty, Dirty'];
-  var properNoun = ['Mr. Belvedere', 'President Obama', 'Jiggypuff', 'Spiderman', 'Captain Kirk', 'Aragorn', 'Oprah', 'Magneto', 'Big Bird', 'Kanye West', 'Vladimir Putin', 'Guy Fieri', 'Simon Cowell', 'David Bowie', 'Gloria Steinem', 'The Artist Formerly Known as and Who Currently Goes by Prince', 'Hulk Hogan', 'The Entire Cast of Cheers'];
-  var pluralNoun = ['Cats', 'Dogs', 'Elephants', 'Children', 'Dragons', 'Witches', 'Kings', 'Queens', 'Flowers', 'Birds', 'Kobolds', 'Gnomes', 'Elves', 'Wizards', 'Chess Masters', 'Actors', 'Teachers', 'Artists', 'Bus Drivers', 'Golfers'];
+  var noun = ['Cat', 'Dog', 'Elephant', 'Child', 'Dragon', 'Witch', 'King', 'Queen', 'Flower', 'Bird', 'Kobold', 'Gnome', 'Elf', 'Wizard', 'Chess Master', 'Actor', 'Teacher', 'Artist', 'Bus Driver', 'Golfer', 'Sentient Trashcan', 'Dungeons and Dragons Enthusiast'];
+  var ptverb = ['Ran', 'Climbed', 'Looked', 'Exclaimed', 'Jumped', 'Flew', 'Dug', 'Fell', 'Shouted', 'Gave', 'Rang', 'Wrote', 'Babysat', 'Sat', 'Napped', 'Skipped', 'Cartwheeled', 'Documented', 'Prepared', 'Fought', 'Taught', 'Hired', 'Annoyed', 'Raced', 'Convinced', 'Cold Called', 'Drove'];
+  var preposition = ['Into', 'Around', 'Into and Around', 'In', 'After', 'Out of', 'Beyond', 'Down', 'From', 'Through', 'Up', 'Over', 'Off', 'Onto', 'By', 'Across', 'Amid', 'Beside', 'Between', 'Inside', 'Outside'];
+  var adjective = ['Purple', 'Large', 'Tiny', 'Yellow', 'Magnificent', 'Calm', 'Jolly', 'Talented', 'Witty', 'Generous', 'Dirty, Dirty', 'Prepubescent', 'Evil', 'Lovable', 'Sad', 'Crazy', 'Silly'];
+  var properNoun = ['Mr. Belvedere', 'President Obama', 'Jiggypuff', 'Spiderman', 'Captain Kirk', 'Aragorn', 'Oprah', 'Magneto', 'Big Bird', 'Kanye West', 'Vladimir Putin', 'Guy Fieri', 'Simon Cowell', 'David Bowie', 'Gloria Steinem', 'The Artist Formerly Known as and Who Currently Goes by Prince', 'Hulk Hogan', 'The Entire Cast of Cheers', 'Joe Biden', 'The Velveteen Rabbit', 'Tito Puente', 'George Washington', 'Sasquatch', 'Jay Leno', 'Aladdin'];
+  var pluralNoun = ['Cats', 'Dogs', 'Elephants', 'Children', 'Dragons', 'Witches', 'Kings', 'Queens', 'Flowers', 'Birds', 'Kobolds', 'Gnomes', 'Elves', 'Wizards', 'Chess Masters', 'Actors', 'Teachers', 'Artists', 'Bus Drivers', 'Golfers', 'Sentient Trashcans', 'Dungeons and Dragons Enthusiasts'];
 
   var randomer = function(array) {
     return array[Math.floor(Math.random() * array.length)];
