@@ -10,7 +10,7 @@
 }
 
 .navbar-default .navbar-brand {
-  color: #E40081;
+  color: #ED5160;
   /*fix hover color*/
 }
 
@@ -21,7 +21,7 @@
 .display-3 {
   font-family: 'Pacifico', cursive;
   font-weight: 700;
-  color: #E40081;
+  color: #ED5160;
 }
 
 .signinBox {
@@ -54,9 +54,15 @@
   box-sizing: border-box;
 }
 
+.jumbotron {
+  background-color: #24C9C9;
+  opacity: .5;
+}
+
 .jumbotron h1,
 .jumbotron .h1 {
-  color: #E40081;
+  color: #ED5160;
+  opacity: 1.0;
 }
 
 .btn-outline {
