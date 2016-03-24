@@ -65,18 +65,23 @@
     transition: all .5s;
 }
 
-.list-group li {
-    list-style: none;
-}
 .panel-info {
     float: left;
     margin: 0 15px;
-    padding: 20px;
+    padding: 0px;
+    border-color: orange;
 }
 
 .usersTitle {
     margin-top: 0px;
-    margin-bottom: 0px;
+    margin-bottom: 5px;
+}
+
+.usersList {
+  -webkit-padding-start: 10px;
+  padding: 5px;
+  background: lightgrey;
+  margin-bottom: 0px;
 }
 
 /*.titleBackground {
