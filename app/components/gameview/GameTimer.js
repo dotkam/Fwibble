@@ -7,7 +7,7 @@ var socket = io.connect();
 module.exports = React.createClass({
   
   getInitialState: function() {
-    return {secondsLeft: 30 };
+    return { secondsLeft: 240, minutes: 4, seconds: '00'};
   },
 
   componentDidMount: function() {
