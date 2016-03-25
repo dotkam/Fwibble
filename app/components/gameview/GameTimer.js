@@ -10,6 +10,7 @@ module.exports = React.createClass({
 
     return {secondsLeft: 30 };
 
+
   },
 
   componentDidMount: function() {
