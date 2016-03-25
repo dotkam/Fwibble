@@ -22,7 +22,8 @@ var bodyParser = require('body-parser');
 
 
 var socket = require('./socket.js');
-var io = require('socket.io').listen(server);
+var io = require('socket.io')({ transports: ["xhr-polling"], "polling duration": 10 }).listen(server);
+
 io.sockets.on('connection', socket);
 
 
@@ -47,10 +48,6 @@ routes.get('/*', function(req, res){
 server.listen(port);
 console.log('Listening on port', port);
 
-io.configure(function () { 
-  io.set("transports", ["xhr-polling"]); 
-  io.set("polling duration", 10); 
-});
 
 
 
