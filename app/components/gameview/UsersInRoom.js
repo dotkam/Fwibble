@@ -2,6 +2,18 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 module.exports = React.createClass({
+  getInitialState: function() {
+    return {userColors: {}};
+  },
+
+  componentWillReceiveProps: function(newProps) {
+    var options = ['DeepPink','DarkSlateBlue','Orange', 'Green','RedWine'], curr=0;
+
+    for (var i=0; i<this.props.users.length; i++) {
+      this.state.userColors[this.props.users[i]] = options[curr]
+      if (curr<options.length-1) {curr++} else {curr=0}
+    }
+  },
   
   render: function (){
     return (
