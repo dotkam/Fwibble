@@ -7,7 +7,7 @@ var socket = io.connect();
 module.exports = React.createClass({
   
   getInitialState: function() {
-    return {secondsLeft: 6 };
+    return { secondsLeft: 240, minutes: 4, seconds: '00'};
   },
 
   componentDidMount: function() {
@@ -32,6 +32,18 @@ module.exports = React.createClass({
       clearInterval(this.interval);    
       socket.emit('endtimer', {username: this.props.user, gamehash: this.props.active_game});
     }
+
+    var time = this.state.secondsLeft;
+    this.setState({minutes: Math.floor(time / 60)});
+
+    var seconds = time - this.state.minutes * 60;
+    function str_pad_left(string,pad,length) {
+      return (new Array(length+1).join(pad)+string).slice(-length);
+    }
+
+    var prettySeconds = str_pad_left(seconds,'0',2);
+
+    this.setState({seconds: prettySeconds});
   },
   //sets this interval to nothing, pausing timer
   pauseTimer: function() {
@@ -43,8 +55,9 @@ module.exports = React.createClass({
 
   render: function() {
   	return (
-      <div className='gameTimer'>Seconds Left: {this.state.secondsLeft}</div>
+      <div className='gameTimer'>Seconds Left: {this.state.minutes}:{this.state.seconds}</div>
     );
   }
 });
+
 
