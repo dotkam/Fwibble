@@ -198,7 +198,7 @@ module.exports = function (socket) {
   socket.on('title', function(data){
     Game.titleByHash(data.gamehash)
       .then(function(res) {
-        console.log("title.res", res)
+        console.log("TITLE:", res)
         socket.emit('title:update', {title: res})
       });
   });
