@@ -59,7 +59,7 @@ module.exports = React.createClass({
 
   render: function() {
   	return (
-      <div className='gameTimer'>Seconds Left: {this.state.minutes}:{this.state.seconds}</div>
+      <div className='gameTimer'>Seconds Left in Game: {this.state.minutes}:{this.state.seconds}</div>
     );
   }
 });

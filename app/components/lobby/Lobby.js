@@ -19,12 +19,10 @@ module.exports = React.createClass({
     socket.on('enter:game', this.props.setUser);
   },
   updateOpenGames: function(data){
-      console.log('Lobby socket hears data:', data)
       this.setState({openGames: data.games})
   },
   generateGameRoom: function(){
     socket.emit('create:game_room', {username: this.props.user});
-    console.log('sent create:game_room', this.props.user);
   },
   render: function() {
     socket.emit('lobby:games',this.state.openGames);
