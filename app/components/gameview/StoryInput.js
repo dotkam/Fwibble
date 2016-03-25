@@ -42,7 +42,7 @@ module.exports = React.createClass({
               placeholder="Enter 6 words"
               onChange={this.changeHandler}
               value={this.state.text}></input>
-            <button type="submit" className="btn btn-primary">Submit</button>
+            <button type="submit" className="btn btn-success">Submit</button>
           </form>
         </div>
         <br />

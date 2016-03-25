@@ -5,13 +5,13 @@ module.exports = React.createClass({
   
   render: function (){
     return (
-      <div className='users panel panel-info'>
-        <h3 className='usersTitle panel-heading'> Users in Room </h3>
-        <ul className='usersList panel-body'>
+      <div className="panel panel-info">
+        <h4 className="panel-heading"> Users in Room </h4>
+        <ul className="panel-body">
           {
             this.props.users.map((user, i) => {
               return (
-                <li className='list-unstyled' key={i}>
+                <li className="list-unstyled" key={i}>
                   {user}
                 </li>
               );
