@@ -24,7 +24,7 @@ var port = process.env.PORT || 3000;
 var connectionPoint = process.env.NODE_ENV === 'production' ? 'rocky-forest-16843.herokuapp.com:' : 'localhost:'
 var io = require('socket.io-client');
 
-console.log('process.env', process.env);
+console.log('process.env', process);
 console.log('process.env.DB', process.env.DATABASE_URL);
 
 console.log('socket connection attempt:', connectionPoint, port, process.env.NODE_ENV)
