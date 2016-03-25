@@ -18,8 +18,13 @@ var Gameview = require('../app/components/gameview/GameView');
 //var userActions = //
 var Auth = require('./auth');
 
+var port = process.env.PORT || 3000;
+var connectionPoint = process.env.NODE_ENV === 'production' ? 'rocky-forest-16843.herokuapp.com:' : 'localhost:'
 var io = require('socket.io-client');
-var socket = io.connect();
+
+console.log('socket connection attempt:', connectionPoint, port, process.env.NODE_ENV)
+
+var socket = io.connect(connectionPoint + port);
 
 var App = React.createClass({
   contextTypes: {
