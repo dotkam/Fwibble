@@ -173,7 +173,7 @@ module.exports = React.createClass({
               {leave}
               </div>
             <div className="col-md-3">
-              <UsersInRoom user={this.state.user} users={this.state.users} />
+              <UsersInRoom user={this.state.user} users={this.state.users} turn={this.state.turn} />
             </div>
           </div>
         </div>
