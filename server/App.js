@@ -22,6 +22,8 @@ var port = process.env.PORT || 3000;
 var connectionPoint = process.env.NODE_ENV === 'production' ? 'rocky-forest-16843.herokuapp.com:' : 'localhost:'
 var io = require('socket.io-client');
 
+console.log('socket connection attempt:', connectionPoint, port)
+
 var socket = io.connect(connectionPoint + port);
 
 var App = React.createClass({
