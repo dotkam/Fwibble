@@ -65,7 +65,7 @@ module.exports = function (socket) {
   // send the new user their name and a list of users
   // notify other clients that a new user has joined
   socket.on('fetch:users', function(data){ // Validate that user belongs in room
-    console.log('socket data', data.users)
+    console.log('fetch:users data', data)
     // name = data.user; // May not need this
     // userNames.claim(name); // Grab all users for room // Good lord please deprecate this
     var client = this;
