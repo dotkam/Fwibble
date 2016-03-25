@@ -22,7 +22,7 @@ var port = process.env.PORT || 3000;
 var connectionPoint = process.env.NODE_ENV === 'production' ? 'rocky-forest-16843.herokuapp.com:' : 'localhost:'
 var io = require('socket.io-client');
 
-console.log('socket connection attempt:', connectionPoint, port)
+console.log('socket connection attempt:', connectionPoint, port, process.env.NODE_ENV)
 
 var socket = io.connect(connectionPoint + port);
 
