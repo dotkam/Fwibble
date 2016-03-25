@@ -103,8 +103,21 @@ body {
   border-color: rgb(0, 166, 166);
 }
 
-.btn-primary:focus,
 .btn-primary.focus {
+  color: #fff;
+  background-color: rgba(0, 166, 166, .60);
+  border-color: rgb(0, 166, 166);
+}
+
+.btn-primary:active:hover,
+.btn-primary.active:hover,
+.open > .dropdown-toggle.btn-primary:hover,
+.btn-primary:active:focus,
+.btn-primary.active:focus,
+.open > .dropdown-toggle.btn-primary:focus,
+.btn-primary:active.focus,
+.btn-primary.active.focus,
+.open > .dropdown-toggle.btn-primary.focus {
   color: #fff;
   background-color: rgba(0, 166, 166, .60);
   border-color: rgb(0, 166, 166);
@@ -122,12 +135,25 @@ body {
   border-color: rgb(125, 163, 9);
 }
 
-.btn-success:focus,
 .btn-success.focus {
   color: #fff;
   background-color: rgba(130, 170, 6, .75);
   border-color: rgb(125, 163, 9);
 }
+
+.btn-success:active:hover,
+.btn-success.active:hover,
+.open > .dropdown-toggle.btn-success:hover,
+.btn-success:active:focus,
+.btn-success.active:focus,
+.open > .dropdown-toggle.btn-success:focus,
+.btn-success:active.focus,
+.btn-success.active.focus,
+.open > .dropdown-toggle.btn-success.focus {
+  color: #fff;
+  background-color: rgba(130, 170, 6, .75);
+  border-color: rgb(125, 163, 9);
+} 
 
 .btn-danger {
   background-color: rgb(249, 9, 110);
@@ -140,7 +166,6 @@ body {
   border-color: ;
 }
 
-.btn-danger:focus,
 .btn-danger.focus {
   color: #fff;
   background-color: ;
@@ -156,30 +181,30 @@ body {
 .panel {
   background-color: white;
   border: 1px solid transparent;
-  border-radius: 2px;
+  border-radius: 1px;
   font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
           box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
 }
 
 .panel-info {
-    float: left;
-    margin: 15px;
-    padding: 0px;
-    border-color: lightgrey;
+  float: left;
+  margin: 15px;
+  padding: 0px;
+  border-color: lightgrey;
 }
 
 .panel-info > .panel-heading {
-  color: #31708f;
-  background-color: white;
+  background-color: rgba(36, 201, 201, .05);
   margin-top: 0px;
   margin-bottom: 5px;
-  color: #333;
+  color: inherit;
+  font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 .panel-body {
   -webkit-padding-start: 10px;
   padding: 5px;
-  background: none;
+  background-color: white;
   margin-bottom: 0px;
 }

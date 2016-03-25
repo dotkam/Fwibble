@@ -24,7 +24,6 @@ module.exports = React.createClass({
           <StoryBox fwibs={this.props.fwibs} />
           <br />
           {inputForm}
-          <br />
           <GameTimer active_game={this.props.active_game} user={this.props.user} />
         </div>
       </div>
