@@ -169,6 +169,10 @@ body {
     border-color: lightgrey;
 }
 
+.img-responsive {
+  padding-left: 75px;
+}
+
 .panel-info > .panel-heading {
   color: #31708f;
   background-color: white;

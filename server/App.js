@@ -18,6 +18,8 @@ var Gameview = require('../app/components/gameview/GameView');
 //var userActions = //
 var Auth = require('./auth');
 
+var logo = '../public/images/Fwibble-logo-cropped.png';
+
 var port = process.env.PORT || 3000;
 var connectionPoint = process.env.NODE_ENV === 'production' ? 'rocky-forest-16843.herokuapp.com:' : 'localhost:'
 var io = require('socket.io-client');
@@ -33,7 +35,7 @@ var App = React.createClass({
 
   getInitialState: function() {
 
-    return {username: null, loggedIn: Auth.loggedIn(), active_game: null} // Ask Gilbert if this belongs in the state
+    return {username: null, loggedIn: Auth.loggedIn(), active_game: null, logo: logo} // Ask Gilbert if this belongs in the state
   },
 
   componentDidMount: function(){
@@ -102,7 +104,7 @@ var App = React.createClass({
 
   render: function() {
 
-  var navBarShow = this.state.loggedIn ? (<NavBar active_game={this.state.active_game} loggedIn={this.state.loggedIn} />) : null;
+  var navBarShow = this.state.loggedIn ? (<NavBar active_game={this.state.active_game} loggedIn={this.state.loggedIn} logo={this.state.logo}/>) : null;
 
     return (
       <div>
@@ -114,7 +116,8 @@ var App = React.createClass({
           joinGame: this.joinGame,
           leaveGame: this.leaveGame,
           setActiveGame: this.setActiveGame,
-          active_game: this.state.active_game
+          active_game: this.state.active_game,
+          logo: this.state.logo
         })}
       </div>
     )

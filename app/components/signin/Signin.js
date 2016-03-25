@@ -95,9 +95,9 @@ module.exports = React.createClass({
           <div className="row">
             <div className="signinBox">
               <div className="col-md-6 col-md-offset-3">
-                  <div className="jumbotron">
-                    <h1 className="display-3">Fwibble</h1>
-                      <div className="signInForm">
+                <div className="jumbotron">
+                  <div><img src={'./images/Fwibble-logo-cropped.png'} width='400px' height='200px' alt="Fwibble" className="img-responsive"/></div>                      
+                       <div className="signInForm">
               	        <form onSubmit={this.trySignIn}>
               		        <input type="text" className="form-control" placeholder="username" value={this.state.username} onChange={this.handleUsername} />
               		        <br/>
