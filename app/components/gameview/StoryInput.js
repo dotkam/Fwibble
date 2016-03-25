@@ -36,11 +36,10 @@ module.exports = React.createClass({
 
   render: function() {
     var wordMeter = (<WordCountMeter wordCount={this.state.trimmedWordLength} />)
-
     return(
       <div>
         <div className='storyInput_form'>
-          <form  className="form-inline" onSubmit={this.handleSubmit}>
+          <form  className="form-inline" onSubmit={this.handleSubmit} autoFocus>
             <input
               className="form-control"
               placeholder="Enter 6 words"
