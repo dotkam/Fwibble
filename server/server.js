@@ -48,12 +48,6 @@ routes.get('/*', function(req, res){
 server.listen(port);
 console.log('Listening on port', port);
 
-io.configure(function () { 
-  io.set("transports", ["xhr-polling"]); 
-  io.set("polling duration", 10); 
-});
-
-
 
 
 
