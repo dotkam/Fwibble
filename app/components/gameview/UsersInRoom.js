@@ -22,17 +22,13 @@ module.exports = React.createClass({
         <ul className="panel-body">
           {
             this.props.users.map((user, i) => {
-              var color = this.state.userColors[user], font=null;
-              if (this.props.users[this.props.turn]===user) {font = 'bold'}
-              else {font = null}  // style={{color}} style={{font}}
-              //   console.log('usersinroom font', font, '\nbold',bold)
-            // console.log('colorrr', color, '\nthis.props.users',this.props.users, '\nthis.props.turn',this.props.turn, '\nbfonnnt',font)
+              var color = this.state.userColors[user];
+              var style = {color: color};
+              var spacer = this.props.users[this.props.turn]===user ? '* ' : "\u00a0\u00a0";
 
-            var style = {color: color, font: font}
-                        console.log('style',style)
               return (
                 <li className="list-unstyled" key={i} style={style}>
-                  {user}
+                  {spacer}{user}
                 </li>
               );
             })
