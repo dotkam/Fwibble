@@ -1,6 +1,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var StoryInput = require('./StoryInput.js');
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
+
 
 module.exports = React.createClass({
 
@@ -23,11 +25,20 @@ module.exports = React.createClass({
 		var color = this.state.userColors[this.props.user];
 		var style = {color: color};
 		var spacer = "\u00a0";
+	  var text = this.props.text;
+	  console.log('rctg', ReactCSSTransitionGroup)
 
+	  console.log('fwib props', this.props)
 	  return (
+<ReactCSSTransitionGroup transitionName = "example"
+               transitionAppear = {true} transitionAppearTimeout = {500}
+               transitionEnter = {false} transitionLeave = {false}>
+
 		<b className="fwib" style={style}>
-		  {this.props.text}{spacer}
+		  	{text}{spacer}
 		</b>
+				  </ReactCSSTransitionGroup>
+
 		);
 	}
 });
