@@ -121,7 +121,7 @@ module.exports = React.createClass({
     if(user === users[turn]){ // This logic isn't necessary anymore
       fwibs.push(fwib);
       turn = this._changeTurn();
-      myTurn = false;
+      myTurn = user === users[turn];
       fwib.game_hash = this.props.params.game_hash;
       this.setState({fwibs, turn, myTurn});
       socket.emit('change:turn', {turn: turn, game_hash: this.props.params.game_hash});
