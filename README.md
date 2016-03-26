@@ -44,21 +44,21 @@ Running `webpack -p` (p for production) will minify and uglify the dist files.
 
 ### Database Initialization
 
-To initialize the PostgreSQL environment type `initdb fwibbleDB` in console, then 
+To initialize the PostgreSQL environment, type `initdb fwibbleDB` in console, then 
 `postgres -D fwibbleDB` to open the connection to the database environment.
-In another console tab type `createdb development` or `createdb test` 
+In another console tab type `createdb development` or `createdb test`.
 This creates the database in the FwibbleDB folder.
 To load schema, depending on environment, type:
   `psql "dbname=development options=--search_path=public" -f db/fwibble.sql`
 OR
   `psql "dbname=test options=--search_path=public" -f db/fwibble.sql`
-Seed the database with information`node db/db_setup.js`
+To seed the database with information type `node db/db_setup.js`.
 IF NEEDED:
-   Delete all database tables, while Postgres is running, with `dropdb development`
+   Delete all database tables, while Postgres is running, with `dropdb development`.
    Start over at `createdb` steps to recreate database tables.
 
 ### Express Server 
 
-Ensure database is running with `postgres -D fwibbleDB`
-In another terminal tab run `npm start`
+Ensure database is running with `postgres -D fwibbleDB`.
+In another terminal tab run `npm start`.
 This will allow connection through `localhost:3000` for endpoint and API testing.
