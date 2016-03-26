@@ -2,6 +2,8 @@ var React = require('react');
 var Link = require('react-router').Link;
 var $ = require('../../../jquery.min.js');
 
+var logo = require('./../../images/Fwibble-logo-cropped.png')
+
 module.exports = React.createClass({
 
   getInitialState: function() {
@@ -65,7 +67,7 @@ module.exports = React.createClass({
             <div className="signupBox">
               <div className="col-md-6 col-md-offset-3">
                 <div className="jumbotron">
-                  <div><img src={'./images/Fwibble-logo-cropped.png'} width='400px' height='200px' alt="Fwibble" className="img-responsive"/></div>
+                  <div><img src={logo} width='200px' alt="Fwibble" className="center-block"/></div>
                     <div className="signUpForm">
             	        <form>
             		        <input type="text" className="form-control" placeholder="username" value={this.state.username} onChange={this.handleUsername} />
