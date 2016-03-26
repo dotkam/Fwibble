@@ -52,7 +52,7 @@ To load schema, depending on environment, type:
   `psql "dbname=development options=--search_path=public" -f db/fwibble.sql`
 OR
   `psql "dbname=test options=--search_path=public" -f db/fwibble.sql`
-To seed the database with information type `node db/db_setup.js`.
+To seed the database with information type `node db/db_setup.js`.<br/>
 IF NEEDED:
    Delete all database tables, while Postgres is running, with `dropdb development`.
    Start over at `createdb` steps to recreate database tables.
