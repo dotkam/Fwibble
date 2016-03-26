@@ -23,8 +23,9 @@
     "body-parser": "^1.15.0",
     "bootstrap": "^3.3.6",
     "cookie-parser": "^1.4.1",
-    "express": "^4.12.4",
     "css-loader": "^0.23.1",
+    "express": "^4.12.4",
+    "file-loader": "^0.8.5",
     "html-webpack-plugin": "^2.9.0",
     "http-server": "^0.8.5",
     "knex": "^0.10.0",
@@ -34,9 +35,9 @@
     "react-dom": "^0.14.7",
     "react-router": "^2.0.0",
     "sha1": "^1.1.1",
-    "style-loader": "^0.13.0",
     "socket.io": "^1.4.5",
     "socket.io-client": "^1.4.5",
+    "style-loader": "^0.13.0",
     "webpack": "^1.12.13"
   },
   "devDependencies": {
