@@ -4,20 +4,34 @@
 
 Fwibble was born out of the love of playground telephone games, silly stories with the family on road trips, and real-time, interactive social media experiences. A Fwibble combines collaboration, spontaneity, and a knack for the absurd.  
 
+The result can be a scribble or a fractured fable. Hence: Fwibble!
+
+### GAME PLAY:
+Participants take turns typing 6-word additions to the Fwibble; these individual snippets are called Fwibs. Sometimes a sentence will be left incomplete, so it’s up to the next player to finish that thought. This strategy leads to the zany Fwibble fun we’re all so fond of. The overall game is timed, and when the time expires the Fwibble is finished: so make those Fwibs fly off your fingers, players!
+
 ## The Fwibble Force
 
 Austin Kovach - Scrum Master
+
 Kamran Varahramyan - Development Team 
+
 Natalie Sharpe - Development Team
+
 Zachary Fullerton - Product Owner
+
 
 ## Tech Stack
 
 PostgreSQL / Knex.js
+
 React
+
 React-Router
+
 Socket.io
+
 Bootstrap
+
 Webpack
 
 ## Visit Us
