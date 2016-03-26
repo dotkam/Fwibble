@@ -147,14 +147,14 @@ module.exports = React.createClass({
   },
   render: function() {
     // Add user to this game if they are not already
-    if(!this.props.active_game){
-      console.log('this.params.game_hash', this.props.params.game_hash)
-      this.props.joinGame({user: this.props.user, game_hash: this.props.params.game_hash});
-    }
+    // if(!this.props.active_game){
+    //   console.log('this.params.game_hash', this.props.params.game_hash)
+    // }
     if(this.state.user === undefined){ // change to find user in users array - Maybe not?
     // Fetch all info for this gameroom this.params.url
       var {user} = this.props;
       var {users} = this.state;
+      this.props.joinGame({user: this.props.user, game_hash: this.props.params.game_hash});
       socket.emit('fetch:users', {user: user, users: users, game_hash: this.props.params.game_hash});
     }
     console.log('gameState', this.state.gameState)
