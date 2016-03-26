@@ -11,28 +11,20 @@ Participants take turns typing 6-word additions to the Fwibble; these individual
 
 ## The Fwibble Force
 
-Austin Kovach - Scrum Master
-
-Kamran Varahramyan - Development Team 
-
-Natalie Sharpe - Development Team
-
-Zachary Fullerton - Product Owner
+Austin Kovach - Scrum Master<br/>
+Kamran Varahramyan - Development Team<br/>
+Natalie Sharpe - Development Team<br/>
+Zachary Fullerton - Product Owner<br/>
 
 
 ## Tech Stack
 
-PostgreSQL / Knex.js
-
-React
-
-React-Router
-
-Socket.io
-
-Bootstrap
-
-Webpack
+PostgreSQL / Knex.js<br/>
+React<br/>
+React-Router<br/>
+Socket.io<br/>
+Bootstrap<br/>
+Webpack<br/>
 
 ## Visit Us
 
