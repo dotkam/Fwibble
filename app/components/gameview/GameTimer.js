@@ -8,7 +8,7 @@ module.exports = React.createClass({
   
   getInitialState: function() {
 
-    return { secondsLeft: 45, minutes: 0, seconds: '45'};
+    return { secondsLeft: 60, minutes: 1, seconds: '00'};
 
 
 
