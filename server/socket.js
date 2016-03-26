@@ -1,8 +1,4 @@
 // Keep track of which names are used so that there are no duplicates
-// var Fwib = require('../app/actions/fwibs.js')
-// var User = require('../app/actions/users.js')
-// var Game = require('../app/actions/games.js')
-// var Session = require('../app/actions/sessions.js')
 
 var Fwib = require('./models/fwibModel.js')
 var User = require('./models/userModel.js')
@@ -77,10 +73,10 @@ module.exports = function (socket) {
             user: data.user,
             users: res
           });
-          socket.broadcast.to(data.game_hash).emit('user:join', {
-            name: data.user,
-            users: res
-          });
+          // socket.broadcast.to(data.game_hash).emit('user:join', {
+          //   name: data.user,
+          //   users: res
+          // });
         };
       })
   });
@@ -142,15 +138,15 @@ module.exports = function (socket) {
   // Adds active_game to user
   socket.on('join:game', function(data){
     console.log('GOT JOINGAME', data)
-    var client = this;
+    // var client = this;
+    socket.broadcast.to(data.game_hash).emit('user:join', {username: data.username}); // CHANNEL EMIT USER JOIN
     User.addActiveRoom(data.username, data.game_hash)
       .then(function(res){
         console.log('Added Active Room')
         Game.allUser(data.game_hash)
           .then(function(res2){
             console.log('GOT ALL USERS:', res, res2)
-            socket.broadcast.to(data.game_hash).emit('update:users', {users: res2}); // CHANNEL EMIT USER JOIN
-            client.emit('update:users', {users: res2});
+            // client.emit('update:users', {users: res2});
           })
       })
   });
