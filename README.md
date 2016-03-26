@@ -6,7 +6,7 @@ Fwibble was born out of the love of playground telephone games, silly stories wi
 
 The result can be a scribble or a fractured fable. Hence: Fwibble!
 
-### GAME PLAY:
+### Game Play:
 Participants take turns typing 6-word additions to the Fwibble; these individual snippets are called Fwibs. Sometimes a sentence will be left incomplete, so it’s up to the next player to finish that thought. This strategy leads to the zany Fwibble fun we’re all so fond of. The overall game is timed, and when the time expires the Fwibble is finished: so make those Fwibs fly off your fingers, players!
 
 ## The Fwibble Force
