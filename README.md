@@ -1,5 +1,29 @@
 # Fwibble
 
+## What is a Fwibble, you may ask?
+
+Fwibble was born out of the love of playground telephone games, silly stories with the family on road trips, and real-time, interactive social media experiences. A Fwibble combines collaboration, spontaneity, and a knack for the absurd.  
+
+## The Fwibble Force
+
+Austin Kovach - Scrum Master
+Kamran Varahramyan - Development Team 
+Natalie Sharpe - Development Team
+Zachary Fullerton - Product Owner
+
+## Tech Stack
+
+PostgreSQL / Knex.js
+React
+React-Router
+Socket.io
+Bootstrap
+Webpack
+
+## Visit Us
+
+fwibble.me / fwibble.us
+
 ## Webpack
 
 How to start up the webpack database:
@@ -28,5 +52,5 @@ IF NEEDED:
 ## Express Server 
 
 Ensure database is running with `postgres -D fwibbleDB`
-In another terminal tab run `node server/server.js`
+In another terminal tab run `npm start`
 This will allow connection through `localhost:3000` for endpoint and API testing.
