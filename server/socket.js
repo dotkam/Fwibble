@@ -64,10 +64,10 @@ module.exports = function (socket) {
   
   // send the new user their name and a list of users
   // notify other clients that a new user has joined
-  socket.on('fetch:users', function(data){ // Validate that user belongs in room
+  socket.on('fetch:users', function(data){
+
     console.log('fetch:users data', data)
-    // name = data.user; // May not need this
-    // userNames.claim(name); // Grab all users for room // Good lord please deprecate this
+
     var client = this;
     Game.allUser(data.game_hash)
       .then(function(res){
@@ -75,11 +75,11 @@ module.exports = function (socket) {
         if( data.users.length !== res.length){
           socket.emit('init', {
             user: data.user,
-            users: res // userNames.get()
+            users: res
           });
           socket.broadcast.to(data.game_hash).emit('user:join', {
             name: data.user,
-            users: res // userNames.get()
+            users: res
           });
         };
       })
@@ -141,8 +141,8 @@ module.exports = function (socket) {
   });
   // Adds active_game to user
   socket.on('join:game', function(data){
-    var client = this;
     console.log('GOT JOINGAME', data)
+    var client = this;
     User.addActiveRoom(data.username, data.game_hash)
       .then(function(res){
         console.log('Added Active Room')
