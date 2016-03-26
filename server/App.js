@@ -24,6 +24,9 @@ var port = process.env.PORT || 3000;
 var connectionPoint = process.env.NODE_ENV === 'production' ? 'rocky-forest-16843.herokuapp.com:' : 'localhost:'
 var io = require('socket.io-client');
 
+console.log('process.env', process);
+console.log('process.env.DB', process.env.DATABASE_URL);
+
 console.log('socket connection attempt:', connectionPoint, port, process.env.NODE_ENV)
 
 var socket = io.connect(connectionPoint + port);
@@ -51,19 +54,7 @@ var App = React.createClass({
       loggedIn: Auth.loggedIn(),
       active_game: data.active_game
     });
-    // $.ajax({
-    //   type: 'POST',
-    //   url: '/user/game', //game
-    //   data: { username: username },
-    //   contentType: 'application/json',
-    //   success: function(data) {
-    //     // TODO update state based off of active_game response
-    //   },
-    //   error: function(data) {
-    //     console.error("Connection error:", data)
-    //   }
-    // });
-    console.log('setUser active_game', this.state.active_game)
+
     if(this.state.active_game){
       this.context.router.replace(`/gameview/${data.active_game}`)
     }
@@ -75,7 +66,7 @@ var App = React.createClass({
     this.setState({active_game: data.game_hash});
   },
   joinGame: function(data){
-    console.log("calling joingame:", data)
+    console.log("calling JOINGAME:", data)
     socket.emit('join:game', {username: data.user, game_hash: data.game_hash})
     this.setState({active_game: data.game_hash});
   },
@@ -84,18 +75,13 @@ var App = React.createClass({
   },
   logoutUser: function(){
     socket.emit('logout', {username: this.state.username});
-    Auth.logout(); // log out on /signout
+    Auth.logout();
     this.setState({
       username: null,
       loggedIn: Auth.loggedIn(),
       active_game: null
     })
   },
-  // setActiveState: function(data){
-  //   this.setState({
-  //     activeGame
-  //   })
-  // }
   endTimer: function(){
     if(this.state.secondsLeft === 0){
     socket.emit('endtimer', {gamehash: this.state.active_game});

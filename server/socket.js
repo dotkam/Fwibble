@@ -65,7 +65,7 @@ module.exports = function (socket) {
   // send the new user their name and a list of users
   // notify other clients that a new user has joined
   socket.on('fetch:users', function(data){ // Validate that user belongs in room
-    console.log('socket data', data.users)
+    console.log('fetch:users data', data)
     // name = data.user; // May not need this
     // userNames.claim(name); // Grab all users for room // Good lord please deprecate this
     var client = this;
@@ -142,11 +142,13 @@ module.exports = function (socket) {
   // Adds active_game to user
   socket.on('join:game', function(data){
     var client = this;
+    console.log('GOT JOINGAME', data)
     User.addActiveRoom(data.username, data.game_hash)
       .then(function(res){
-
+        console.log('Added Active Room')
         Game.allUser(data.game_hash)
           .then(function(res2){
+            console.log('GOT ALL USERS:', res, res2)
             socket.broadcast.to(data.game_hash).emit('update:users', {users: res2}); // CHANNEL EMIT USER JOIN
             client.emit('update:users', {users: res2});
           })
@@ -160,6 +162,7 @@ module.exports = function (socket) {
         socket.emit('update:active_game', {game_hash: ''});
         Game.allUser(data.game_hash)
           .then(function(res2){
+            console.log('LEAVE DATA:', res, res2)
             socket.broadcast.to(data.game_hash).emit('update:users', {users: res2}); // CHANNEL EMIT USER LEAVE
             client.emit('update:users', {users: res2});
           })
@@ -195,7 +198,7 @@ module.exports = function (socket) {
   socket.on('title', function(data){
     Game.titleByHash(data.gamehash)
       .then(function(res) {
-        console.log("title.res", res)
+        console.log("TITLE:", res)
         socket.emit('title:update', {title: res})
       });
   });

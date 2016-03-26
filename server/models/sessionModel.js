@@ -75,7 +75,7 @@ Session.userInnerJoin = function(username) {
       console.error('error retrieving join table', error)
     })
     .then(function(res){
-      console.log('successfully retrieved join table', res)
+      // console.log('successfully retrieved join table', res)
       return res[0];
     })
 }

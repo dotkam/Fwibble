@@ -15,13 +15,15 @@ var server = http.createServer(app);
 var routes = express.Router();
 
 var port = process.env.PORT || 3000;
+console.log('PORT', port, process.env);
 var assetFolder = Path.resolve(__dirname + '/../dist');
 var bodyParser = require('body-parser');
 
 
 
 var socket = require('./socket.js');
-var io = require('socket.io').listen(server);
+var io = require('socket.io')({ transports: ["xhr-polling"], "polling duration": 10 }).listen(server);
+
 io.sockets.on('connection', socket);
 
 

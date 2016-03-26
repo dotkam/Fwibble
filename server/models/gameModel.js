@@ -18,7 +18,6 @@ Game.generateHash = function(gameId) {
       console.error('error inserting hash into db', error)
     }) 
     .then(function(res){
-      console.log('successfully updated hash', res)
       return res;
     })  
 }
@@ -35,7 +34,7 @@ Game.titleGenerator = function() {
   var noun = ['Cat', 'Dog', 'Elephant', 'Child', 'Dragon', 'Witch', 'King', 'Queen', 'Flower', 'Bird', 'Kobold', 'Gnome', 'Elf', 'Wizard', 'Chess Master', 'Actor', 'Teacher', 'Artist', 'Bus Driver', 'Golfer', 'Sentient Trashcan', 'Dungeons and Dragons Enthusiast'];
   var ptverb = ['Ran', 'Climbed', 'Looked', 'Jumped', 'Flew', 'Dug', 'Fell', 'Shouted', 'Gave', 'Rang', 'Wrote', 'Babysat', 'Sat', 'Napped', 'Skipped', 'Cartwheeled', 'Documented', 'Prepared', 'Fought', 'Taught', 'Hired', 'Annoyed', 'Raced', 'Convinced', 'Cold Called', 'Drove'];
   var preposition = ['Into', 'Around', 'Into and Around', 'In', 'After', 'Out of', 'Beyond', 'Down', 'From', 'Through', 'Up', 'Over', 'Onto', 'By', 'Across', 'Amid', 'Beside', 'Between', 'Inside', 'Outside'];
-  var adjective = ['Purple', 'Large', 'Tiny', 'Yellow', 'Magnificent', 'Calm', 'Jolly', 'Talented', 'Witty', 'Generous', 'Dirty, Dirty', 'Prepubescent', 'Evil', 'Lovable', 'Sad', 'Crazy', 'Silly'];
+  var adjective = ['Purple', 'Large', 'Tiny', 'Magnificent', 'Calm', 'Jolly', 'Talented', 'Witty', 'Generous', 'Dirty, Dirty', 'Prepubescent', 'Evil', 'Lovable', 'Sad', 'Crazy', 'Silly'];
   var properNoun = ['Mr. Belvedere', 'President Obama', 'Jiggypuff', 'Spiderman', 'Captain Kirk', 'Aragorn', 'Oprah', 'Magneto', 'Big Bird', 'Kanye West', 'Vladimir Putin', 'Guy Fieri', 'Simon Cowell', 'David Bowie', 'Gloria Steinem', 'The Artist Formerly Known as and Who Currently Goes by Prince', 'Hulk Hogan', 'The Entire Cast of Cheers', 'Joe Biden', 'The Velveteen Rabbit', 'Tito Puente', 'George Washington', 'Sasquatch', 'Jay Leno', 'Aladdin'];
   var pluralNoun = ['Cats', 'Dogs', 'Elephants', 'Children', 'Dragons', 'Witches', 'Kings', 'Queens', 'Flowers', 'Birds', 'Kobolds', 'Gnomes', 'Elves', 'Wizards', 'Chess Masters', 'Actors', 'Teachers', 'Artists', 'Bus Drivers', 'Golfers', 'Sentient Trashcans', 'Dungeons and Dragons Enthusiasts'];
 
@@ -80,7 +79,7 @@ Game.titleByHash = function(gamehash) {
       console.error('error retrieving game', error)
     })
     .then(function(res){
-      console.log('successfully retrieved game', res)
+      // console.log('successfully retrieved game', res)
       return res[0].game_title;
     })  
 }
@@ -126,7 +125,7 @@ Game.allInProgress = function() {
       console.error('error retrieving games', error)
     })
     .then(function(res){
-      console.log('successfully retrieved games', res)
+      // console.log('successfully retrieved games', res)
       return res;
     })  
 }
@@ -137,7 +136,7 @@ Game.allCompleted = function() {
       console.error('error retrieving games', error)
     })
     .then(function(res){
-      console.log('successfully retrieved games', res)
+      // console.log('successfully retrieved games', res)
       return res;
     })  
 }
@@ -148,7 +147,7 @@ Game.all = function() {
       console.error('error retrieving games', error)
     })
     .then(function(res){
-      console.log('successfully retrieved games', res)
+      // console.log('successfully retrieved games', res)
       return res;
     })  
 }
