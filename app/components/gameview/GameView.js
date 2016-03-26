@@ -38,11 +38,11 @@ module.exports = React.createClass({
    socket.on('game:start', this.startUp);
    socket.on('game:end', this.gameEnd);
    socket.emit('subscribe', this.props.params.game_hash);
-    if(!this.props.active_game){
+    // if(!this.props.active_game){
       console.log('this.params.game_hash', this.props.params.game_hash);
       console.log(this.props.joinGame)
       this.props.joinGame({user: this.props.user, game_hash: this.props.params.game_hash});
-    }
+    // }
     if(this.state.user === undefined){ // change to find user in users array - Maybe not?
     // Fetch all info for this gameroom this.params.url
       var {user} = this.props;
