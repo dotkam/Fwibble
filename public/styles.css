@@ -214,12 +214,11 @@ body {
 }
 
 
-
-.example-appear {
+.fwib-appear {
    opacity: 0.01;
 }
 
-.example-appear.example-appear-active {
+.fwib-appear.fwib-appear-active {
    opacity: 1;
-   transition: opacity 500ms ease-in;
+   transition: opacity 300ms linear;
 }

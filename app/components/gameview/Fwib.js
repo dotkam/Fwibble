@@ -25,19 +25,16 @@ module.exports = React.createClass({
 		var color = this.state.userColors[this.props.user];
 		var style = {color: color};
 		var spacer = "\u00a0";
-	  var text = this.props.text;
-	  console.log('rctg', ReactCSSTransitionGroup)
 
-	  console.log('fwib props', this.props)
 	  return (
-<ReactCSSTransitionGroup transitionName = "example"
-               transitionAppear = {true} transitionAppearTimeout = {500}
-               transitionEnter = {false} transitionLeave = {false}>
+			<ReactCSSTransitionGroup transitionName = "fwib" transitionAppear = {true}
+				transitionAppearTimeout = {500} transitionEnter = {false} transitionLeave = {false}>
 
-		<b className="fwib" style={style}>
-		  	{text}{spacer}
-		</b>
-				  </ReactCSSTransitionGroup>
+				<b className="fwib" style={style}>
+			  	{this.props.text}{spacer}
+				</b>
+
+			</ReactCSSTransitionGroup>
 
 		);
 	}
