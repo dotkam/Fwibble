@@ -30,7 +30,9 @@ Webpack<br/>
 
 fwibble.me / fwibble.us
 
-## Webpack
+##Development Environment Setup
+
+### Webpack
 
 How to start up the webpack database:
 You'll need to do a global install of webpack: `npm install -g webpack`.
@@ -40,7 +42,7 @@ Run an `npm start`, and you should now be able to pull up the site on localhost:
 If you want to automatically update your in-browser view when you make changes, you can run `webpack -w`.
 Running `webpack -p` (p for production) will minify and uglify the dist files.
 
-## Database Initialization
+### Database Initialization
 
 To initialize the PostgreSQL environment type `initdb fwibbleDB` in console, then 
 `postgres -D fwibbleDB` to open the connection to the database environment.
@@ -55,7 +57,7 @@ IF NEEDED:
    Delete all database tables, while Postgres is running, with `dropdb development`
    Start over at `createdb` steps to recreate database tables.
 
-## Express Server 
+### Express Server 
 
 Ensure database is running with `postgres -D fwibbleDB`
 In another terminal tab run `npm start`
