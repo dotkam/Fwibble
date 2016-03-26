@@ -212,3 +212,13 @@ body {
   background-color: white;
   margin-bottom: 0px;
 }
+
+
+.fwib-appear {
+   opacity: 0.01;
+}
+
+.fwib-appear.fwib-appear-active {
+   opacity: 1;
+   transition: opacity 300ms linear;
+}

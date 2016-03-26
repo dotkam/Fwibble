@@ -1,6 +1,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var StoryInput = require('./StoryInput.js');
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
+
 
 module.exports = React.createClass({
 
@@ -25,9 +27,15 @@ module.exports = React.createClass({
 		var spacer = "\u00a0";
 
 	  return (
-		<b className="fwib" style={style}>
-		  {this.props.text}{spacer}
-		</b>
+			<ReactCSSTransitionGroup transitionName = "fwib" transitionAppear = {true}
+				transitionAppearTimeout = {500} transitionEnter = {false} transitionLeave = {false}>
+
+				<b className="fwib" style={style}>
+			  	{this.props.text}{spacer}
+				</b>
+
+			</ReactCSSTransitionGroup>
+
 		);
 	}
 });
