@@ -194,6 +194,10 @@ body {
   border-color: lightgrey;
 }
 
+.img-responsive {
+  padding-left: 75px;
+}
+
 .panel-info > .panel-heading {
   background-color: rgba(36, 201, 201, .05);
   margin-top: 0px;
