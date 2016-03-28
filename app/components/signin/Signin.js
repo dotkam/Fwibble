@@ -99,17 +99,17 @@ module.exports = React.createClass({
                 <div className="jumbotron">
                   <div><img src={logo} width='200px' alt="Fwibble" className="center-block"/></div>                      
                        <div className="signInForm">
-              	        <form onSubmit={this.trySignIn}>
-              		        <input type="text" className="form-control" placeholder="username" value={this.state.username} onChange={this.handleUsername} />
-              		        <br/>
-              		        <input type="password" className="form-control" placeholder="password" value={this.state.password} onChange={this.handlePassword} />
-              		        <br/>
-              		          <input type="submit" className="btn btn-success" onClick={this.handleClick} /> 
-              		      </form>
+                        <form onSubmit={this.trySignIn}>
+                          <input type="text" className="form-control" placeholder="username" value={this.state.username} onChange={this.handleUsername} />
+                          <br/>
+                          <input type="password" className="form-control" placeholder="password" value={this.state.password} onChange={this.handlePassword} />
+                          <br/>
+                            <input type="submit" className="btn btn-success" onClick={this.handleClick} /> 
+                        </form>
                         <p>{loginMessage}</p>
                         <div className="row">
                           <a href="/signup">Don't have an account yet? Sign up!</a>
-              		      </div>
+                        </div>
                       </div>    
                   </div>
                 </div>
