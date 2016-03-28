@@ -5,7 +5,8 @@ var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
 var DefaultRoute = Router.DefaultRoute;  
 var Route = Router.Route;
-var Logo = require('./../../images/Fwibble-logo-cropped.png')
+
+var logo = require('./../../images/Fwibble-logo-cropped.png')
 
 module.exports = React.createClass({
   contextTypes: {
@@ -97,7 +98,7 @@ module.exports = React.createClass({
             <div className="signinBox">
               <div className="col-md-6 col-md-offset-3">
                 <div className="jumbotron">
-                  <div><img src={Logo} width='400px' height='200px' alt="Fwibble" className="img-responsive"/></div>                      
+                  <div><img src={logo} width='200px' alt="Fwibble" className="center-block"/></div>                      
                        <div className="signInForm">
               	        <form onSubmit={this.trySignIn}>
               		        <input type="text" className="form-control" placeholder="username" value={this.state.username} onChange={this.handleUsername} />

@@ -18,7 +18,7 @@ startGame: function() {
     // var display = this.props.showStory ? (<StoryContainer fwibs={this.props.fwibs} onFwibSubmit={this.handleFwibSubmit} user={this.props.user} />) : null;
 
     return(
-      <div className="col-md-9">
+      <div className="col-md-9 col-sm-12 col-xs-12 col-lg-9">
         <br />
         <br />
         <div className="text-center">
