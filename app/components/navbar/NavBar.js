@@ -12,7 +12,7 @@ module.exports = React.createClass({
      <div className='navbar navbar-default navbar-static-top'>
        <div className='container-fluid'>
          <div className='navbar-header'>
-           <div><img src={Logo} width='120px' alt="Fwibble" className="img-responsive"/></div>
+           <div><img src={Logo} alt="Fwibble" className="navbar-brand"/></div>
          </div>
            <ul className="nav navbar-nav navbar-right">
              <li>
