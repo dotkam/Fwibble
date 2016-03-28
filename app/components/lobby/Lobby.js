@@ -31,7 +31,7 @@ module.exports = React.createClass({
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-      				<h2>Greetings, Fwibbler!</h2><h4>You can create your own new Fwibble now or join an existing Fwibble below.</h4>
+      				<h2>Greetings, {this.props.user}!</h2><h4>You can create your own new Fwibble now or join an existing Fwibble below.</h4>
             </div>
           </div>
           <br />

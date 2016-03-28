@@ -20,16 +20,19 @@ var Auth = require('./auth');
 
 var logo = '../public/images/Fwibble-logo-cropped.png';
 
-var port = process.env.PORT || 3000;
-var connectionPoint = process.env.NODE_ENV === 'production' ? 'rocky-forest-16843.herokuapp.com:' : 'localhost:'
-var io = require('socket.io-client');
+var port = 3000;
+var connectionPoint = 'rocky-forest-16843.herokuapp.com'
 
-console.log('process.env', process);
-console.log('process.env.DB', process.env.DATABASE_URL);
+if (window.location.hostname === 'localhost'){
+  connectionPoint = 'localhost:3000';
+}
+
+
+var io = require('socket.io-client');
 
 console.log('socket connection attempt:', connectionPoint, port, process.env.NODE_ENV)
 
-var socket = io.connect(connectionPoint + port);
+var socket = io.connect(connectionPoint);
 
 var App = React.createClass({
   contextTypes: {
@@ -38,7 +41,7 @@ var App = React.createClass({
 
   getInitialState: function() {
 
-    return {username: null, loggedIn: Auth.loggedIn(), active_game: null, logo: logo} // Ask Gilbert if this belongs in the state
+    return {username: null, loggedIn: Auth.loggedIn(), active_game: ''}
   },
 
   componentDidMount: function(){

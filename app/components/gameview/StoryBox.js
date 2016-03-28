@@ -35,6 +35,7 @@ module.exports = React.createClass({
                 key={i}
                 user={fwib.user}
                 text={fwib.text} 
+                users={this.props.users}
               />
             );
             })

@@ -1,4 +1,5 @@
 var React = require('react');
+var Link = require('react-router').Link;
 var Auth = require('../../../server/auth');
 
 var logo = require('./../../images/Fwibble-logo-cropped.png')
@@ -19,7 +20,7 @@ module.exports = React.createClass({
                 <div className="jumbotron">
                   <div><img src={logo} width='200px' alt="Fwibble" className="center-block"/></div>
                   <p>You have successfully logged out.</p>
-                  <a href="/signin">Need more Fwibbles in your life? Sign back in!</a>
+                  <Link to="/signin">Need more Fwibbles in your life? Sign back in!</Link>
                 </div>
               </div>
             </div>

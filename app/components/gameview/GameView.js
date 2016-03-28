@@ -40,7 +40,7 @@ module.exports = React.createClass({
    socket.emit('subscribe', this.props.params.game_hash);
     if(!this.props.active_game){
       console.log('this.params.game_hash', this.props.params.game_hash);
-      console.log(this.props.joinGame)
+      console.log('this.props.joinGame:', this.props.joinGame)
       this.props.joinGame({user: this.props.user, game_hash: this.props.params.game_hash});
     }
     if(this.state.user === undefined){ // change to find user in users array - Maybe not?
@@ -65,15 +65,13 @@ module.exports = React.createClass({
   },
 
   _userJoined: function(data) {
-    // Should just need to grab all data for this user - only broadcast 
-    var {user, users, fwibs, turn} = this.state;
-    var {name} = data;
-    this.setState({users, fwibs});
-    
-    // TODO: put this logic in GO button function instead!
-    var {myTurn} = this.state;
+    // Should just need to grab all data for this user - only broadcast
+    console.log('CLIENT USERJOINED:', data);
+    var {user, users, fwibs, turn, myTurn} = this.state;
+    var {username} = data;
     if (user===users[0]) { myTurn = true };
-    this.setState({myTurn});
+    users.push(username);
+    this.setState({users, fwibs, myTurn});
   },
   leaveGame: function() {
     // on clicking leave room button, 
@@ -123,7 +121,7 @@ module.exports = React.createClass({
     if(user === users[turn]){ // This logic isn't necessary anymore
       fwibs.push(fwib);
       turn = this._changeTurn();
-      myTurn = false;
+      myTurn = user === users[turn];
       fwib.game_hash = this.props.params.game_hash;
       this.setState({fwibs, turn, myTurn});
       socket.emit('change:turn', {turn: turn, game_hash: this.props.params.game_hash});
@@ -146,17 +144,6 @@ module.exports = React.createClass({
     this.setState({ gameState: 'completed' });
   },
   render: function() {
-    // Add user to this game if they are not already
-    // if(!this.props.active_game){
-    //   console.log('this.params.game_hash', this.props.params.game_hash)
-    //   this.props.joinGame({user: this.props.user, game_hash: this.props.params.game_hash});
-    // }
-    // if(this.state.user === undefined){ // change to find user in users array - Maybe not?
-    // // Fetch all info for this gameroom this.params.url
-    //   var {user} = this.props;
-    //   var {users} = this.state;
-    //   socket.emit('fetch:users', {user: user, users: users, game_hash: this.props.params.game_hash});
-    // }
     console.log('gameState', this.state.gameState)
     var display = this.state.gameState !== 'open' ? (<StoryContainer fwibs={this.state.fwibs} onFwibSubmit={this.handleFwibSubmit} user={this.state.user} users={this.state.users} active_game={this.props.params.game_hash} myTurn={this.state.myTurn} gameState={this.state.gameState} />) 
                                                   : (<GoButton goButtonPush={this.onGo} gameStart={this.startUp}/>);
