@@ -1,7 +1,6 @@
 var React = require('react');
 var Link = require('react-router').Link;
 var Auth = require('../../../server/auth');
-
 var logo = require('./../../images/Fwibble-logo-cropped.png')
 
 module.exports = React.createClass({

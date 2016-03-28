@@ -1,6 +1,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var WordCountMeter = require('./WordCountMeter.js');
+var alertify = require('alertify.js');
+
 
 module.exports = React.createClass({
 
@@ -20,10 +22,11 @@ module.exports = React.createClass({
         text : this.state.text
       }
       this.props.onFwibSubmit(fwib); 
+      alertify.success('What a Fwib!');
       this.setState({ text: '', trimmedWordLength: 0 });
     }
     else {
-      console.log('Not 6 words!'); // Change to alert/flash
+      alertify.error('Not 6 words!');
     }
   },
 

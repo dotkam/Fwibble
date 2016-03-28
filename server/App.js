@@ -15,8 +15,11 @@ var Signup = require('../app/components/signup/Signup');
 var Signout = require('../app/components/signout/Signout');
 var Lobby = require('../app/components/lobby/Lobby');
 var Gameview = require('../app/components/gameview/GameView');
-//var userActions = //
+
 var Auth = require('./auth');
+var alertify = require('alertify.js');
+alertify.logPosition('bottom right');
+
 
 var logo = '../public/images/Fwibble-logo-cropped.png';
 
@@ -84,6 +87,7 @@ var App = React.createClass({
       loggedIn: Auth.loggedIn(),
       active_game: null
     })
+    alertify.success('Successfully logged out');
   },
   endTimer: function(){
     if(this.state.secondsLeft === 0){

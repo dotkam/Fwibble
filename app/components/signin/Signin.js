@@ -6,6 +6,7 @@ var Router = ReactRouter.Router;
 var DefaultRoute = Router.DefaultRoute;  
 var Route = Router.Route;
 
+var alertify = require('alertify.js');
 var logo = require('./../../images/Fwibble-logo-cropped.png')
 
 module.exports = React.createClass({
@@ -20,6 +21,10 @@ module.exports = React.createClass({
       loginMsg: null,
       showStory: false 
     }
+  },
+  
+  componentDidMount: function(){
+    document.getElementsByTagName('input')[0].focus();
   },
 
   handleUsername: function (e) {
@@ -68,10 +73,11 @@ module.exports = React.createClass({
           }
           // trigger on-page display of error message
           this.setState({loginErr: true})
-
+          alertify.error(this.state.loginMsg);
         // Or set active user and route to game
         } else {
           this.setState({loginErr: false})
+          alertify.success('Sign in successful!');
           this.props.setUser({username: data.activeUser, active_game: data.activeGame}) // was data.activeUser
           localStorage.fwibbleToken = data.sessToken;
         }
