@@ -11,6 +11,7 @@ var LeaveGameButton = require('./LeaveGameButton.js');
 
 var io = require('socket.io-client');
 var socket = io.connect();
+var alertify = require('alertify.js');
 
 
 module.exports = React.createClass({
@@ -128,7 +129,7 @@ module.exports = React.createClass({
       socket.emit('send:fwib', fwib);
     }
     else {
-      console.log('It\'s ' + users[turn] + '\'s turn!');
+      alertify.error('It\'s ' + users[turn] + '\'s turn!');
     }
   },
 
