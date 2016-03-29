@@ -57,8 +57,11 @@ module.exports = React.createClass({
 
   _initialize: function(data) {
     var {users, user} = data;
-    users = users.map((u) => u.username)
-    this.setState({users, user});
+    var { myTurn, turn } = this.state;
+
+    users = users.map((u) => u.username);
+    myTurn = users[turn] === user;
+    this.setState({users, user, myTurn});
   },
 
   _fwibReceive: function(fwib) {
