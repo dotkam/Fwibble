@@ -16,7 +16,7 @@ module.exports = React.createClass({
               var options = ['#F9096E','#24C9C9','#9ACC00'];
               var color = options[i % 3];
               var style = {color: color};
-              var spacer = this.props.users[this.props.turn]===user ? '* ' : "\u00a0\u00a0";
+              var spacer = this.props.users[this.props.turn]===user ? <div className="glyphicon glyphicon-star"></div> : "\u00a0\u00a0\u00a0";
 
               return (
                 <li className="list-unstyled" key={i} style={style}>
