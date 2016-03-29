@@ -36,6 +36,7 @@ module.exports = React.createClass({
                 user={fwib.user}
                 text={fwib.text} 
                 users={this.props.users}
+                gameState={this.props.gameState}
               />
             );
             })
