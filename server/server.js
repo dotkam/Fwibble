@@ -22,12 +22,10 @@ var bodyParser = require('body-parser');
 
 
 var socket = require('./socket.js');
-// var io = require('socket.io')({ transports: ["xhr-polling"], "polling duration": 10 }).listen(server);
 var io = require('socket.io').listen(server);
 
+
 io.sockets.on('connection', socket);
-
-
 
 routes.use(express.static(assetFolder));
 app.use('/', routes)

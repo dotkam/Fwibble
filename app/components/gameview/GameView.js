@@ -27,7 +27,6 @@ module.exports = React.createClass({
   componentWillMount: function(){
   },
   componentDidMount: function() {
-   socket.emit('title', {gamehash: this.props.params.game_hash});
    socket.on('title:update', this._setTitle)
    socket.on('init', this._initialize);
    socket.on('send:fwib', this._fwibReceive);
@@ -39,6 +38,10 @@ module.exports = React.createClass({
    socket.on('game:start', this.startUp);
    socket.on('game:end', this.gameEnd);
    socket.emit('subscribe', this.props.params.game_hash);
+
+   if(this.state.title === ''){
+     socket.emit('title', {gamehash: this.props.params.game_hash});
+   };
     if(!this.props.active_game){
       console.log('this.params.game_hash', this.props.params.game_hash);
       console.log('this.props.joinGame:', this.props.joinGame)
@@ -145,11 +148,10 @@ module.exports = React.createClass({
     this.setState({ gameState: 'completed' });
   },
   render: function() {
-    console.log('gameState', this.state.gameState)
     var display = this.state.gameState !== 'open' ? (<StoryContainer fwibs={this.state.fwibs} onFwibSubmit={this.handleFwibSubmit} user={this.state.user} users={this.state.users} active_game={this.props.params.game_hash} myTurn={this.state.myTurn} gameState={this.state.gameState} />) 
                                                   : (<GoButton goButtonPush={this.onGo} gameStart={this.startUp}/>);
+                                                  
     var leave = this.state.gameState === 'open' || this.state.gameState === 'completed' ? (<LeaveGameButton leaveGame={this.leaveGame} />) : null;
-    console.log('after', this.state.gameState)
 
 
     return (

@@ -9,6 +9,7 @@ module.exports = React.createClass({
   getInitialState: function() {
     return { text: '', trimmedWordLength: 0 };
   },
+  
   componentDidMount: function(){
     document.getElementsByTagName('input')[0].focus();
   },
