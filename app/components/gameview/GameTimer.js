@@ -7,11 +7,7 @@ var socket = io.connect();
 module.exports = React.createClass({
   
   getInitialState: function() {
-
     return { secondsLeft: 72 };
-
-
-
   },
 
   componentDidMount: function() {
@@ -48,9 +44,9 @@ module.exports = React.createClass({
   render: function() {
     var minutes = Math.floor(this.state.secondsLeft / 60);
     var seconds = Math.floor(this.state.secondsLeft % 60);
-    seconds = seconds < 10 ? '0' + seconds : '' + seconds;
+    var prettySeconds = seconds < 10 ? '0' + seconds : '' + seconds;
   	return (
-      <div className='gameTimer'>Time Left in Game: {minutes}:{seconds}</div>
+      <div className='gameTimer'>Time Left in Game: {minutes}:{prettySeconds}</div>
     );
   }
 });
