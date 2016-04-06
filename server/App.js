@@ -8,7 +8,7 @@ var IndexRoute = ReactRouter.IndexRoute;
 var browserHistory = ReactRouter.browserHistory;
 
 var Stylesheet = require('../public/styles.css');
-var Index = require('../app/components/index/Index');
+// var Index = require('../app/components/index/Index');
 var NavBar = require('../app/components/navbar/NavBar');
 var Signin = require('../app/components/signin/Signin');
 var Signup = require('../app/components/signup/Signup');
