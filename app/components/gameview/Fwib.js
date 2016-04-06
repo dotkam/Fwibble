@@ -23,7 +23,7 @@ module.exports = React.createClass({
 
 	render: function() {
 		var options = ['#F9096E','#24C9C9','#9ACC00'], curr=0;
-		var color = this.props.gameState === 'completed' ? '#000' : options[this.props.users.indexOf(this.props.user)];
+		var color = this.props.gameState === 'completed' ? '#000' : options[this.props.users.indexOf(this.props.user) % 3];
 		var style = {color: color};
 		var spacer = "\u00a0";
 
