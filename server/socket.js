@@ -5,55 +5,6 @@ var User = require('./models/userModel.js')
 var Game = require('./models/gameModel.js')
 var Session = require('./models/sessionModel.js')
 
-var userNames = (function () {
-  var names = {};
-
-  var claim = function (name) {
-    if (!name || names[name]) {
-      return false;
-    } else {
-      names[name] = true;
-      return true;
-    }
-  };
-
-  // find the lowest unused "guest" name and claim it
-  var getGuestName = function () {
-    var name,
-      nextUserId = 1;
-
-    do {
-      name = 'Guest ' + nextUserId;
-      nextUserId += 1;
-    } while (!claim(name));
-
-    return name;
-  };
-
-  // serialize claimed names as an array
-  var get = function () {
-    var res = [];
-    for (user in names) {
-      res.push(user);
-    }
-
-    return res;
-  };
-
-  var free = function (name) {
-    if (names[name]) {
-      delete names[name];
-    }
-  };
-
-  return {
-    claim: claim,
-    free: free,
-    get: get,
-    getGuestName: getGuestName
-  };
-}());
-
 // export function for listening to the socket
 module.exports = function (socket) {
   var name;
@@ -73,10 +24,6 @@ module.exports = function (socket) {
             user: data.user,
             users: res
           });
-          // socket.broadcast.to(data.game_hash).emit('user:join', {
-          //   name: data.user,
-          //   users: res
-          // });
         };
       })
   });
@@ -197,15 +144,6 @@ module.exports = function (socket) {
         console.log("TITLE:", res)
         socket.emit('title:update', {title: res})
       });
-  });
-
-  // clean up when a user leaves, and broadcast it to other users
-  socket.on('disconnect', function () {
-    userNames.free(name);
-    socket.broadcast.emit('user:left', {
-      name: name,
-      users: userNames.get()
-    });
   });
 };
 
