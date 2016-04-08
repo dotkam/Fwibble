@@ -90,7 +90,7 @@ module.exports = function (socket) {
       })
       .then(function(res2){
         console.log('CREATE CHANNEL:', res2[0].game_hash) 
-        client.emit('enter:game', {username: data.username, active_game: res.game_hash})
+        client.emit('enter:game', {username: data.username, active_game: res2[0].game_hash})
       })
       // })
   });
