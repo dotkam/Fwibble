@@ -11,6 +11,17 @@ module.exports = function (socket) {
   
   // send the new user their name and a list of users
   // notify other clients that a new user has joined
+
+  socket.on('fetch:userData', function(data){
+    console.log('fetching user data:', data);
+
+    Session.findByToken(data.token)
+      .then(function(res){
+        console.log('fetch userData res:', res)
+        socket.emit('valid_user', {username: res})
+      })
+  });
+
   socket.on('fetch:users', function(data){
 
     console.log('fetch:users data', data)

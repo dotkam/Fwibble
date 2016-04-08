@@ -50,6 +50,14 @@ var App = React.createClass({
   componentDidMount: function(){
     // TODO grab user info based on session token
     // THEN setState based on this info
+    if(localStorage.fwibbleToken){
+      console.log('has a fwibble token:', localStorage.fwibbleToken)
+      socket.emit('fetch:userData', { token: localStorage.fwibbleToken })
+    }
+    socket.on('valid_user', this.validUser)
+  },
+  validUser: function(data){
+    this.setState({ username: data.username });
   },
   setUser: function(data) {
     console.log('setUser data', data)
