@@ -3,6 +3,7 @@ var loggedIn = function(){
 };
 var login = function(){
   console.log('token set')
+  // Make a socket call to generate a session token here
   if(!localStorage.fwibbleToken){
     localStorage.fwibbleToken = 'Token'; // For now - remove later
   }
