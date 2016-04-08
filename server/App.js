@@ -33,8 +33,6 @@ if (window.location.hostname === 'localhost'){
 
 var io = require('socket.io-client');
 
-console.log('socket connection attempt:', connectionPoint, port, process.env.NODE_ENV)
-
 var socket = io.connect(connectionPoint);
 
 var App = React.createClass({
