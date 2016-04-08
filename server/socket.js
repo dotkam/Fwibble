@@ -18,8 +18,13 @@ module.exports = function (socket) {
     Session.findByToken(data.token)
       .then(function(res){
         console.log('fetch userData res:', res)
-        socket.emit('valid_user', {username: res})
+        return Promise.all([res, User.findActiveGame(res)])
       })
+      .then(function(res2){
+        console.log('Session Promise.all:', res2);
+        socket.emit('valid_user', {username: res2[0], active_game: res2[1]})
+      })
+
   });
 
   socket.on('fetch:users', function(data){

@@ -52,7 +52,7 @@ var App = React.createClass({
       console.log('has a fwibble token:', localStorage.fwibbleToken)
       socket.emit('fetch:userData', { token: localStorage.fwibbleToken })
     }
-    socket.on('valid_user', this.validUser)
+    socket.on('valid_user', this.setUser)
   },
   validUser: function(data){
     this.setState({ username: data.username });
