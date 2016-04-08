@@ -106,11 +106,12 @@ Session.create = function(attrs) {
       console.log('successfully inserted session', res)
       var sessionId = res[0].session_id;
       var timestamp = res[0].createdat;
-      Session.generateToken(sessionId, timestamp)
-      .then(function(res) {
-         console.log("create session after token creation", res);     
-         return res[0]; // returning 'null' as string instead of object
-      })
+
+      return Promise.all([res, Session.generateToken(sessionId, timestamp)]) // Just return new Promise ?
+    })
+    .then(function(res) {
+       console.log("create session after token creation", res);     
+       return res[1][0]; // returning 'null' as string instead of object
     })
     .catch(function(error) {
       console.error('error inserting session', error) // Error Cannot read property '0' of undefined

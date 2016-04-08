@@ -11,10 +11,8 @@ module.exports = function (socket) {
   
   // send the new user their name and a list of users
   // notify other clients that a new user has joined
-
   socket.on('fetch:userData', function(data){
     console.log('fetching user data:', data);
-
     Session.findByToken(data.token)
       .then(function(res){
         console.log('fetch userData res:', res)
@@ -24,13 +22,10 @@ module.exports = function (socket) {
         console.log('Session Promise.all:', res2);
         socket.emit('valid_user', {username: res2[0], active_game: res2[1]})
       })
-
   });
-
+  // Fetch all users in a given game hash
   socket.on('fetch:users', function(data){
-
     console.log('fetch:users data', data)
-
     var client = this;
     Game.allUser(data.game_hash)
       .then(function(res){
@@ -86,45 +81,37 @@ module.exports = function (socket) {
       })
   });
   // Creates game room and sends its hash back to creator
-  socket.on('create:game_room', function(data){
+  socket.on('create:game_room', function(data){ // Promise.all-ify me
     var client = this;
     Game.create({game_creator: data.username})
       .then(function(res){
         console.log('Game create res:', res);
-        User.addActiveRoom(data.username, res.game_hash)
-          .then(function(res2){
-            console.log('CREATE CHANNEL:', res.game_hash) 
-            client.emit('enter:game', {username: data.username, active_game: res.game_hash})
-          })
+        return Promise.all([res, User.addActiveRoom(data.username, res.game_hash)])
       })
+      .then(function(res2){
+        console.log('CREATE CHANNEL:', res2[0].game_hash) 
+        client.emit('enter:game', {username: data.username, active_game: res.game_hash})
+      })
+      // })
   });
   // Adds active_game to user
-  socket.on('join:game', function(data){
+  socket.on('join:game', function(data){ // Large chunk removed, may need to revisit - check revamp_auth branch for old code
     console.log('GOT JOINGAME', data)
-    // var client = this;
     socket.broadcast.to(data.game_hash).emit('user:join', {username: data.username}); // CHANNEL EMIT USER JOIN
     User.addActiveRoom(data.username, data.game_hash)
-      .then(function(res){
-        console.log('Added Active Room')
-        Game.allUser(data.game_hash)
-          .then(function(res2){
-            console.log('GOT ALL USERS:', res, res2)
-            // client.emit('update:users', {users: res2});
-          })
-      })
   });
-  socket.on('leave:game', function(data){
+  socket.on('leave:game', function(data){ // This seems to work correctly - check revamp_auth branch for old code if not working in prod
     var client = this;
     console.log('LEAVING FROM THE SERVER', data)
     User.deleteActiveRoom(data.username)
       .then(function(res){
         socket.emit('update:active_game', {game_hash: ''});
-        Game.allUser(data.game_hash)
-          .then(function(res2){
-            console.log('LEAVE DATA:', res, res2)
-            socket.broadcast.to(data.game_hash).emit('update:users', {users: res2}); // CHANNEL EMIT USER LEAVE
-            client.emit('update:users', {users: res2});
-          })
+        return Game.allUser(data.game_hash)
+      })
+      .then(function(res2){
+        console.log('LEAVE DATA:', res2)
+        socket.broadcast.to(data.game_hash).emit('update:users', {users: res2}); // CHANNEL EMIT USER LEAVE
+        client.emit('update:users', {users: res2});
       })
   });
   // Passes in updated turn counter and broadcasts it to other users
