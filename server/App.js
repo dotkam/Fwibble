@@ -85,7 +85,7 @@ var App = React.createClass({
     this.setState({
       username: null,
       loggedIn: Auth.loggedIn(),
-      active_game: null
+      active_game: ''
     })
     alertify.success('Successfully logged out');
   },
