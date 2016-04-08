@@ -11,13 +11,12 @@ var Fwib = module.exports;
 
 Fwib.create = function(attrs) {
   return pg('fwibs').insert(attrs, ['fwib_id', 'fwib_content', 'game_hash', 'username', 'createdat'])
-
-    .catch(function(error) {
-      console.error('error inserting fwib', error)
-    })
     .then(function(res){
       console.log('successfully inserted fwib', res)
       return res[0];
+    })
+    .catch(function(error) {
+      console.error('error inserting fwib', error)
     })
 }
 
@@ -27,12 +26,12 @@ Fwib.create = function(attrs) {
 
 Fwib.allOfGame = function(gamehash) {
   return pg.select('*').from('fwibs').where({'game_hash': gamehash}).orderBy('createdat', 'asc')
-    .catch(function(error) {
-      console.error('error retrieving fwib', error)
-    })
     .then(function(res){
       console.log('successfully retrieved fwib', res)
       return res;
+    })
+    .catch(function(error) {
+      console.error('error retrieving fwib', error)
     })
 }
 
@@ -42,11 +41,11 @@ Fwib.allOfGame = function(gamehash) {
 
 Fwib.allOfUser = function(gamehash, username) {
   return pg.select('*').from('fwibs').where({'game_hash': gamehash, 'username': username})
-    .catch(function(error) {
-      console.error('error retrieving fwib', error)
-    })
     .then(function(res){
       console.log('successfully retrieved fwib', res)
       return res;
+    })
+    .catch(function(error) {
+      console.error('error retrieving fwib', error)
     })
 }

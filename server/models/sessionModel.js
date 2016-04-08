@@ -11,13 +11,13 @@ Session.generateToken = function(sessionId, timestamp) {
   var token = sha1(timestamp);
   console.log(token);
   return pg('sessions').where({'session_id': sessionId}).update({'token': token}).returning(['session_id', 'username', 'createdat', 'token'])
-    .catch(function(error) {
-      console.error('error inserting token into db', error)
-    }) 
     .then(function(res){
       console.log('successfully updated token', res)
       return res[0];
     })  
+    .catch(function(error) {
+      console.error('error inserting token into db', error)
+    }) 
 }
 
 /* 
@@ -26,12 +26,12 @@ Session.generateToken = function(sessionId, timestamp) {
 
 Session.findTokenByUsername = function(username) {
   return pg.select('token').from('sessions').where({'username': username})
-    .catch(function(error) {
-      console.error('error retrieving token', error)
-    })
     .then(function(res){
       console.log('successfully retrieved token', res)
       return res[0].token;
+    })
+    .catch(function(error) {
+      console.error('error retrieving token', error)
     })
 }
 
@@ -41,12 +41,12 @@ Session.findTokenByUsername = function(username) {
 
 Session.findIdByUsername = function(username) {
   return pg.select('session_id').from('sessions').where({'username': username})
-    .catch(function(error) {
-      console.error('error retrieving session', error)
-    })
     .then(function(res){
       console.log('successfully retrieved session', res)
       return res[0].session_id;
+    })
+    .catch(function(error) {
+      console.error('error retrieving session', error)
     })
 }
 
@@ -56,12 +56,12 @@ Session.findIdByUsername = function(username) {
 
 Session.findByToken = function(token) {
   return pg.select('*').from('sessions').where({'token': token})
-    .catch(function(error) {
-      console.error('error retrieving user', error)
-    })
     .then(function(res){
       console.log('successfully retrieved user', res)
       return res[0].username;
+    })
+    .catch(function(error) {
+      console.error('error retrieving user', error)
     })
 }
 
@@ -71,12 +71,12 @@ Session.findByToken = function(token) {
 
 Session.userInnerJoin = function(username) {
   return pg('sessions').join('users', 'users.username', 'sessions.username').where('sessions.username', '=', username).select('sessions.token', 'users.active_game')
-    .catch(function(error) {
-      console.error('error retrieving join table', error)
-    })
     .then(function(res){
       // console.log('successfully retrieved join table', res)
       return res[0];
+    })
+    .catch(function(error) {
+      console.error('error retrieving join table', error)
     })
 }
 
@@ -86,9 +86,6 @@ Session.userInnerJoin = function(username) {
 
 Session.tokenInnerJoin = function(token) {
   return pg('sessions').join('users', 'users.username', 'sessions.username').where('sessions.token', '=', token).select('sessions.username', 'users.active_game')
-    .catch(function(error) {
-      console.error('error retrieving join table', error)
-    })
     .then(function(res){
       console.log('successfully retrieved join table', res)
       return res[0];
@@ -126,12 +123,12 @@ Session.create = function(attrs) {
 
 Session.deleteByUsername = function(username) {
   return pg('sessions').where({'username': username}).del()
-    .catch(function(error) {
-      console.error('error deleting session');
-    })
     .then(function(res) {
       console.log('successfully deleted session row', res)
       return res;
+    })
+    .catch(function(error) {
+      console.error('error deleting session');
     })
 }
 
