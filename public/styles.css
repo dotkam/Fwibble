@@ -219,3 +219,20 @@ body {
    opacity: 1;
    transition: opacity 300ms linear;
 }
+
+
+.three-bounce {
+  height: 34px;
+}
+
+.three-bounce .bounce1 {
+  background-color: #F9096E;
+}
+
+.three-bounce .bounce2 {
+  background-color: #24C9C9;
+}
+.three-bounce .bounce3 {
+  background-color: #9ACC00;
+}
+
