@@ -1,5 +1,7 @@
 # Fwibble
 
+www.fwibble.me / www.fwibble.us
+
 ## What is a Fwibble, you may ask?
 
 Fwibble was born out of the love of playground telephone games, silly stories with the family on road trips, and real-time, interactive social media experiences. A Fwibble combines collaboration, spontaneity, and a knack for the absurd.  
@@ -25,10 +27,6 @@ React-Router<br/>
 Socket.io<br/>
 Bootstrap<br/>
 Webpack<br/>
-
-## Visit Us
-
-fwibble.me / fwibble.us
 
 ##Development Environment Setup
 
