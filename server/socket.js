@@ -105,7 +105,7 @@ module.exports = function (socket) {
     console.log('LEAVING FROM THE SERVER', data)
     User.deleteActiveRoom(data.username)
       .then(function(res){
-        socket.emit('update:active_game', {game_hash: ''});
+        socket.emit('update:active_game', {game_hash: null});
         return Game.allUser(data.game_hash)
       })
       .then(function(res2){
