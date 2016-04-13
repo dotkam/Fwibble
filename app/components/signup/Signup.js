@@ -82,7 +82,7 @@ module.exports = React.createClass({
                         <input type="password" className="form-control" placeholder="password" value={this.state.password} onChange={this.handlePassword} />
                         <br/>
                         {
-                         this.state.loading ? <Spinner spinnerName='three-bounce' noFadeIn />  : <input type="submit" className="btn btn-success" name="signUpSubmit" onClick={this.handleClick} />
+                         this.state.loading ? <Spinner spinnerName='three-bounce' noFadeIn />  : <input type="submit" className="btn btn-success" name="signUpSubmit" onClick={this.handleClick} value="Create Account"/>
                         } 
                       </form>
                       <div className="row">

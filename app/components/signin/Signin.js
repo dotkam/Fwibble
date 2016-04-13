@@ -118,6 +118,7 @@ module.exports = React.createClass({
                               this.state.loading ? <Spinner spinnerName='three-bounce' noFadeIn />  : <input type="submit" className="btn btn-success" name="signUpSubmit" onClick={this.handleClick} />
                             }
                         </form>
+                        <br/>
                         <div className="row">
                           <a href="/signup">Don't have an account yet? Sign up!</a>
                         </div>

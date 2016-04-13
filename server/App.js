@@ -8,13 +8,14 @@ var IndexRoute = ReactRouter.IndexRoute;
 var browserHistory = ReactRouter.browserHistory;
 
 var Stylesheet = require('../public/styles.css');
-// var Index = require('../app/components/index/Index');
 var NavBar = require('../app/components/navbar/NavBar');
 var Signin = require('../app/components/signin/Signin');
 var Signup = require('../app/components/signup/Signup');
 var Signout = require('../app/components/signout/Signout');
 var Lobby = require('../app/components/lobby/Lobby');
 var Gameview = require('../app/components/gameview/GameView');
+var About = require('../app/components/about/About');
+var Profile = require('../app/components/profile/Profile');
 
 var Auth = require('./auth');
 var alertify = require('alertify.js');
@@ -131,8 +132,10 @@ ReactDOM.render(
             <Route path='signin' component={Signin} />
             <Route path='signup' component={Signup} />
             <Route path='signout' component={Signout} />
-            <Route path='lobby' component={Lobby} onEnter={Auth.requireAuth} />
             <Route path='gameview/:game_hash' component={Gameview} onEnter={Auth.requireAuth} />
+            <Route path='lobby' component={Lobby} onEnter={Auth.requireAuth} />
+            <Route path='profile' component={Profile} />
+            <Route path='about' component={About} />
           </Route>
         </Router>
   ), document.getElementById('app')
