@@ -8,11 +8,11 @@ var Fwib = require('./Fwib.js');
 var UsersInRoom = require('./UsersInRoom.js');
 var GoButton = require('./GoButton.js');
 var LeaveGameButton = require('./LeaveGameButton.js');
+var OpenGame = require('./OpenGame.js');
 
 var io = require('socket.io-client');
 var socket = io.connect();
 var alertify = require('alertify.js');
-var Spinner = require('react-spinkit');
 
 
 module.exports = React.createClass({
@@ -153,26 +153,36 @@ module.exports = React.createClass({
     this.setState({ gameState: 'completed' });
   },
   render: function() {
-    var display = this.state.gameState === ('in progress' || 'completed') ? (<StoryContainer fwibs={this.state.fwibs} onFwibSubmit={this.handleFwibSubmit} user={this.state.user} users={this.state.users} active_game={this.props.params.game_hash} myTurn={this.state.myTurn} gameState={this.state.gameState} />) 
-                                                  : (<GoButton startGame={this.startGame}/>);
-                                                  
-    var leave = this.state.gameState === ('open' || 'completed') ? (<LeaveGameButton leaveGame={this.leaveGame} />) : null;
-
-
+   // var display = this.state.gameState === ('in progress' || 'completed') ? (<StoryContainer fwibs={this.state.fwibs} onFwibSubmit={this.handleFwibSubmit} user={this.state.user} users={this.state.users} active_game={this.props.params.game_hash} myTurn={this.state.myTurn} gameState={this.state.gameState} />) 
+                                  //                : (<GoButton startGame={this.startGame}/>);                                        
+    var leave = this.state.gameState === 'completed' ? (<LeaveGameButton leaveGame={this.leaveGame} />) : null;
+    var openGame = this.state.gameState === ('open') ? (<OpenGame leaveGame={this.leaveGame} startGame={this.startGame} />) : 
+    (<StoryContainer 
+      fwibs={this.state.fwibs} 
+      onFwibSubmit={this.handleFwibSubmit} 
+      user={this.state.user} users={this.state.users} 
+      active_game={this.props.params.game_hash} 
+      myTurn={this.state.myTurn} 
+      gameState={this.state.gameState} 
+    />) ;
     return (
+
       <div>
-        <div className="container">
-          <div className="row">
-            <div className="col-md-9 col-sm-12 col-xs-12 col-lg-9">
-              <StoryTitle title={this.state.title} />
-              {display}
-              {leave}
+        {
+          this.state.gameState === 'loading' ? null :  
+          (<div className="container">
+            <div className="row">
+              <div className="col-md-9 col-sm-12 col-xs-12 col-lg-9">
+                <StoryTitle title={this.state.title} />
+                { openGame }
+                { leave }
+                </div>
+              <div className="col-md-3 col-sm-12 col-xs-12 col-lg-3">
+                <UsersInRoom user={this.state.user} users={this.state.users} turn={this.state.turn} />
               </div>
-            <div className="col-md-3 col-sm-12 col-xs-12 col-lg-3">
-              <UsersInRoom user={this.state.user} users={this.state.users} turn={this.state.turn} />
             </div>
-          </div>
-        </div>
+          </div>)
+        }
       </div>
     );
   }
