@@ -27,15 +27,17 @@ module.exports = function (socket) {
   socket.on('fetch:users', function(data){
     console.log('fetch:users data', data)
     var client = this;
-    Game.allUser(data.game_hash)
+    Promise.all([Game.allUser(data.game_hash), Fwib.allOfGame(data.game_hash), Game.getStatusByHash(data.game_hash)])
       .then(function(res){
         console.log('ALL USERS', res);
-        if( data.users.length !== res.length){
+        // if( data.users.length !== res.length){
           socket.emit('init', {
             user: data.user,
-            users: res
+            users: res[0],
+            fwibs: res[1],
+            gameState: res[2]
           });
-        };
+        // };
       })
   });
   // Subscribe a user to a room's socket channel

@@ -25,9 +25,6 @@ module.exports = React.createClass({
               <Link to="/lobby">LOBBY</Link>
             </li>
             <li className="container-fluid">
-              <Link to="/profile">PROFILE</Link>
-            </li>
-            <li className="container-fluid">
               <Link to='/about'>ABOUT</Link>
             </li>
             <li className="container-fluid">

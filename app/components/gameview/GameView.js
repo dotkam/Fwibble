@@ -12,6 +12,7 @@ var LeaveGameButton = require('./LeaveGameButton.js');
 var io = require('socket.io-client');
 var socket = io.connect();
 var alertify = require('alertify.js');
+var Spinner = require('react-spinkit');
 
 
 module.exports = React.createClass({
@@ -21,7 +22,7 @@ module.exports = React.createClass({
   },
   getInitialState: function() {
 
-    return {users: [], fwibs:[], text: '', turn: 0, myTurn: false, gameState: 'open', active: false, title: ''};
+    return {users: [], fwibs:[], text: '', turn: 0, myTurn: false, gameState: 'loading', active: false, title: ''};
 
   },
   componentWillMount: function(){
@@ -56,12 +57,13 @@ module.exports = React.createClass({
   },
 
   _initialize: function(data) {
-    var {users, user} = data;
+    var {users, user, fwibs, gameState} = data;
     var { myTurn, turn } = this.state;
-
+    fwibs = fwibs.map(function(f){return {user: f.username, text: f.fwib_content}});
+    console.log('init data', data)
     users = users.map((u) => u.username);
     myTurn = users[turn] === user;
-    this.setState({users, user, myTurn});
+    this.setState({users, user, myTurn, fwibs, gameState});
   },
 
   _fwibReceive: function(fwib) {
@@ -139,10 +141,10 @@ module.exports = React.createClass({
     }
   },
 
-  onGo: function() {
-    this.setState({ gameState: 'in progress'});
+  startGame: function() {
     this._setTurn({turn: this.state.turn});
     socket.emit('update:game:inprogress', {game_hash: this.props.params.game_hash}) // send only to users listening to this channel (game_hash)
+    this.setState({ gameState: 'in progress'});
   },
   startUp: function() {
     this.setState({ gameState: 'in progress' });
@@ -151,10 +153,10 @@ module.exports = React.createClass({
     this.setState({ gameState: 'completed' });
   },
   render: function() {
-    var display = this.state.gameState !== 'open' ? (<StoryContainer fwibs={this.state.fwibs} onFwibSubmit={this.handleFwibSubmit} user={this.state.user} users={this.state.users} active_game={this.props.params.game_hash} myTurn={this.state.myTurn} gameState={this.state.gameState} />) 
-                                                  : (<GoButton goButtonPush={this.onGo} gameStart={this.startUp}/>);
+    var display = this.state.gameState === ('in progress' || 'completed') ? (<StoryContainer fwibs={this.state.fwibs} onFwibSubmit={this.handleFwibSubmit} user={this.state.user} users={this.state.users} active_game={this.props.params.game_hash} myTurn={this.state.myTurn} gameState={this.state.gameState} />) 
+                                                  : (<GoButton startGame={this.startGame}/>);
                                                   
-    var leave = this.state.gameState === 'open' || this.state.gameState === 'completed' ? (<LeaveGameButton leaveGame={this.leaveGame} />) : null;
+    var leave = this.state.gameState === ('open' || 'completed') ? (<LeaveGameButton leaveGame={this.leaveGame} />) : null;
 
 
     return (

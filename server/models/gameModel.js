@@ -237,6 +237,17 @@ Game.updateTurn = function(gamehash, newTurn) {
     })
 }
 
+Game.getStatusByHash = function(gamehash) {
+  return pg.select('game_status').from('games').where({game_hash: gamehash})
+    .then(function(res){
+      console.log('successfully retrieved game status', res)
+      return res[0].game_status
+    })
+    .catch(function(error){
+      console.error('error retrieving game status', error)
+    })
+}
+
 
 
 
