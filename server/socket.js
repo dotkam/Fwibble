@@ -41,6 +41,16 @@ module.exports = function (socket) {
         // };
       })
   });
+  // Fetch completed games by username for Profile Page
+  socket.on('fetch:completedGames', function(data){
+    User.findIdByUsername(data.username)
+      .then(function(res){
+        return GamesUsers.allGamesByUserId(res)
+      })
+      .then(function(res2){
+        socket.emit('update:games:completed', {games: res2});
+      });
+  });
   // Subscribe a user to a room's socket channel
   socket.on('subscribe', function(room){
     console.log('SUBSCRIBED TO ROOM:', room);
@@ -151,26 +161,13 @@ module.exports = function (socket) {
         socket.emit('title:update', {title: res})
       });
   });
-  // test socket for GamesUsers
-  socket.on('testing', function(data){
-    data.users.forEach(function(u){    
-      GamesUsers.addUsernameToGame({username: u, game_hash: data.game_hash})
-        .then(function(res){
-          console.log('test firing added', u)
-        })
-    })
-  });
-  socket.on('fetch:completedGames', function(data){
-    // Grab user_id by username
-    User.findIdByUsername(data.username)
+  // Fetch fwibs for archive view
+  socket.on('fetch:archivedFwibs', function(data){
+    var client = this;
+    Fwib.allOfGame(data.gamehash)
       .then(function(res){
-        console.log('fetch completedGames res', res)
-        return GamesUsers.allGamesByUserId(res)
-      })
-      .then(function(res2){
-        console.log('res2', res2)
-        socket.emit('update:games:completed', {games: res2});
-      })
-  })
+        client.emit('archive:response', {fwibs: res})
+      });
+  });
 };
 

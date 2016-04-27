@@ -14,7 +14,7 @@ module.exports = React.createClass({
                   return (
                     <div key={i}>
                       <li>
-                        <Link to={`gameview/${game.game_hash}`} className="btn btn-primary btn-outline btn-lg btn-block">{game.game_title}</Link>
+                        <Link to={`archive/${game.game_hash}`} className="btn btn-primary btn-outline btn-lg btn-block">{game.game_title} | {game.game_creator}</Link>
                       </li>
                       <br/>
                     </div>

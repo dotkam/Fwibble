@@ -20,9 +20,9 @@ module.exports = React.createClass({
   render: function(){
     return (
       <div>
-        <div className="container">
+        <h2 className="container">
           {this.props.user}'s Completed Games
-        </div>
+        </h2>
         <CompletedGamesContainer completedGames={this.state.completedGames} />
       </div>
     )
