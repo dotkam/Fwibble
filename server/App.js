@@ -12,6 +12,7 @@ var NavBar = require('../app/components/navbar/NavBar');
 var Signin = require('../app/components/signin/Signin');
 var Signup = require('../app/components/signup/Signup');
 var Signout = require('../app/components/signout/Signout');
+var Profile = require('../app/components/profile/Profile');
 var Lobby = require('../app/components/lobby/Lobby');
 var Gameview = require('../app/components/gameview/GameView');
 var About = require('../app/components/about/About');
@@ -132,6 +133,7 @@ ReactDOM.render(
             <Route path='signup' component={Signup} />
             <Route path='signout' component={Signout} />
             <Route path='gameview/:game_hash' component={Gameview} />
+            <Route path='profile' component={Profile} />
             <Route path='lobby' component={Lobby} onEnter={Auth.requireAuth} />
             <Route path='about' component={About} />
           </Route>

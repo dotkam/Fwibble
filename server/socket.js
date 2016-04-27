@@ -4,6 +4,7 @@ var Fwib = require('./models/fwibModel.js')
 var User = require('./models/userModel.js')
 var Game = require('./models/gameModel.js')
 var Session = require('./models/sessionModel.js')
+var GamesUsers = require('./models/games_usersModel.js')
 
 // export function for listening to the socket
 module.exports = function (socket) {
@@ -150,5 +151,26 @@ module.exports = function (socket) {
         socket.emit('title:update', {title: res})
       });
   });
+  // test socket for GamesUsers
+  socket.on('testing', function(data){
+    data.users.forEach(function(u){    
+      GamesUsers.addUsernameToGame({username: u, game_hash: data.game_hash})
+        .then(function(res){
+          console.log('test firing added', u)
+        })
+    })
+  });
+  socket.on('fetch:completedGames', function(data){
+    // Grab user_id by username
+    User.findIdByUsername(data.username)
+      .then(function(res){
+        console.log('fetch completedGames res', res)
+        return GamesUsers.allGamesByUserId(res)
+      })
+      .then(function(res2){
+        console.log('res2', res2)
+        socket.emit('update:games:completed', {games: res2});
+      })
+  })
 };
 
