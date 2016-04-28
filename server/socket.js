@@ -170,14 +170,20 @@ module.exports = function (socket) {
         client.emit('archive:response', {fwibs: res})
       });
   });
-  // test socket for GamesUsers
+  // Insert users in game into GamesUsers
   socket.on('archive:users', function(data){
     data.users.forEach(function(u){    
       GamesUsers.addUsernameToGame({username: u, game_hash: data.game_hash})
         .then(function(res){
           console.log('INSERTING', u)
-        })
-    })
+        });
+    });
   });
+
+  // Testing socket for delete
+  socket.on('archive:delete', function(data){
+    console.log('GOT DELETE SOCKET', data);
+    GamesUsers.removeUsernameFromGame({username: data.username, game_hash: data.game_hash})
+  })
 };
 

@@ -156,6 +156,20 @@ body {
   border-color: rgb(125, 163, 9);
 } 
 
+.btn-danger:active:hover,
+.btn-danger.active:hover,
+.open > .dropdown-toggle.btn-danger:hover,
+.btn-danger:active:focus,
+.btn-danger.active:focus,
+.open > .dropdown-toggle.btn-danger:focus,
+.btn-danger:active:focus,
+.btn-danger:active:focus,
+.open > .dropdown-toggle.btn-danger:focus {
+  color: #fff;
+  background-color: rgba(249, 9, 110, .75);
+  border-color: rgb(241, 0, 101);
+} 
+
 .btn-danger {
   background-color: rgb(249, 9, 110);
   border-color: rgb(241, 0, 101);
@@ -163,14 +177,14 @@ body {
 
 .btn-danger:hover {
   color: #fff;
-  background-color: ;
-  border-color: ;
+  background-color: rgb(249, 9, 110);
+  border-color: rgb(241, 0, 101);
 }
 
 .btn-danger:focus {
   color: #fff;
-  background-color: ;
-  border-color: ;
+  background-color: rgb(249, 9, 110);
+  border-color: rgb(241, 0, 101);
 }
 
 .btn-outline {
