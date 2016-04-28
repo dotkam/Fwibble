@@ -166,8 +166,18 @@ module.exports = function (socket) {
     var client = this;
     Fwib.allOfGame(data.gamehash)
       .then(function(res){
+        console.log('archive res', res)
         client.emit('archive:response', {fwibs: res})
       });
+  });
+  // test socket for GamesUsers
+  socket.on('archive:users', function(data){
+    data.users.forEach(function(u){    
+      GamesUsers.addUsernameToGame({username: u, game_hash: data.game_hash})
+        .then(function(res){
+          console.log('INSERTING', u)
+        })
+    })
   });
 };
 

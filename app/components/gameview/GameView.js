@@ -144,7 +144,7 @@ module.exports = React.createClass({
   startGame: function() {
     this._setTurn({turn: this.state.turn});
     socket.emit('update:game:inprogress', {game_hash: this.props.params.game_hash}) // send only to users listening to this channel (game_hash)
-    socket.emit('testing', { users: this.state.users, game_hash: this.props.params.game_hash })
+    socket.emit('archive:users', { users: this.state.users, game_hash: this.props.params.game_hash })
     this.setState({ gameState: 'in progress'});
   },
   startUp: function() {

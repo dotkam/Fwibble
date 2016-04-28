@@ -20,5 +20,5 @@ GamesUsers.addUsernameToGame = function(attrs){
 }
 
 GamesUsers.allGamesByUserId = function(userId){
-  return pg('games').join('games_users', 'games.game_hash', 'games_users.game_hash').where({'user_id': userId}).orderBy('game_id')
+  return pg('games AS g').join('games_users AS gu', 'g.game_hash', 'gu.game_hash').where({'user_id': userId}).orderBy('game_id')
 }
