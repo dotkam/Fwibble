@@ -18,13 +18,11 @@ module.exports = React.createClass({
     this.setState({completedGames: data.games})
   },
   deleteGame: function(gamehash){
-    // TODO get gamehash from button
-    console.log('IVE BEEN CLICKED', gamehash);
+    // if(confirm('Are you sure you want to delete this game?') === true){ // DO STUFF }   
     var { completedGames } = this.state;
       completedGames = completedGames.filter((game) => game.game_hash !== gamehash);
       this.setState({completedGames: completedGames});
       socket.emit('archive:delete', {username: this.props.user, game_hash: gamehash});
-    // if(confirm('Are you sure you want to delete this game?') === true){ // DO STUFF }   
   },
   render: function(){
     return (
