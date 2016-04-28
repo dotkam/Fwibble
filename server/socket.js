@@ -184,6 +184,11 @@ module.exports = function (socket) {
   socket.on('archive:delete', function(data){
     console.log('GOT DELETE SOCKET', data);
     GamesUsers.removeUsernameFromGame({username: data.username, game_hash: data.game_hash})
+  });
+  // Favorite Game
+  socket.on('favorite:game', function(data){
+    console.log('UPDATE FAVORITE', data)
+    GamesUsers.addGameToFavorites(data)
   })
 };
 

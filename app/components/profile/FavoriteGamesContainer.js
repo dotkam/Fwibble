@@ -13,7 +13,7 @@ module.exports = React.createClass({
           <div className="text-center">
             <ul className="list-unstyled">
               {
-                this.props.completedGames.map((game, i) => {
+                this.props.favoriteGames.map((game, i) => {
                   return (
                     <div key={i}>
                       <li className="btn-group">
@@ -29,13 +29,6 @@ module.exports = React.createClass({
             </ul>
           </div>
         </div>
-      </div>
-    )
+      </div>    )
   }
-});
-
-/*
-
-  NOTE: onClick bind() function should bind to 'null' rather than 'this' when calling a prop function
-
-*/
+})
