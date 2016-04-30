@@ -26,7 +26,7 @@ module.exports = React.createClass({
       return game;
     });
     this.setState({completedGames: completedGames});
-    socket.emit('favorite:game:add', {username: this.props.user, game_hash: data.gamehash, favorite: !data.favorite});
+    socket.emit('favorite:game:toggle', {username: this.props.user, game_hash: data.gamehash, favorite: !data.favorite});
   },
   deleteGame: function(gamehash){
     // if(confirm('Are you sure you want to delete this game?') === true){ // DO STUFF }   

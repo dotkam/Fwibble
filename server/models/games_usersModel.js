@@ -43,14 +43,3 @@ GamesUsers.addGameToFavorites = function(attrs){
       return pg('games_users').where({'user_id': res[0].user_id, 'game_hash': game_hash}).update({'favorite': attrs.favorite});
     })
 }
-
-GamesUsers.removeGameFromFavorites = function(attrs){
-  // TODO: find user_id by username
-  //       set favorite to true
-  var game_hash = attrs.game_hash;
-  return pg.select('user_id').from('users').where({username: attrs.username})
-    .then(function(res){
-      console.log('UNFAVORITING res:', res)
-      return pg('games_users').where({'user_id': res[0].user_id, 'game_hash': game_hash}).update({'favorite': false});
-    })
-}

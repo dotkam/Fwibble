@@ -186,14 +186,9 @@ module.exports = function (socket) {
     GamesUsers.removeUsernameFromGame({username: data.username, game_hash: data.game_hash})
   });
   // Set Favorite to true for gamehash
-  socket.on('favorite:game:add', function(data){
-    console.log('UPDATE FAVORITE to true', data)
+  socket.on('favorite:game:toggle', function(data){
+    console.log('UPDATE FAVORITE', data)
     GamesUsers.addGameToFavorites(data)
-  });
-  // Set Favorite to false for gamehash
-  socket.on('favorite:game:remove', function(data){
-    console.log('UPDATE FAVORITE to false', data)
-    GamesUsers.removeGameFromFavorites(data)
   });
 };
 
