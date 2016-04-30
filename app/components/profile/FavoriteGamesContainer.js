@@ -13,13 +13,19 @@ module.exports = React.createClass({
           <div className="text-center">
             <ul className="list-unstyled">
               {
-                this.props.favoriteGames.map((game, i) => {
+                this.props.listedGames.map((game, i) => {
                   return (
                     <div key={i}>
-                      <li className="btn-group">
-                        <Link to={`archive/${game.game_hash}`} className="btn btn-primary btn-outline btn-lg">{game.game_title}</Link>
-                        <button className="btn btn-success btn-outline btn-lg" onClick={this.props.toggleFavorite.bind(null, game.game_hash)} ><div className="glyphicon glyphicon-star"></div></button>
-                        <button className="btn btn-danger btn-outline btn-lg" onClick={this.props.deleteGame.bind(null, game.game_hash)} ><div className="glyphicon glyphicon-trash"></div></button>
+                      <li className="btn-group btn-group-justified">
+                        <div className="btn-group">
+                          <Link to={`archive/${game.game_hash}`} className="btn btn-primary btn-outline btn-lg">{game.game_title}</Link>
+                        </div>
+                        <div className="btn-group">
+                          <button className="btn btn-favorite-true btn-lg" onClick={this.props.toggleFavorite.bind(null, {gamehash: game.game_hash, favorite: game.favorite})} ><div className="glyphicon glyphicon-star"></div></button>
+                        </div>
+                        <div className="btn-group">
+                          <button className="btn btn-danger btn-outline btn-lg" onClick={this.props.deleteGame.bind(null, game.game_hash)} ><div className="glyphicon glyphicon-trash"></div></button>
+                        </div>
                       </li>
                       <br/>
                     </div>
