@@ -35,6 +35,7 @@ module.exports = React.createClass({
             </ul>
           </div>
         </div>
-      </div>    )
+      </div>
+    )
   }
 })
