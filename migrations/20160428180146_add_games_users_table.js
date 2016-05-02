@@ -12,7 +12,7 @@ exports.up = function(knex, Promise) {
         table.string('game_hash').references('games.game_hash');
         table.boolean('favorites').defaultTo(false);;
     })
-  );
+  });
 };
 
 exports.down = function(knex, Promise) {
