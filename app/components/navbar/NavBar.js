@@ -22,6 +22,9 @@ module.exports = React.createClass({
              : null
             }
             <li className="container-fluid">
+              <Link to="/draw">DRAW</Link>
+            </li>
+            <li className="container-fluid">
               <Link to="/profile">PROFILE</Link>
             </li>
             <li className="container-fluid">

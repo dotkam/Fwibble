@@ -264,6 +264,10 @@ body {
   width: 10%;
 }
 
+#canvasInAPerfectWorld {
+  border: 2px solid black;
+}
+
 .panel {
   background-color: white;
   border: 1px solid transparent;
