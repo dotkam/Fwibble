@@ -1,16 +1,31 @@
 var React = require('react');
 
 module.exports = React.createClass({
+  getInitialState: function(){
+    return {
+      clickX: [],
+      clickY: [],
+      clickDrag: [],
+      clickColor: [],
+      currentColor: 'black'
+    }
+  },
+  addClick: function(x, y, dragging, currentColor){
+    var { clickX, clickY, clickDrag, clickColor, currentColor } = this.state;
+    clickX.push(x);
+    clickY.push(y);
+    clickDrag.push(dragging);
+    clickColor.push(currentColor);
+    this.setState({clickX: clickX, clickY: clickY, clickDrag: clickDrag, clickColor: clickColor})
+  },
+  setColor: function(color){
+    this.setState({currentColor: color})
+  },
   componentDidMount: function(){
+//  May need to create new React Canvas component for saved drawings
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
 
-    canvas.height = 300;
-    canvas.width = 1000;
-
-    var clickX = new Array();
-    var clickY = new Array();
-    var clickDrag = new Array();
     var paint;
 
     var colors = ['red', 'yellow', 'blue', 'black']
@@ -19,8 +34,19 @@ module.exports = React.createClass({
     var colorBlue = "blue"
     var colorYellow = "yellow"
     var colorBlack = "black"
-    var currentColor = "black"
-    var clickColor = new Array();
+    var component = this;
+
+    canvas.height = 300;
+    canvas.width = 500;
+    if(this.props.clickX){
+      var { clickX, clickY, clickDrag, clickColor } = this.props;
+      this.setState({ clickX:clickX, clickY: clickY, clickDrag: clickDrag, clickColor: clickColor });
+      redraw();
+    }
+    else {
+
+    var { clickX, clickY, clickDrag, clickColor } = this.state;
+
 
 
     canvas.addEventListener('mousedown', function(e){
@@ -28,13 +54,13 @@ module.exports = React.createClass({
       var mouseY = e.pageY - this.offsetTop;
       console.log('mouseX Y ', mouseX, mouseY)
       paint = true;
-      addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
+      component.addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
       redraw();
     });
 
     canvas.addEventListener('mousemove', function(e){
       if(paint){
-        addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
+        component.addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
         redraw();
       }
     });
@@ -62,17 +88,20 @@ module.exports = React.createClass({
 
     colors.forEach(function(color){ 
       return document.getElementById(color).addEventListener('click', function(e){
-        currentColor = this.id;
-        console.log('currentColor', currentColor)
+        component.setColor(this.id);
+        console.log('state currentColor', component.state.currentColor)
         })
       }
     );
+    }
+
+
 
     function redraw(){
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height); // Clears the canvas
       ctx.lineJoin = "round";
       ctx.lineWidth = 7;
-
+      console.log('clickX', clickX)
       for(var i=0; i < clickX.length; i++){
         ctx.beginPath();
         if(clickDrag[i] && i){
@@ -85,21 +114,26 @@ module.exports = React.createClass({
         ctx.closePath();
         ctx.strokeStyle = clickColor[i];
         ctx.stroke();
-        console.log('color:', currentColor)
       }
     };
 
-    function addClick(x, y, dragging){
-      clickX.push(x);
-      clickY.push(y);
-      clickDrag.push(dragging);
-      clickColor.push(currentColor);
-    };
+    // function addClick(x, y, dragging){
+    //   clickX.push(x);
+    //   clickY.push(y);
+    //   clickDrag.push(dragging);
+    //   clickColor.push(currentColor);
+    //   this.setState({clickX: clickX, clickY: clickY, clickDrag: clickDrag, clickColor: clickColor})
+    // };
 
   },
   render:function(){
     return (
-      <canvas id="canvas"></canvas>
+      <div>
+        <canvas id="canvas"></canvas>
+        <div className="button-container">
+          <button className="new-canvas" onClick={this.props.saveDrawing.bind(null, {clickX: this.state.clickX, clickY: this.state.clickY, clickDrag: this.state.clickDrag, clickColor: this.state.clickColor})}>New Canvas</button>
+        </div>
+      </div>
     )
   }
 });

@@ -273,6 +273,10 @@ body {
   height: 150px;
 }
 
+.canvas-container {
+  padding-left: 100px;
+}
+
 .color-button {
   padding: 5px;
   border-radius: 50%;
