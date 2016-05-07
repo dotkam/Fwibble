@@ -264,7 +264,7 @@ body {
   width: 10%;
 }
 
-#canvas {
+.canvas {
   border: 2px solid black;
 }
 

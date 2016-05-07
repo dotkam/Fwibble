@@ -1,107 +1,31 @@
 var React = require('react');
 
+// Grab correct component by ID
+
 module.exports = React.createClass({
-  getInitialState: function(){
-    return {
-      clickX: [],
-      clickY: [],
-      clickDrag: [],
-      clickColor: [],
-      currentColor: 'black'
-    }
-  },
-  addClick: function(x, y, dragging, currentColor){
-    var { clickX, clickY, clickDrag, clickColor, currentColor } = this.state;
-    clickX.push(x);
-    clickY.push(y);
-    clickDrag.push(dragging);
-    clickColor.push(currentColor);
-    this.setState({clickX: clickX, clickY: clickY, clickDrag: clickDrag, clickColor: clickColor})
-  },
-  setColor: function(color){
-    this.setState({currentColor: color})
-  },
   componentDidMount: function(){
-//  May need to create new React Canvas component for saved drawings
-    var canvas = document.getElementById('canvas');
-    var ctx = canvas.getContext('2d');
 
-    var paint;
+    console.log('canvas component index', this.props.index)
+    this.redraw();
 
-    var colors = ['red', 'yellow', 'blue', 'black']
+  },
+  redraw: function(){
+    var index = this.props.index;
 
-    var colorRed = "red"
-    var colorBlue = "blue"
-    var colorYellow = "yellow"
-    var colorBlack = "black"
-    var component = this;
+    var canvas = document.getElementById('canvas-' + index);
+    console.log('redraw canvas', index, canvas);
 
     canvas.height = 300;
     canvas.width = 500;
-    if(this.props.clickX){
+
+    if(canvas){    
+      var ctx = canvas.getContext('2d');
       var { clickX, clickY, clickDrag, clickColor } = this.props;
-      this.setState({ clickX:clickX, clickY: clickY, clickDrag: clickDrag, clickColor: clickColor });
-      redraw();
-    }
-    else {
 
-    var { clickX, clickY, clickDrag, clickColor } = this.state;
-
-
-
-    canvas.addEventListener('mousedown', function(e){
-      var mouseX = e.pageX - this.offsetLeft;
-      var mouseY = e.pageY - this.offsetTop;
-      console.log('mouseX Y ', mouseX, mouseY)
-      paint = true;
-      component.addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
-      redraw();
-    });
-
-    canvas.addEventListener('mousemove', function(e){
-      if(paint){
-        component.addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
-        redraw();
-      }
-    });
-
-    canvas.addEventListener('mouseup', function(e){
-      paint = false;
-    });
-
-    canvas.addEventListener('mouseleave', function(e){
-      paint = false;
-    });
-
-    // document.getElementById('clear').addEventListener('click', function(e){
-    //   console.log('clickX:', clickX, 'clickY:', clickY, 'clickDrag:', clickDrag, 'clickColor:', clickColor)
-    //   clickX = [];
-    //   clickY = [];
-    //   clickDrag = [];
-    //   clickColor = [];
-    //   redraw();
-    // });
-
-    colors.forEach(function(color){
-      document.getElementById(color).setAttribute("style", "background-color: " + color);
-    });
-
-    colors.forEach(function(color){ 
-      return document.getElementById(color).addEventListener('click', function(e){
-        component.setColor(this.id);
-        console.log('state currentColor', component.state.currentColor)
-        })
-      }
-    );
-    }
-
-
-
-    function redraw(){
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height); // Clears the canvas
       ctx.lineJoin = "round";
       ctx.lineWidth = 7;
-      console.log('clickX', clickX)
+      console.log('OUTER redraw', clickX)
       for(var i=0; i < clickX.length; i++){
         ctx.beginPath();
         if(clickDrag[i] && i){
@@ -115,24 +39,12 @@ module.exports = React.createClass({
         ctx.strokeStyle = clickColor[i];
         ctx.stroke();
       }
-    };
-
-    // function addClick(x, y, dragging){
-    //   clickX.push(x);
-    //   clickY.push(y);
-    //   clickDrag.push(dragging);
-    //   clickColor.push(currentColor);
-    //   this.setState({clickX: clickX, clickY: clickY, clickDrag: clickDrag, clickColor: clickColor})
-    // };
-
+    }
   },
   render:function(){
     return (
       <div>
-        <canvas id="canvas"></canvas>
-        <div className="button-container">
-          <button className="new-canvas" onClick={this.props.saveDrawing.bind(null, {clickX: this.state.clickX, clickY: this.state.clickY, clickDrag: this.state.clickDrag, clickColor: this.state.clickColor})}>New Canvas</button>
-        </div>
+        <canvas id={"canvas-" + this.props.index} className="canvas" ></canvas>
       </div>
     )
   }
