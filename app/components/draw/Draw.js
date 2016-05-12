@@ -1,6 +1,6 @@
 var React = require('react');
-var Canvas = require('./canvas');
-var Gallery = require('./gallery');
+var Canvas = require('./Canvas');
+var Gallery = require('./Gallery');
 
 var io = require('socket.io-client');
 var socket = io.connect();
@@ -16,6 +16,7 @@ module.exports = React.createClass({
       drawings: []
     }
   },
+
   saveDrawing: function(){
     var { drawings } = this.state;
     var data = {
@@ -79,12 +80,9 @@ module.exports = React.createClass({
     socket.on('update:drawings', this.updateDrawings);
 
     var canvas = document.getElementById('canvas-active');
-    console.log('mount canvas', canvas)
-
     var ctx = canvas.getContext('2d');
 
     var paint;
-    var colors = ['red', 'yellow', 'blue', 'black']
     var component = this;
 
     canvas.height = 300;
@@ -117,6 +115,7 @@ module.exports = React.createClass({
       paint = false;
     });
 
+    var colors = ['red', 'yellow', 'blue', 'black', 'white']
 
     colors.forEach(function(color){
       document.getElementById(color).setAttribute("style", "background-color: " + color);
@@ -160,7 +159,7 @@ module.exports = React.createClass({
   },
   render: function(){
 
-    var buttonColors = ['red', 'blue', 'yellow', 'black'];
+    var buttonColors = ['red', 'blue', 'yellow', 'black', 'white'];
     return (
       <div className="canvas-container">
         <Canvas index={'active'} redraw={this.redraw} clickX={this.state.clickX} clickY={this.state.clickY} clickDrag={this.state.clickDrag} clickColor={this.state.clickColor} currentColor={this.state.currentColor} />

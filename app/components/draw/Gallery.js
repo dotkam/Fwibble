@@ -1,5 +1,5 @@
 var React = require('react');
-var Canvas = require('./canvas');
+var Canvas = require('./Canvas');
 
 module.exports = React.createClass({
   render: function(){

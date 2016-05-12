@@ -10,6 +10,10 @@ var GoButton = require('./GoButton.js');
 var LeaveGameButton = require('./LeaveGameButton.js');
 var OpenGame = require('./OpenGame.js');
 
+var Canvas = require('../draw/Canvas.js');
+var Gallery = require('../draw/Gallery.js');
+var Draw = require('../draw/Draw.js');
+
 var io = require('socket.io-client');
 var socket = io.connect();
 var alertify = require('alertify.js');
@@ -22,10 +26,22 @@ module.exports = React.createClass({
   },
   getInitialState: function() {
 
-    return {users: [], fwibs:[], text: '', turn: 0, myTurn: false, gameState: 'loading', active: false, title: ''};
-
-  },
-  componentWillMount: function(){
+    return {
+      users: [],
+      fwibs:[],
+      text: '',
+      turn: 0,
+      myTurn: false,
+      gameState: 'loading',
+      active: false,
+      title: '',
+      clickX: [],
+      clickY: [],
+      clickDrag: [],
+      clickColor: [],
+      currentColor: 'black',
+      drawings: []
+    }
   },
   componentDidMount: function() {
    socket.on('title:update', this._setTitle)
@@ -39,6 +55,59 @@ module.exports = React.createClass({
    socket.on('game:start', this.startUp);
    socket.on('game:end', this.gameEnd);
    socket.emit('subscribe', this.props.params.game_hash);
+   /////////////////
+   /////////////////
+   // socket.on('update:drawings', this.updateDrawings);
+
+   // var canvas = document.getElementById('canvas-active');
+   // var ctx = canvas.getContext('2d');
+
+   // var paint;
+   // var colors = ['red', 'yellow', 'blue', 'black']
+   // var component = this;
+
+   // canvas.height = 300;
+   // canvas.width = 500;
+
+   // var { clickX, clickY, clickDrag, clickColor } = this.state;
+
+   // canvas.addEventListener('mousedown', function(e){
+   //   var mouseX = e.pageX - this.offsetLeft;
+   //   var mouseY = e.pageY - this.offsetTop;
+   //   paint = true;
+   //   component.addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
+   //   component.redrawActiveCanvas();
+   // });
+
+   // canvas.addEventListener('mousemove', function(e){
+   //   if(paint){
+   //     component.addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
+   //     component.redrawActiveCanvas();
+   //   }
+   // });
+
+   // canvas.addEventListener('mouseup', function(e){
+   //   paint = false;
+   // });
+
+   // canvas.addEventListener('mouseleave', function(e){
+   //   paint = false;
+   // });
+
+
+   // colors.forEach(function(color){
+   //   document.getElementById(color).setAttribute("style", "background-color: " + color);
+   // });
+
+   // colors.forEach(function(color){ 
+   //   return document.getElementById(color).addEventListener('click', function(e){
+   //     component.setColor(this.id);
+   //     })
+   //   }
+   // );
+
+   //////////
+   //////////
 
    if(this.state.title === ''){
      socket.emit('title', {gamehash: this.props.params.game_hash});
@@ -97,7 +166,6 @@ module.exports = React.createClass({
 
     this.setState({users, fwibs});
   },
-
   _setTurn: function(data){
     var {turn, user, users, myTurn} = this.state;
     turn = data.turn;
@@ -106,11 +174,9 @@ module.exports = React.createClass({
     }
     this.setState({turn, myTurn});
   },
-
   _setTitle: function(data) {
     this.setState({title: data.title});
   },
-
   _changeTurn: function(){
     var {turn, users} = this.state;
     turn++;
@@ -140,7 +206,6 @@ module.exports = React.createClass({
       alertify.error('It\'s ' + users[turn] + '\'s turn!');
     }
   },
-
   startGame: function() {
     this._setTurn({turn: this.state.turn});
     socket.emit('update:game:inprogress', {game_hash: this.props.params.game_hash}) // send only to users listening to this channel (game_hash)
@@ -153,10 +218,69 @@ module.exports = React.createClass({
   gameEnd: function() {
     this.setState({ gameState: 'completed' });
   },
+  // saveDrawing: function(){
+  //   var { drawings } = this.state;
+  //   var data = {
+  //     clickX: this.state.clickX,
+  //     clickY: this.state.clickY,
+  //     clickDrag: this.state.clickDrag,
+  //     clickColor: this.state.clickColor
+  //   };
+  //   drawings.push(data);
+  //   socket.emit('create:drawing', {drawings:drawings, game_hash: this.props.active_game})
+  //   this.setState({
+  //     drawings: drawings,
+  //     clickX: [],
+  //     clickY: [],
+  //     clickDrag: [],
+  //     clickColor: []
+  //   }, this.redrawActiveCanvas);
+  // },
+  // addClick: function(x, y, dragging, currentColor){
+  //   console.log('IVE BEEN CLICKED');
+  //   var { clickX, clickY, clickDrag, clickColor, currentColor } = this.state;
+  //   clickX.push(x);
+  //   clickY.push(y);
+  //   clickDrag.push(dragging);
+  //   clickColor.push(currentColor);
+  //   this.setState({clickX: clickX, clickY: clickY, clickDrag: clickDrag, clickColor: clickColor});
+  // },
+  // setColor: function(color){
+  //   this.setState({currentColor: color})
+  // },
+  // redrawActiveCanvas: function(){
+
+  //   var canvas = document.getElementById('canvas-active');
+  //   var ctx = canvas.getContext('2d');
+  //   var { clickX, clickY, clickDrag, clickColor } = this.state;
+
+  //   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height); // Clears the canvas
+  //   ctx.lineJoin = "round";
+  //   ctx.lineWidth = 7;
+  //   console.log('OUTER redraw', clickX)
+  //   for(var i=0; i < clickX.length; i++){
+  //     ctx.beginPath();
+  //     if(clickDrag[i] && i){
+  //       ctx.moveTo(clickX[i-1], clickY[i-1]);
+  //     }
+  //     else {
+  //       ctx.moveTo(clickX[i]-1, clickY[i]);
+  //     }
+  //     ctx.lineTo(clickX[i], clickY[i]);
+  //     ctx.closePath();
+  //     ctx.strokeStyle = clickColor[i];
+  //     ctx.stroke();
+  //   }
+  // },
+  // updateDrawings: function(data){
+  //   console.log("GOT A PICTURE");
+  //   this.setState({drawings: data}, this.redrawActiveCanvas);
+  // },
   render: function() {
    // var display = this.state.gameState === ('in progress' || 'completed') ? (<StoryContainer fwibs={this.state.fwibs} onFwibSubmit={this.handleFwibSubmit} user={this.state.user} users={this.state.users} active_game={this.props.params.game_hash} myTurn={this.state.myTurn} gameState={this.state.gameState} />) 
                                   //                : (<GoButton startGame={this.startGame}/>);                                        
     var leave = this.state.gameState === 'completed' ? (<LeaveGameButton leaveGame={this.leaveGame} />) : null;
+    var drawingPad = this.state.gameState === 'in progress' ? <Draw /> : null;
     var openGame = this.state.gameState === ('open') ? (<OpenGame leaveGame={this.leaveGame} startGame={this.startGame} />) : 
     (<StoryContainer 
       fwibs={this.state.fwibs} 
@@ -177,6 +301,7 @@ module.exports = React.createClass({
                 <StoryTitle title={this.state.title} />
                 { openGame }
                 { leave }
+                { drawingPad }
                 </div>
               <div className="col-md-3 col-sm-12 col-xs-12 col-lg-3">
                 <UsersInRoom user={this.state.user} users={this.state.users} turn={this.state.turn} />
