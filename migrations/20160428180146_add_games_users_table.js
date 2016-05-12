@@ -3,7 +3,7 @@ exports.up = function(knex, Promise) {
     table.increments('id').primary();
     table.integer('user_id').references('users.user_id');
     table.string('game_hash').references('games.game_hash');
-    table.boolean('favorites').defaultTo(false);
+    table.boolean('favorite').defaultTo(false);
   })
   .then(function(){
     return;

@@ -180,7 +180,7 @@ module.exports = function (socket) {
     });
   });
 
-  // Testing socket for delete
+  // Delete game from user's archive
   socket.on('archive:delete', function(data){
     console.log('GOT DELETE SOCKET', data);
     GamesUsers.removeUsernameFromGame({username: data.username, game_hash: data.game_hash})
@@ -190,5 +190,10 @@ module.exports = function (socket) {
     console.log('UPDATE FAVORITE', data)
     GamesUsers.addGameToFavorites(data)
   });
+  // Test for passing drawing data
+  socket.on('create:drawing', function(data){
+    console.log('got DRAWING')
+    socket.broadcast.emit('update:drawings', data.drawings)
+  })
 };
 

@@ -2,6 +2,9 @@ var React = require('react');
 var Canvas = require('./canvas');
 var Gallery = require('./gallery');
 
+var io = require('socket.io-client');
+var socket = io.connect();
+
 module.exports = React.createClass({
   getInitialState: function(){
     return {
@@ -22,13 +25,14 @@ module.exports = React.createClass({
       clickColor: this.state.clickColor
     };
     drawings.push(data);
+    socket.emit('create:drawing', {drawings:drawings, game_hash: this.props.active_game})
     this.setState({
       drawings: drawings,
       clickX: [],
       clickY: [],
       clickDrag: [],
       clickColor: []
-    }, this.activeCanvasRedraw);
+    }, this.redrawActiveCanvas);
   },
   addClick: function(x, y, dragging, currentColor){
     console.log('IVE BEEN CLICKED');
@@ -42,7 +46,7 @@ module.exports = React.createClass({
   setColor: function(color){
     this.setState({currentColor: color})
   },
-  activeCanvasRedraw: function(){
+  redrawActiveCanvas: function(){
 
     var canvas = document.getElementById('canvas-active');
     var ctx = canvas.getContext('2d');
@@ -66,7 +70,14 @@ module.exports = React.createClass({
       ctx.stroke();
     }
   },
+  updateDrawings: function(data){
+    console.log("GOT A PICTURE");
+    this.setState({drawings: data}, this.redrawActiveCanvas);
+  },
   componentDidMount: function(){
+
+    socket.on('update:drawings', this.updateDrawings);
+
     var canvas = document.getElementById('canvas-active');
     console.log('mount canvas', canvas)
 
@@ -88,13 +99,13 @@ module.exports = React.createClass({
       var mouseY = e.pageY - this.offsetTop;
       paint = true;
       component.addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
-      component.activeCanvasRedraw();
+      component.redrawActiveCanvas();
     });
 
     canvas.addEventListener('mousemove', function(e){
       if(paint){
         component.addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
-        component.activeCanvasRedraw();
+        component.redrawActiveCanvas();
       }
     });
 
