@@ -56,7 +56,7 @@ module.exports = React.createClass({
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height); // Clears the canvas
     ctx.lineJoin = "round";
     ctx.lineWidth = 7;
-    console.log('OUTER redraw', clickX)
+    console.log('OUTER redraw Draw', clickX)
     for(var i=0; i < clickX.length; i++){
       ctx.beginPath();
       if(clickDrag[i] && i){
@@ -85,25 +85,24 @@ module.exports = React.createClass({
     var paint;
     var component = this;
 
-    canvas.height = 300;
-    canvas.width = 500;
+    canvas.height = 400;
+    canvas.width = 400;
 
     var { clickX, clickY, clickDrag, clickColor } = this.state;
 
 
 
     canvas.addEventListener('mousedown', function(e){
-      var mouseX = e.pageX - this.offsetLeft;
-      var mouseY = e.pageY - this.offsetTop;
+      var mouseX = e.pageX - this.offsetLeft - this.offsetParent.offsetLeft;
+      var mouseY = e.pageY - this.offsetTop - this.offsetParent.offsetTop;
       paint = true;
-      component.addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
+      component.addClick(e.pageX - this.offsetLeft - this.offsetParent.offsetLeft, e.pageY - this.offsetTop - this.offsetParent.offsetTop);
       component.redrawActiveCanvas();
     });
 
     canvas.addEventListener('mousemove', function(e){
       if(paint){
-        component.addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
-        component.redrawActiveCanvas();
+        component.addClick(e.pageX - this.offsetLeft - this.offsetParent.offsetLeft, e.pageY - this.offsetTop - this.offsetParent.offsetTop, true);        component.redrawActiveCanvas();
       }
     });
 

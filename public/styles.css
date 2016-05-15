@@ -64,7 +64,9 @@ body {
 .storyBoxStyling {
   background-color: #eee;
   height: 400px;
+  width: 400px;
   margin: 10px;
+  clear: none;
   padding-right: 40px;
   padding-left: 40px;
   padding-top: 15px;
@@ -273,8 +275,11 @@ body {
   height: 150px;
 }
 
-.canvas-container {
+div.canvas-container {
+  clear: none;
   padding-left: 100px;
+  height:400px;
+  width:400px;
 }
 
 .color-button {

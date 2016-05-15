@@ -5,7 +5,7 @@ var StoryBox = require('./StoryBox.js');
 var StoryInput = require('./StoryInput.js');
 
 var GoButton = require('./GoButton.js');
-var GameTimer = require('./GameTimer.js')
+var GameTimer = require('./GameTimer.js');
 
 var io = require('socket.io-client');
 var socket = io.connect();

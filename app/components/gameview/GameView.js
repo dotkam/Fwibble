@@ -301,7 +301,6 @@ module.exports = React.createClass({
                 <StoryTitle title={this.state.title} />
                 { openGame }
                 { leave }
-                { drawingPad }
                 </div>
               <div className="col-md-3 col-sm-12 col-xs-12 col-lg-3">
                 <UsersInRoom user={this.state.user} users={this.state.users} turn={this.state.turn} />

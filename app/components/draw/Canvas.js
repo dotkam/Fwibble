@@ -25,7 +25,7 @@ module.exports = React.createClass({
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height); // Clears the canvas
       ctx.lineJoin = "round";
       ctx.lineWidth = 7;
-      console.log('OUTER redraw', clickX)
+      console.log('OUTER redraw CANVAS', clickX)
       for(var i=0; i < clickX.length; i++){
         ctx.beginPath();
         if(clickDrag[i] && i){
