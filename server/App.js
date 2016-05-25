@@ -17,7 +17,6 @@ var Lobby = require('../app/components/lobby/Lobby');
 var Archive = require('../app/components/archive/ArchiveGame');
 var Gameview = require('../app/components/gameview/GameView');
 var About = require('../app/components/about/About');
-var Draw = require('../app/components/draw/Draw');
 
 var Auth = require('./auth');
 var alertify = require('alertify.js');
@@ -139,7 +138,6 @@ ReactDOM.render(
             <Route path='profile' component={Profile} />
             <Route path='lobby' component={Lobby} onEnter={Auth.requireAuth} />
             <Route path='about' component={About} />
-            <Route path='draw' component={Draw} />
           </Route>
         </Router>
   ), document.getElementById('app')

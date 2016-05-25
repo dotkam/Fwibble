@@ -44,6 +44,14 @@ module.exports = React.createClass({
     clickColor.push(currentColor);
     this.setState({clickX: clickX, clickY: clickY, clickDrag: clickDrag, clickColor: clickColor});
   },
+  clearCanvas: function(){
+    this.setState({
+      clickX: [],
+      clickY: [],
+      clickDrag: [],
+      clickColor: []
+    }, this.redrawActiveCanvas);
+  },
   setColor: function(color){
     this.setState({currentColor: color})
   },
@@ -114,13 +122,13 @@ module.exports = React.createClass({
       paint = false;
     });
 
-    var colors = ['red', 'yellow', 'blue', 'black', 'white']
+    var colors = ['red', 'yellow', 'blue', 'black']
 
     colors.forEach(function(color){
       document.getElementById(color).setAttribute("style", "background-color: " + color);
     });
 
-    colors.forEach(function(color){ 
+    colors.forEach(function(color){
       return document.getElementById(color).addEventListener('click', function(e){
         component.setColor(this.id);
         })
@@ -158,12 +166,13 @@ module.exports = React.createClass({
   },
   render: function(){
 
-    var buttonColors = ['red', 'blue', 'yellow', 'black', 'white'];
+    var buttonColors = ['red', 'blue', 'yellow', 'black'];
     return (
       <div className="canvas-container">
         <Canvas index={'active'} redraw={this.redraw} clickX={this.state.clickX} clickY={this.state.clickY} clickDrag={this.state.clickDrag} clickColor={this.state.clickColor} currentColor={this.state.currentColor} />
         <div className="button-container">
-          <button className="new-canvas" onClick={this.saveDrawing}>Save Canvas</button>
+          <button className="save-canvas btn btn-success btn-md" onClick={this.saveDrawing}>Publish</button>
+          <button className="clear-canvas btn btn-primary btn-md" onClick={this.clearCanvas}>Clear</button>
         </div>
         <div className="button-container">
           { buttonColors.map((color, i) => ( <button key={i} id={color} className="color-button" /> )) }

@@ -18,8 +18,6 @@ var port = process.env.PORT || 3000;
 var assetFolder = Path.resolve(__dirname + '/../dist');
 var bodyParser = require('body-parser');
 
-
-
 var socket = require('./socket.js');
 var io = require('socket.io').listen(server);
 
@@ -57,7 +55,7 @@ console.log('Listening on port', port);
 
 
 
-// if(process.env.NODE_ENV !== 'test'){  
+// if(process.env.NODE_ENV !== 'test'){
 //   // Catch-all Route
 //   // This is for supporting browser history pushstate.
 

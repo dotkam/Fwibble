@@ -15,10 +15,10 @@ module.exports = React.createClass({
     var canvas = document.getElementById('canvas-' + index);
     console.log('redraw canvas', index, canvas);
 
-    canvas.height = 300;
-    canvas.width = 500;
+    canvas.height = 400;
+    canvas.width = 400;
 
-    if(canvas){    
+    if(canvas){
       var ctx = canvas.getContext('2d');
       var { clickX, clickY, clickDrag, clickColor } = this.props;
 
@@ -51,16 +51,16 @@ module.exports = React.createClass({
 });
 
 
-/* 
+/*
 
   Canvas height and width are set separetly from CSS style elements
   The two are represented as ratios of each other, e.g.
 
         canvas.width  = 400;
-        canvas.height = 300; 
+        canvas.height = 300;
         canvas.style.width  = '800px';
         canvas.style.height = '600px';
 
-  returns fuzzy pixels because the canvas is being stretched across a larger area 
+  returns fuzzy pixels because the canvas is being stretched across a larger area
 
 */

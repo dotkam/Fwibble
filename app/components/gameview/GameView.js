@@ -2,7 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 // var StoryContainer = require('./StoryContainer');
-var StoryTitle = require('./StoryTitle');
+// var StoryTitle = require('./StoryTitle');
 var StoryContainer = require('./StoryContainer.js');
 var Fwib = require('./Fwib.js');
 var UsersInRoom = require('./UsersInRoom.js');
@@ -20,7 +20,7 @@ var alertify = require('alertify.js');
 
 
 module.exports = React.createClass({
-  
+
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
@@ -35,11 +35,13 @@ module.exports = React.createClass({
       gameState: 'loading',
       active: false,
       title: '',
+
       clickX: [],
       clickY: [],
       clickDrag: [],
       clickColor: [],
       currentColor: 'black',
+
       drawings: []
     }
   },
@@ -99,7 +101,7 @@ module.exports = React.createClass({
    //   document.getElementById(color).setAttribute("style", "background-color: " + color);
    // });
 
-   // colors.forEach(function(color){ 
+   // colors.forEach(function(color){
    //   return document.getElementById(color).addEventListener('click', function(e){
    //     component.setColor(this.id);
    //     })
@@ -152,7 +154,7 @@ module.exports = React.createClass({
     this.setState({users, fwibs, myTurn});
   },
   leaveGame: function() {
-    // on clicking leave room button, 
+    // on clicking leave room button,
     // change game state from active to ?????
     socket.emit('leave:game', {username: this.props.user, game_hash: this.props.active_game});
     socket.emit('unsubscribe', this.props.params.game_hash);
@@ -277,32 +279,37 @@ module.exports = React.createClass({
   //   this.setState({drawings: data}, this.redrawActiveCanvas);
   // },
   render: function() {
-   // var display = this.state.gameState === ('in progress' || 'completed') ? (<StoryContainer fwibs={this.state.fwibs} onFwibSubmit={this.handleFwibSubmit} user={this.state.user} users={this.state.users} active_game={this.props.params.game_hash} myTurn={this.state.myTurn} gameState={this.state.gameState} />) 
-                                  //                : (<GoButton startGame={this.startGame}/>);                                        
+   // var display = this.state.gameState === ('in progress' || 'completed') ? (<StoryContainer fwibs={this.state.fwibs} onFwibSubmit={this.handleFwibSubmit} user={this.state.user} users={this.state.users} active_game={this.props.params.game_hash} myTurn={this.state.myTurn} gameState={this.state.gameState} />)
+                                  //                : (<GoButton startGame={this.startGame}/>);
     var leave = this.state.gameState === 'completed' ? (<LeaveGameButton leaveGame={this.leaveGame} />) : null;
     var drawingPad = this.state.gameState === 'in progress' ? <Draw /> : null;
-    var openGame = this.state.gameState === ('open') ? (<OpenGame leaveGame={this.leaveGame} startGame={this.startGame} />) : 
-    (<StoryContainer 
-      fwibs={this.state.fwibs} 
-      onFwibSubmit={this.handleFwibSubmit} 
-      user={this.state.user} users={this.state.users} 
-      active_game={this.props.params.game_hash} 
-      myTurn={this.state.myTurn} 
-      gameState={this.state.gameState} 
+    var openGame = this.state.gameState === ('open') ? (<OpenGame leaveGame={this.leaveGame} startGame={this.startGame} />) :
+    (<StoryContainer
+      fwibs={this.state.fwibs}
+      onFwibSubmit={this.handleFwibSubmit}
+      user={this.state.user} users={this.state.users}
+      active_game={this.props.params.game_hash}
+      myTurn={this.state.myTurn}
+      gameState={this.state.gameState}
     />) ;
     return (
 
       <div>
+        <h3 className="StoryTitle">
+          {this.state.title}
+        </h3>
         {
-          this.state.gameState === 'loading' ? null :  
+          this.state.gameState === 'loading' ? null :
           (<div className="container">
             <div className="row">
-              <div className="col-md-9 col-sm-12 col-xs-12 col-lg-9">
-                <StoryTitle title={this.state.title} />
+              <div className="col-lg-4 col-xs-12">
                 { openGame }
                 { leave }
-                </div>
-              <div className="col-md-3 col-sm-12 col-xs-12 col-lg-3">
+              </div>
+              <div className="col-lg-3 col-lg-offset-1 col-xs-9">
+                <Draw />
+              </div>
+              <div className="col-lg-2 col-lg-offset-2 panel-users col-xs-3">
                 <UsersInRoom user={this.state.user} users={this.state.users} turn={this.state.turn} />
               </div>
             </div>
@@ -311,4 +318,4 @@ module.exports = React.createClass({
       </div>
     );
   }
-}); 
+});

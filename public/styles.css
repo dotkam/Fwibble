@@ -1,4 +1,4 @@
-/* 
+/*
 
 // APP COLOR SCHEME:
 
@@ -24,7 +24,7 @@ body {
 
 .navbar-default .navbar-brand {
   font-family: 'Pacifico', cursive;
-  font-weight: 700; 
+  font-weight: 700;
   font-size: 200%;
   color: rgb(249, 9, 110);
 }
@@ -61,11 +61,15 @@ body {
   margin-top: 20px;
 }
 
+.StoryTitle {
+  text-align: center
+}
+
 .storyBoxStyling {
   background-color: #eee;
   height: 400px;
   width: 400px;
-  margin: 10px;
+  float: left;
   clear: none;
   padding-right: 40px;
   padding-left: 40px;
@@ -73,17 +77,24 @@ body {
   padding-bottom: 15px;
   border-radius: 5px;
   border: 1px solid silver;
-  box-sizing: border-box;
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
-  box-sizing: border-box;
+  margin-bottom: 15px;
+}
+
+.form-control {
+  margin-right: 10px;
+}
+
+.progress {
+  width: 400px;
 }
 
 .jumbotron {
   background-color: rgba(36, 201, 201, .35);
-  // border-style: solid;
-  // border-radius: 1px;
+  border-style: solid;
+  border-radius: 1px;
   border-color: rgb(36, 201, 201);
   border: 1px solid rgb(36, 201, 201);
   border-radius: 4px;
@@ -156,7 +167,7 @@ body {
   color: #fff;
   background-color: rgba(130, 170, 6, .75);
   border-color: rgb(125, 163, 9);
-} 
+}
 
 .btn-danger:active:hover,
 .btn-danger.active:hover,
@@ -170,7 +181,7 @@ body {
   color: #fff;
   background-color: rgba(249, 9, 110, .75);
   border-color: rgb(241, 0, 101);
-} 
+}
 
 .btn-danger {
   background-color: rgb(249, 9, 110);
@@ -201,7 +212,7 @@ body {
   color: #fff;
   background-color: rgba(255, 204, 0, .75);
   border-color: rgb(255, 204, 0);
-} 
+}
 
 .btn-favorite {
   color: #fff;
@@ -233,7 +244,7 @@ body {
   color: #fff;
   background-color: rgba(100, 80, 0, .75);
   border-color: rgb(100, 80, 0);
-} 
+}
 
 .btn-favorite-true {
   background-color: #ffcc00;
@@ -266,18 +277,24 @@ body {
   width: 10%;
 }
 
+.save-canvas {
+  width: 120px;
+  margin-right: 10px;
+}
+
 .canvas {
-  border: 2px solid black;
+  border: 2px solid silver;
+  border-radius: 5px;
 }
 
 .button-container {
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 40px;
+  margin-bottom: 10px;
 }
 
-div.canvas-container {
+.canvas-container {
   clear: none;
-  padding-left: 100px;
   height:400px;
   width:400px;
 }
@@ -285,8 +302,8 @@ div.canvas-container {
 .color-button {
   padding: 5px;
   border-radius: 50%;
-  width: 25%;
-  height: 25%;
+  height: 40px;
+  width: 40px;
 }
 
 .panel {
@@ -300,9 +317,9 @@ div.canvas-container {
 
 .panel-info {
   float: left;
-  margin: 15px;
   padding: 0px;
-  border-color: lightgrey;
+  border-radius: 5px;
+  border: 2px solid silver;
 }
 
 .panel-info > .panel-heading {
@@ -320,6 +337,11 @@ div.canvas-container {
   margin-bottom: 0px;
 }
 
+.panel-users {
+  padding-left: 10px;
+}
+
+/* ----- FWIB FADEIN ----- */
 
 .fwib-appear {
    opacity: 0.01;
@@ -330,6 +352,9 @@ div.canvas-container {
    transition: opacity 300ms linear;
 }
 
+
+
+/* ----- SPINNER ----- */
 
 .three-bounce {
   height: 34px;
