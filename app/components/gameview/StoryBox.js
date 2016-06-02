@@ -3,6 +3,9 @@ var ReactDOM = require('react-dom');
 var Fwib = require('./Fwib.js');
 var StoryInput = require('./StoryInput.js');
 
+var Draw = require('../draw/Draw.js');
+
+
 module.exports = React.createClass({
 
   getInitialState: function() {
@@ -24,22 +27,26 @@ module.exports = React.createClass({
     },
 
   render: function() {
-  return (
-    <div className='fwibs'>
-      <div className='storyBoxStyling'>
-        {
-          this.props.fwibs.map((fwib, i) => {
-          return (
-            <Fwib
-              key={i}
-              user={fwib.user}
-              text={fwib.text} 
-            />
-          );
-          })
-        } 
+    return (
+      <div className="fwibs">
+        <div className="storyBoxStyling">
+          <div className="story">
+            {
+              this.props.fwibs.map((fwib, i) => {
+              return (
+                <Fwib
+                  key={i}
+                  user={fwib.user}
+                  text={fwib.text} 
+                  users={this.props.users}
+                  gameState={this.props.gameState}
+                />
+              );
+              })
+            } 
+          </div>
+        </div>
       </div>
-    </div>
-  );
+    );
   }
 });

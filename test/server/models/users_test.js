@@ -1,7 +1,7 @@
 "use strict"
 require('../../test-helper.js')  // <--- This must be at the top of every test file.
 
-const User = require(__app + '/actions/users');
+const User = require(__server + '/models/userModel');
 const pg      = require('../../../db/db_setup');
 const dbCleaner = require('knex-cleaner');
 
@@ -83,9 +83,6 @@ describe('Users model', function() {
         .catch(function(error) {
           console.error('error updating active room', error);
         })
-        // .then(function(user) {
-        //   expect(user.active_game).to.equal('ghi789');
-        // })
     })
 
     it_('should delete an active room', function *() {
@@ -94,8 +91,5 @@ describe('Users model', function() {
         .catch(function(error) {
           console.error('error deleting active room', error);
         })
-        // .then(function(user) {
-        //   expect(user.active_game).to.equal(null);
-        // })
     })
 })

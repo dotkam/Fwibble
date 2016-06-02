@@ -2,22 +2,21 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var GoButton = require('./GoButton.js');
 
+var io = require('socket.io-client');
+var socket = io.connect();
+
 module.exports = React.createClass({
-
-leaveGame: function() {
-  // on clicking leave room button, 
-  // change game state from active to ?????
-
-},
-
 
   render: function() {
 
     // var display = this.props.showStory ? (<StoryContainer fwibs={this.props.fwibs} onFwibSubmit={this.handleFwibSubmit} user={this.props.user} />) : null;
 
     return(
-      <div className="col-md-9">
-        <button type="button" className="btn btn-primary btn-md" onClick={this.leaveGame}>Leave Game</button>
+      <div className="col-md-9 col-sm-12 col-xs-12 col-lg-9">
+        <br />
+        <div className="text-center">
+          <button type="button" className="btn btn-primary btn-lg btn-block" onClick={this.props.leaveGame}>Back to Foyer</button>
+        </div>
       </div>
     );
   }

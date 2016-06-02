@@ -1,8 +1,8 @@
 var FwibAPI    = require('express').Router();
 
-var Fwib = require('../../app/actions/fwibs');
-var User = require('../../app/actions/users');
-var Game = require('../../app/actions/games');
+var Fwib = require('../models/fwibModel');
+var User = require('../models/userModel');
+var Game = require('../models/gameModel');
 
 module.exports = FwibAPI;
 
@@ -65,7 +65,6 @@ FwibAPI.post('/:game_hash/fwib', function(req, res) {
   ]
 */
 
-//using room_id for now, can be changed to room_hash later, then run Room.findByHash to find the roomid to enter as argument
 FwibAPI.get('/:game_hash/', function(req, res) {
   var gamehash = req.params.game_hash;
 

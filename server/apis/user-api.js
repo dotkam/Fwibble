@@ -1,8 +1,8 @@
 var UserAPI = require('express').Router();
 
-var User = require('../../app/actions/users');
-var Game = require('../../app/actions/games');
-var Session = require('../../app/actions/sessions')
+var User = require('../models/userModel');
+var Game = require('../models/gameModel');
+var Session = require('../models/sessionModel')
 
 
 module.exports = UserAPI;
@@ -35,7 +35,7 @@ UserAPI.post('/signup', function(req, res) {
     console.log('User.create: ', response)
     setTimeout(function(){ 
        signIn(req, res)
-     }, 1000);
+     }, 750);
  })
  .catch(function() {
   res.send({error: errMsg})
@@ -101,7 +101,7 @@ function signIn (req, res, err) {
          console.log('RESPONSE', response)
          res.send(response);
        })
-     }, 1000);
+     }, 750);
   })
   .catch(function(err) {
     console.error('response.err', response.errMessage)

@@ -16,9 +16,6 @@ global.expect = chai.expect
 // Option 2: Make everything should-able
 // global.should = chai.should()
 
-// var chaiAsPromised = require('chai-as-promised');
-// chai.use(chaiAsPromised);
-
 
 // Helper Functions
 //
