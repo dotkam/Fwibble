@@ -3,7 +3,10 @@ var loggedIn = function(){
 };
 var login = function(){
   console.log('token set')
-  localStorage.fwibbleToken = 'Token'; // For now - remove later
+  // Make a socket call to generate a session token here
+  if(!localStorage.fwibbleToken){
+    localStorage.fwibbleToken = 'Token'; // For now - remove later
+  }
 };
 var logout = function(){
   delete localStorage.fwibbleToken;

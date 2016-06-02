@@ -7,7 +7,6 @@ var LobbyGameContainer = require('./LobbyGameContainer.js');
 
 var io = require('socket.io-client');
 var socket = io.connect();
-var Auth = require('../../../server/auth')
 
 module.exports = React.createClass({
 

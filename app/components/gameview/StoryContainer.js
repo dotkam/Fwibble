@@ -5,7 +5,7 @@ var StoryBox = require('./StoryBox.js');
 var StoryInput = require('./StoryInput.js');
 
 var GoButton = require('./GoButton.js');
-var GameTimer = require('./GameTimer.js')
+var GameTimer = require('./GameTimer.js');
 
 var io = require('socket.io-client');
 var socket = io.connect();
@@ -20,14 +20,11 @@ module.exports = React.createClass({
 
     return (
       <div>
-        <div className="col-md-12 col-sm-12 col-xs-12 col-lg-12">
-          <StoryBox fwibs={this.props.fwibs} users={this.props.users} gameState={this.props.gameState} />
-          <br />
-          {inputForm}
-          <GameTimer active_game={this.props.active_game} user={this.props.user} />
-        </div>
+        <StoryBox fwibs={this.props.fwibs} users={this.props.users} gameState={this.props.gameState} />
+        <br />
+        { inputForm }
+        <GameTimer active_game={this.props.active_game} user={this.props.user} />
       </div>
     )
   }
 });
-

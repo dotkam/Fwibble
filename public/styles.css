@@ -1,15 +1,19 @@
-/* 
+/*
 
 // APP COLOR SCHEME:
 
 PINK:   rgb(249, 9, 110)
-  hex:  #F9096E
+    hex: #F9096E
 
 LIGHT BLUE: rgb(36, 201, 201)
-  hex:      #24C9C9
+    hex: #24C9C9
 
 GREEN: rgb(154, 204, 0)
-  hex: #9ACC00
+    hex: #9ACC00
+
+GOLD: rgb(255, 204, 0)
+    hex: #FFCC00
+SILVER: hex #C0C0C0
 
 */
 
@@ -24,7 +28,7 @@ body {
 
 .navbar-default .navbar-brand {
   font-family: 'Pacifico', cursive;
-  font-weight: 700; 
+  font-weight: 700;
   font-size: 200%;
   color: rgb(249, 9, 110);
 }
@@ -61,27 +65,46 @@ body {
   margin-top: 20px;
 }
 
+.StoryTitle {
+  text-align: center;
+  font-size: 35px;
+  padding-bottom: 10px;
+  margin-bottom: 25px;
+  margin-left: 10%;
+  margin-right: 10%;
+  border-bottom: 3px solid #F9096E;
+}
+
 .storyBoxStyling {
   background-color: #eee;
   height: 400px;
-  margin: 10px;
+  width: 400px;
+  float: left;
+  clear: none;
   padding-right: 40px;
   padding-left: 40px;
   padding-top: 15px;
   padding-bottom: 15px;
   border-radius: 5px;
-  border: 1px solid silver;
-  box-sizing: border-box;
+  border: 2px solid silver;
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
-  box-sizing: border-box;
+  margin-bottom: 15px;
+}
+
+.form-control {
+  margin-right: 10px;
+}
+
+.progress {
+  width: 400px;
 }
 
 .jumbotron {
   background-color: rgba(36, 201, 201, .35);
-  // border-style: solid;
-  // border-radius: 1px;
+  border-style: solid;
+  border-radius: 1px;
   border-color: rgb(36, 201, 201);
   border: 1px solid rgb(36, 201, 201);
   border-radius: 4px;
@@ -154,7 +177,21 @@ body {
   color: #fff;
   background-color: rgba(130, 170, 6, .75);
   border-color: rgb(125, 163, 9);
-} 
+}
+
+.btn-danger:active:hover,
+.btn-danger.active:hover,
+.open > .dropdown-toggle.btn-danger:hover,
+.btn-danger:active:focus,
+.btn-danger.active:focus,
+.open > .dropdown-toggle.btn-danger:focus,
+.btn-danger:active:focus,
+.btn-danger:active:focus,
+.open > .dropdown-toggle.btn-danger:focus {
+  color: #fff;
+  background-color: rgba(249, 9, 110, .75);
+  border-color: rgb(241, 0, 101);
+}
 
 .btn-danger {
   background-color: rgb(249, 9, 110);
@@ -163,20 +200,120 @@ body {
 
 .btn-danger:hover {
   color: #fff;
-  background-color: ;
-  border-color: ;
+  background-color: rgb(249, 9, 110);
+  border-color: rgb(241, 0, 101);
 }
 
 .btn-danger:focus {
   color: #fff;
-  background-color: ;
-  border-color: ;
+  background-color: rgb(249, 9, 110);
+  border-color: rgb(241, 0, 101);
+}
+
+.btn-favorite:active:hover,
+.btn-favorite.active:hover,
+.open > .dropdown-toggle.btn-favorite:hover,
+.btn-favorite:active:focus,
+.btn-favorite.active:focus,
+.open > .dropdown-toggle.btn-favorite:focus,
+.btn-favorite:active:focus,
+.btn-favorite:active:focus,
+.open > .dropdown-toggle.btn-favorite:focus {
+  color: #fff;
+  background-color: rgba(255, 204, 0, .75);
+  border-color: rgb(255, 204, 0);
+}
+
+.btn-favorite {
+  color: #fff;
+  background-color: #fff;
+  border-color: rgb(255, 204, 0);
+}
+
+.btn-favorite:hover {
+  color: #fff;
+  background-color: rgb(255, 204, 0);
+  border-color: rgb(255, 204, 0);
+}
+
+.btn-favorite:focus {
+  color: #fff;
+  background-color: rgb(255, 204, 0);
+  border-color: rgb(255, 204, 0);
+}
+
+.btn-favorite-true:active:hover,
+.btn-favorite-true.active:hover,
+.open > .dropdown-toggle.btn-favorite-true:hover,
+.btn-favorite-true:active:focus,
+.btn-favorite-true.active:focus,
+.open > .dropdown-toggle.btn-favorite-true:focus,
+.btn-favorite-true:active:focus,
+.btn-favorite-true:active:focus,
+.open > .dropdown-toggle.btn-favorite-true:focus {
+  color: #fff;
+  background-color: rgba(100, 80, 0, .75);
+  border-color: rgb(100, 80, 0);
+}
+
+.btn-favorite-true {
+  background-color: #ffcc00;
+  border-color: #ffcc00;
+}
+
+.btn-favorite-true:hover {
+  color: #ffcc00;
+  background-color: #fff;
+  border-color: #ffcc00;
+}
+
+.btn-favorite-true:focus {
+  color: #fff;
+  background-color: #ffcc00;
+  border-color: #ffcc00;
 }
 
 .btn-outline {
     background-color: transparent;
     color: inherit;
     transition: all .5s;
+}
+
+.btn-group.btn-group-big {
+  width: 80%;
+}
+
+.btn-group.btn-group-small {
+  width: 10%;
+}
+
+.save-canvas {
+  width: 120px;
+  margin-right: 10px;
+}
+
+.canvas {
+  border: 2px solid silver;
+  border-radius: 5px;
+}
+
+.button-container {
+  width: 200px;
+  height: 40px;
+  margin-bottom: 10px;
+}
+
+.canvas-container {
+  clear: none;
+  height:400px;
+  width:400px;
+}
+
+.color-button {
+  padding: 5px;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
 }
 
 .panel {
@@ -190,9 +327,9 @@ body {
 
 .panel-info {
   float: left;
-  margin: 15px;
   padding: 0px;
-  border-color: lightgrey;
+  border-radius: 5px;
+  border: 2px solid silver;
 }
 
 .panel-info > .panel-heading {
@@ -210,12 +347,74 @@ body {
   margin-bottom: 0px;
 }
 
+.panel-users {
+  padding-left: 10px;
+}
+
+/* ----- ABOUT PAGE ----- */
+
+.about-content {
+  margin: 0 auto;
+  width: 500px;
+}
+
+.about-content h2 {
+  padding-bottom: 3px;
+  border-bottom: 2px solid #24C9C9;
+  margin-bottom: 7px;
+}
+.about-content h2:nth-of-type(1) {
+  color: #F9096E;
+}
+
+.about-content h2:nth-of-type(2) {
+  color: #9ACC00;
+}
+/* ----- FWIB FADEIN ----- */
 
 .fwib-appear {
-   opacity: 0.01;
+   opacity: 0;
 }
 
 .fwib-appear.fwib-appear-active {
    opacity: 1;
    transition: opacity 300ms linear;
+}
+
+/* ----- CANVAS FADEIN ----- */
+
+.drawing-appear {
+  opacity: 0;
+}
+
+.drawing-appear.drawing-appear-active {
+  opacity: 1;
+  transition: opacity 300ms linear;
+}
+
+
+/* ----- GAME TIMER ----- */
+
+.timer {
+  border: 2px solid silver;
+  border-radius: 5px;
+  text-align: center;
+}
+
+/* ----- SPINNER ----- */
+
+.three-bounce {
+  height: 34px;
+}
+
+.three-bounce .bounce1 {
+  background-color: #F9096E;
+}
+
+.three-bounce .bounce2 {
+  background-color: #24C9C9;
+}
+
+.three-bounce .bounce3 {
+  background-color: #9ACC00;
 }

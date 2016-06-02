@@ -4,55 +4,7 @@ var Fwib = require('./models/fwibModel.js')
 var User = require('./models/userModel.js')
 var Game = require('./models/gameModel.js')
 var Session = require('./models/sessionModel.js')
-
-var userNames = (function () {
-  var names = {};
-
-  var claim = function (name) {
-    if (!name || names[name]) {
-      return false;
-    } else {
-      names[name] = true;
-      return true;
-    }
-  };
-
-  // find the lowest unused "guest" name and claim it
-  var getGuestName = function () {
-    var name,
-      nextUserId = 1;
-
-    do {
-      name = 'Guest ' + nextUserId;
-      nextUserId += 1;
-    } while (!claim(name));
-
-    return name;
-  };
-
-  // serialize claimed names as an array
-  var get = function () {
-    var res = [];
-    for (user in names) {
-      res.push(user);
-    }
-
-    return res;
-  };
-
-  var free = function (name) {
-    if (names[name]) {
-      delete names[name];
-    }
-  };
-
-  return {
-    claim: claim,
-    free: free,
-    get: get,
-    getGuestName: getGuestName
-  };
-}());
+var GamesUsers = require('./models/games_usersModel.js')
 
 // export function for listening to the socket
 module.exports = function (socket) {
@@ -60,25 +12,44 @@ module.exports = function (socket) {
   
   // send the new user their name and a list of users
   // notify other clients that a new user has joined
+  socket.on('fetch:userData', function(data){
+    console.log('fetching user data:', data);
+    Session.findByToken(data.token)
+      .then(function(res){
+        console.log('fetch userData res:', res)
+        return Promise.all([res, User.findActiveGame(res)])
+      })
+      .then(function(res2){
+        console.log('Session Promise.all:', res2);
+        socket.emit('valid_user', {username: res2[0], active_game: res2[1]})
+      })
+  });
+  // Fetch all users in a given game hash
   socket.on('fetch:users', function(data){
-
     console.log('fetch:users data', data)
-
     var client = this;
-    Game.allUser(data.game_hash)
+    Promise.all([Game.allUser(data.game_hash), Fwib.allOfGame(data.game_hash), Game.getStatusByHash(data.game_hash)])
       .then(function(res){
         console.log('ALL USERS', res);
-        if( data.users.length !== res.length){
+        // if( data.users.length !== res.length){
           socket.emit('init', {
             user: data.user,
-            users: res
+            users: res[0],
+            fwibs: res[1],
+            gameState: res[2]
           });
-          // socket.broadcast.to(data.game_hash).emit('user:join', {
-          //   name: data.user,
-          //   users: res
-          // });
-        };
+        // };
       })
+  });
+  // Fetch completed games by username for Profile Page
+  socket.on('fetch:completedGames', function(data){
+    User.findIdByUsername(data.username)
+      .then(function(res){
+        return GamesUsers.allGamesByUserId(res)
+      })
+      .then(function(res2){
+        socket.emit('update:games:completed', {games: res2});
+      });
   });
   // Subscribe a user to a room's socket channel
   socket.on('subscribe', function(room){
@@ -123,45 +94,37 @@ module.exports = function (socket) {
       })
   });
   // Creates game room and sends its hash back to creator
-  socket.on('create:game_room', function(data){
+  socket.on('create:game_room', function(data){ // Promise.all-ify me
     var client = this;
     Game.create({game_creator: data.username})
       .then(function(res){
         console.log('Game create res:', res);
-        User.addActiveRoom(data.username, res.game_hash)
-          .then(function(res2){
-            console.log('CREATE CHANNEL:', res.game_hash) 
-            client.emit('enter:game', {username: data.username, active_game: res.game_hash})
-          })
+        return Promise.all([res, User.addActiveRoom(data.username, res.game_hash)])
       })
+      .then(function(res2){
+        console.log('CREATE CHANNEL:', res2[0].game_hash) 
+        client.emit('enter:game', {username: data.username, active_game: res2[0].game_hash})
+      })
+      // })
   });
   // Adds active_game to user
-  socket.on('join:game', function(data){
+  socket.on('join:game', function(data){ // Large chunk removed, may need to revisit - check revamp_auth branch for old code
     console.log('GOT JOINGAME', data)
-    // var client = this;
     socket.broadcast.to(data.game_hash).emit('user:join', {username: data.username}); // CHANNEL EMIT USER JOIN
     User.addActiveRoom(data.username, data.game_hash)
-      .then(function(res){
-        console.log('Added Active Room')
-        Game.allUser(data.game_hash)
-          .then(function(res2){
-            console.log('GOT ALL USERS:', res, res2)
-            // client.emit('update:users', {users: res2});
-          })
-      })
   });
-  socket.on('leave:game', function(data){
+  socket.on('leave:game', function(data){ // This seems to work correctly - check revamp_auth branch for old code if not working in prod
     var client = this;
     console.log('LEAVING FROM THE SERVER', data)
     User.deleteActiveRoom(data.username)
       .then(function(res){
-        socket.emit('update:active_game', {game_hash: ''});
-        Game.allUser(data.game_hash)
-          .then(function(res2){
-            console.log('LEAVE DATA:', res, res2)
-            socket.broadcast.to(data.game_hash).emit('update:users', {users: res2}); // CHANNEL EMIT USER LEAVE
-            client.emit('update:users', {users: res2});
-          })
+        socket.emit('update:active_game', {game_hash: null});
+        return Game.allUser(data.game_hash)
+      })
+      .then(function(res2){
+        console.log('LEAVE DATA:', res2)
+        socket.broadcast.to(data.game_hash).emit('update:users', {users: res2}); // CHANNEL EMIT USER LEAVE
+        client.emit('update:users', {users: res2});
       })
   });
   // Passes in updated turn counter and broadcasts it to other users
@@ -198,14 +161,39 @@ module.exports = function (socket) {
         socket.emit('title:update', {title: res})
       });
   });
-
-  // clean up when a user leaves, and broadcast it to other users
-  socket.on('disconnect', function () {
-    userNames.free(name);
-    socket.broadcast.emit('user:left', {
-      name: name,
-      users: userNames.get()
+  // Fetch fwibs for archive view
+  socket.on('fetch:archivedFwibs', function(data){
+    var client = this;
+    Fwib.allOfGame(data.gamehash)
+      .then(function(res){
+        console.log('archive res', res)
+        client.emit('archive:response', {fwibs: res})
+      });
+  });
+  // Insert users in game into GamesUsers
+  socket.on('archive:users', function(data){
+    data.users.forEach(function(u){    
+      GamesUsers.addUsernameToGame({username: u, game_hash: data.game_hash})
+        .then(function(res){
+          console.log('INSERTING', u)
+        });
     });
   });
+
+  // Delete game from user's archive
+  socket.on('archive:delete', function(data){
+    console.log('GOT DELETE SOCKET', data);
+    GamesUsers.removeUsernameFromGame({username: data.username, game_hash: data.game_hash})
+  });
+  // Set Favorite to true for gamehash
+  socket.on('favorite:game:toggle', function(data){
+    console.log('UPDATE FAVORITE', data)
+    GamesUsers.addGameToFavorites(data)
+  });
+  // Test for passing drawing data
+  socket.on('create:drawing', function(data){
+    console.log('got DRAWING')
+    socket.broadcast.emit('update:drawings', data.drawings)
+  })
 };
 

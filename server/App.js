@@ -8,13 +8,15 @@ var IndexRoute = ReactRouter.IndexRoute;
 var browserHistory = ReactRouter.browserHistory;
 
 var Stylesheet = require('../public/styles.css');
-var Index = require('../app/components/index/Index');
 var NavBar = require('../app/components/navbar/NavBar');
 var Signin = require('../app/components/signin/Signin');
 var Signup = require('../app/components/signup/Signup');
 var Signout = require('../app/components/signout/Signout');
+var Profile = require('../app/components/profile/Profile');
 var Lobby = require('../app/components/lobby/Lobby');
+var Archive = require('../app/components/archive/ArchiveGame');
 var Gameview = require('../app/components/gameview/GameView');
+var About = require('../app/components/about/About');
 
 var Auth = require('./auth');
 var alertify = require('alertify.js');
@@ -33,8 +35,6 @@ if (window.location.hostname === 'localhost'){
 
 var io = require('socket.io-client');
 
-console.log('socket connection attempt:', connectionPoint, port, process.env.NODE_ENV)
-
 var socket = io.connect(connectionPoint);
 
 var App = React.createClass({
@@ -48,8 +48,14 @@ var App = React.createClass({
   },
 
   componentDidMount: function(){
-    // TODO grab user info based on session token
-    // THEN setState based on this info
+    if(localStorage.fwibbleToken){
+      console.log('has a fwibble token:', localStorage.fwibbleToken)
+      socket.emit('fetch:userData', { token: localStorage.fwibbleToken })
+    }
+    socket.on('valid_user', this.setUser)
+  },
+  validUser: function(data){
+    this.setState({ username: data.username });
   },
   setUser: function(data) {
     console.log('setUser data', data)
@@ -85,7 +91,7 @@ var App = React.createClass({
     this.setState({
       username: null,
       loggedIn: Auth.loggedIn(),
-      active_game: null
+      active_game: ''
     })
     alertify.success('Successfully logged out');
   },
@@ -125,37 +131,12 @@ ReactDOM.render(
             <Route path='signin' component={Signin} />
             <Route path='signup' component={Signup} />
             <Route path='signout' component={Signout} />
+            <Route path='archive/:game_hash' component={Archive} />
+            <Route path='gameview/:game_hash' component={Gameview} />
+            <Route path='profile' component={Profile} />
             <Route path='lobby' component={Lobby} onEnter={Auth.requireAuth} />
-            <Route path='gameview/:game_hash' component={Gameview} onEnter={Auth.requireAuth} />
+            <Route path='about' component={About} />
           </Route>
         </Router>
   ), document.getElementById('app')
 )
-
-/*
-
-NavBar active_game={this.state.active_game} loggedIn={this.state.loggedIn}
-
-
-
-*/
-
-
-
-
-
-/*
-   render: function() {
-    return (
-      <div>
-        <NavBar />
-        {this.props.children && React.cloneElement(this.props.children, {
-          setUser: this.setUser,
-          user: this.state.username
-        })}
-      </div>
-    )
-  }
-})
-
-*/

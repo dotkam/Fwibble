@@ -13,13 +13,12 @@ Game.generateHash = function(gameId) {
   hash = hash.slice(0, 15);
   console.log(hash)
   return pg('games').where({'game_id': gameId}).update({'game_hash': hash}).returning(['game_id', 'game_hash', 'game_title', 'turn_index', 'game_status', 'game_creator'])
-
-    .catch(function(error) {
-      console.error('error inserting hash into db', error)
-    }) 
     .then(function(res){
       return res;
     })  
+    .catch(function(error) {
+      console.error('error inserting hash into db', error)
+    }) 
 }
 /*
   fwibble title creator
@@ -41,7 +40,7 @@ Game.titleGenerator = function() {
   var randomer = function(array) {
     return array[Math.floor(Math.random() * array.length)];
   } 
-  var fwib = ['The ' + randomer(noun) + ' ' + randomer(ptverb) + ' ' + randomer(preposition) + ' the ' + randomer(noun), randomer(properNoun) + ' and the ' + randomer(adjective) + ' ' + randomer(pluralNoun), "Episode II: Attack of the " + randomer(pluralNoun), randomer(properNoun) + "\'s " + randomer(pluralNoun), "Star Trek III: The Search for " + randomer(properNoun), "Harry Potter and the " + randomer(noun) + " of the " + randomer(noun)];
+  var fwib = ['The ' + randomer(noun) + ' ' + randomer(ptverb) + ' ' + randomer(preposition) + ' the ' + randomer(noun), randomer(properNoun) + ' and the ' + randomer(adjective) + ' ' + randomer(pluralNoun), "Episode II: Attack of the " + randomer(pluralNoun), randomer(properNoun) + "\'s " + randomer(pluralNoun), "Star Trek III: The Search for " + randomer(properNoun), "Harry Potter and the " + randomer(noun) + " of the " + randomer(pluralNoun), randomer(properNoun) + " and the Terrible, Horrible, No Good, Very Bad " + randomer(noun)];
 
   var starter = randomer(fwib);
   console.log(starter);
@@ -56,17 +55,16 @@ Game.titleGenerator = function() {
     game_creator: username
 */
 
-Game.create = function(attrs) {
+Game.create = function(attrs) { // Just return new Promise ?
   attrs.game_title = Game.titleGenerator();
   return pg('games').insert(attrs, ['game_id', 'game_hash', 'game_title', 'turn_index', 'game_status', 'game_creator'])
     .then(function(res){
       console.log('successfully inserted game', res)
-      var gameId = res[0].game_id;
-      console.log("game id", gameId);
-      return Game.generateHash(gameId)
-        .then(function(res2){
-          return res2[0];
-        })
+      console.log("game id", res[0].game_id);
+      return Promise.all([res, Game.generateHash(res[0].game_id)])
+    })
+    .then(function(res2){
+      return res2[1][0] // res2 returns 2 knex arrays, one with gamehash, one without
     })
     .catch(function(error) {
       console.error('error inserting game into db', error)
@@ -75,13 +73,13 @@ Game.create = function(attrs) {
 
 Game.titleByHash = function(gamehash) {
   return pg.select('game_title').from('games').where({'game_hash': gamehash})
-    .catch(function(error) {
-      console.error('error retrieving game', error)
-    })
     .then(function(res){
       // console.log('successfully retrieved game', res)
       return res[0].game_title;
     })  
+    .catch(function(error) {
+      console.error('error retrieving game', error)
+    })
 }
 
 
@@ -90,12 +88,12 @@ Game.titleByHash = function(gamehash) {
 */
 Game.allUser = function(gamehash) {
   return pg.select('username').from('users').where({'active_game': gamehash})
-    .catch(function(error) {
-      console.error('error retrieving users', error)
-    })
     .then(function(res){
       // console.log('successfully retrieved users', res)
       return res;
+    })
+    .catch(function(error) {
+      console.error('error retrieving users', error)
     })
 }
 
@@ -110,46 +108,46 @@ Game.allUser = function(gamehash) {
 
 Game.allJoinable = function() {
   return pg.select('*').from('games').where({'game_status': 'open'})
-    .catch(function(error) {
-      console.error('error retrieving games', error)
-    })
     .then(function(res){
       console.log('successfully retrieved ' + res.length + ' games')
       return res;
     }) 
+    .catch(function(error) {
+      console.error('error retrieving games', error)
+    })
 }
 
 Game.allInProgress = function() {
   return pg.select('*').from('games').where({'game_status': 'in progress'})
-    .catch(function(error) {
-      console.error('error retrieving games', error)
-    })
     .then(function(res){
       // console.log('successfully retrieved games', res)
       return res;
     })  
+    .catch(function(error) {
+      console.error('error retrieving games', error)
+    })
 }
 
 Game.allCompleted = function() {
   return pg.select('*').from('games').where({'game_status': 'completed'})
-    .catch(function(error) {
-      console.error('error retrieving games', error)
-    })
     .then(function(res){
       // console.log('successfully retrieved games', res)
       return res;
     })  
+    .catch(function(error) {
+      console.error('error retrieving games', error)
+    })
 }
 
 Game.all = function() {
   return pg.select('*').from('games')
-    .catch(function(error) {
-      console.error('error retrieving games', error)
-    })
     .then(function(res){
       // console.log('successfully retrieved games', res)
       return res;
     })  
+    .catch(function(error) {
+      console.error('error retrieving games', error)
+    })
 }
 
 /*
@@ -161,34 +159,34 @@ Game.all = function() {
 
 Game.updateToOpen = function(gamehash) {
   return pg('games').where({'game_hash': gamehash}).update({'game_status': 'open'})
-    .catch(function(error) {
-      console.error('error updating status', error)
-    })
     .then(function(res){
       console.log('successfully updated status', res)
       return res;
+    })
+    .catch(function(error) {
+      console.error('error updating status', error)
     })
 }
 
 Game.updateToInProgress = function(gamehash) {
   return pg('games').where({'game_hash': gamehash}).update({'game_status': 'in progress'})
-    .catch(function(error) {
-      console.error('error updating status', error)
-    })
     .then(function(res){
       console.log('successfully updated status', res)
       return res;
+    })
+    .catch(function(error) {
+      console.error('error updating status', error)
     })
 }
 
 Game.updateToCompleted = function(gamehash) {
   return pg('games').where({'game_hash': gamehash}).update({'game_status': 'completed'})
-    .catch(function(error) {
-      console.error('error updating status', error)
-    })
     .then(function(res){
       console.log('successfully updated status', res)
       return res;
+    })
+    .catch(function(error) {
+      console.error('error updating status', error)
     })
 }
 
@@ -199,12 +197,12 @@ Game.updateToCompleted = function(gamehash) {
 
 Game.findIdByHash = function(hash) {
   return pg.select('game_id').from('games').where({'game_hash': hash})
-    .catch(function(error) {
-      console.error('error retrieving game', error)
-    })
     .then(function(res){
       console.log('successfully retrieved game', res)
       return res[0].game_id;
+    })
+    .catch(function(error) {
+      console.error('error retrieving game', error)
     })
 }
 
@@ -213,12 +211,12 @@ Game.findIdByHash = function(hash) {
 */
 Game.findTurn = function(gamehash) {
   return pg.select('turn_index').from('games').where({'game_hash': gamehash})
-    .catch(function(error) {
-      console.error('error retrieving turn', error)
-    })
     .then(function(res){
       console.log('successfully retrieved turn', res)
       return res[0].turn_index;
+    })
+    .catch(function(error) {
+      console.error('error retrieving turn', error)
     })
 }
 
@@ -230,12 +228,23 @@ Game.findTurn = function(gamehash) {
 
 Game.updateTurn = function(gamehash, newTurn) {
   return pg('games').where({'game_hash': gamehash}).update({'turn_index': newTurn})
-    .catch(function(error) {
-      console.error('error updating turn', error)
-    })
     .then(function(res){
       console.log('successfully updated turn', res)
       return res;
+    })
+    .catch(function(error) {
+      console.error('error updating turn', error)
+    })
+}
+
+Game.getStatusByHash = function(gamehash) {
+  return pg.select('game_status').from('games').where({game_hash: gamehash})
+    .then(function(res){
+      console.log('successfully retrieved game status', res)
+      return res[0].game_status
+    })
+    .catch(function(error){
+      console.error('error retrieving game status', error)
     })
 }
 

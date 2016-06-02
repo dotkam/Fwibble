@@ -8,20 +8,34 @@ module.exports = React.createClass({
 
   render: function() {
 
-   return (
-     <div className='navbar navbar-default navbar-static-top'>
-       <div className='container-fluid'>
-         <div className='navbar-header'>
-           <div><img src={Logo} alt="Fwibble" className="navbar-brand"/></div>
-         </div>
-           <ul className="nav navbar-nav navbar-right">
-             <li>
-               { this.props.loggedIn ? (<Link to='/signout'>SIGN OUT</Link>) : (<Link to='/signin'>SIGN IN</Link>)}
+    return (
+      <div className='navbar navbar-default navbar-static-top'>
+        <div className='container-fluid'>
+          <div className='navbar-header'>
+            <div><img src={Logo} alt="Fwibble" className="navbar-brand"/></div>
+          </div>
+          <ul className="nav navbar-nav navbar-right">
+            {this.props.active_game !== null ?
+              <li className="container-fluid">
+                <Link to={`/gameview/${this.props.active_game}`} className="menuOptions">MY GAME</Link>
              </li>
-             <li><Link to={`/gameview/${this.props.active_game}`} className="menuOptions">MY GAME</Link></li>
-           </ul>
-         </div>
-       </div>
+             : null
+            }
+            <li className="container-fluid">
+              <Link to="/profile">PROFILE</Link>
+            </li>
+            <li className="container-fluid">
+              <Link to="/lobby">LOBBY</Link>
+            </li>
+            <li className="container-fluid">
+              <Link to='/about'>ABOUT</Link>
+            </li>
+            <li className="container-fluid">
+              <Link to='/signout'>SIGN OUT</Link>
+            </li>
+          </ul>
+        </div>
+      </div>
    )
  }
 });
