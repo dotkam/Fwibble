@@ -7,13 +7,13 @@ module.exports = React.createClass({
       <div>
         {
           this.props.drawings.map((d, i) => (
-            <Canvas 
+            <Canvas
               key={i}
               index={i}
               redraw={this.props.redraw}
-              clickX={d.clickX} 
-              clickY={d.clickY} 
-              clickDrag={d.clickDrag} 
+              clickX={d.clickX}
+              clickY={d.clickY}
+              clickDrag={d.clickDrag}
               clickColor={d.clickColor}
             />
           ))

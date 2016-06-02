@@ -4,7 +4,7 @@ var Logo = require('./../../images/Fwibble-logo-cropped.png')
 module.exports = React.createClass({
   render: function(){
     return (
-      <div>
+      <div className="about-content">
         <h2>What is a Fwibble, you may ask?</h2>
         <p>
           Fwibble was born out of the love of playground telephone games, silly stories with the family on road trips, and real-time, interactive social media experiences.
@@ -17,7 +17,7 @@ module.exports = React.createClass({
         </p>
         <h2>How to Play</h2>
         <p>
-        Participants take turns typing 6-word additions to the Fwibble; these individual snippets are called Fwibs. 
+        Participants take turns typing 6-word additions to the Fwibble; these individual snippets are called Fwibs.
         </p>
         <p>
         Sometimes a sentence will be left incomplete, so it’s up to the next player to finish that thought. This strategy leads to the zany Fwibble fun we’re all so fond of.

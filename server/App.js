@@ -48,8 +48,6 @@ var App = React.createClass({
   },
 
   componentDidMount: function(){
-    // TODO grab user info based on session token
-    // THEN setState based on this info
     if(localStorage.fwibbleToken){
       console.log('has a fwibble token:', localStorage.fwibbleToken)
       socket.emit('fetch:userData', { token: localStorage.fwibbleToken })
@@ -142,31 +140,3 @@ ReactDOM.render(
         </Router>
   ), document.getElementById('app')
 )
-
-/*
-
-NavBar active_game={this.state.active_game} loggedIn={this.state.loggedIn}
-
-
-
-*/
-
-
-
-
-
-/*
-   render: function() {
-    return (
-      <div>
-        <NavBar />
-        {this.props.children && React.cloneElement(this.props.children, {
-          setUser: this.setUser,
-          user: this.state.username
-        })}
-      </div>
-    )
-  }
-})
-
-*/

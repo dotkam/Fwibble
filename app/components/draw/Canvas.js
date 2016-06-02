@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 // Grab correct component by ID
 
@@ -43,9 +44,9 @@ module.exports = React.createClass({
   },
   render:function(){
     return (
-      <div>
+      <ReactCSSTransitionGroup transitionName="drawing" transitionAppear={true} transitionAppearTimeout={300}>
         <canvas id={"canvas-" + this.props.index} className="canvas" ></canvas>
-      </div>
+      </ReactCSSTransitionGroup>
     )
   }
 });

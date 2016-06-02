@@ -5,7 +5,7 @@ var io = require('socket.io-client');
 var socket = io.connect();
 
 module.exports = React.createClass({
-  
+
   getInitialState: function() {
     return { secondsLeft: 360 };
   },
@@ -29,7 +29,7 @@ module.exports = React.createClass({
       this.setState({secondsLeft: this.state.secondsLeft - 1});
     } else {
       console.log('seconds have ended!', this.props.active_game, this.props.user)
-      clearInterval(this.interval);    
+      clearInterval(this.interval);
       socket.emit('endtimer', {username: this.props.user, gamehash: this.props.active_game});
     }
   },
@@ -46,9 +46,7 @@ module.exports = React.createClass({
     var seconds = Math.floor(this.state.secondsLeft % 60);
     var prettySeconds = seconds < 10 ? '0' + seconds : '' + seconds;
   	return (
-      <div className='gameTimer'>Time Left in Game: {minutes}:{prettySeconds}</div>
+      <div className='timer'>Time Left in Game: {minutes}:{prettySeconds}</div>
     );
   }
 });
-
-

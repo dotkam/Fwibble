@@ -12,7 +12,7 @@ module.exports = React.createClass({
       clickY: [],
       clickDrag: [],
       clickColor: [],
-      currentColor: 'black',
+      currentColor: '#999999',
       drawings: []
     }
   },
@@ -122,7 +122,7 @@ module.exports = React.createClass({
       paint = false;
     });
 
-    var colors = ['red', 'yellow', 'blue', 'black']
+    var colors = ['#F9096E', '#24C9C9', '#FFCC00', '#999999']
 
     colors.forEach(function(color){
       document.getElementById(color).setAttribute("style", "background-color: " + color);
@@ -166,7 +166,7 @@ module.exports = React.createClass({
   },
   render: function(){
 
-    var buttonColors = ['red', 'blue', 'yellow', 'black'];
+    var buttonColors = ['#F9096E', '#24C9C9', '#FFCC00', '#999999'];
     return (
       <div className="canvas-container">
         <Canvas index={'active'} redraw={this.redraw} clickX={this.state.clickX} clickY={this.state.clickY} clickDrag={this.state.clickDrag} clickColor={this.state.clickColor} currentColor={this.state.currentColor} />

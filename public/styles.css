@@ -3,13 +3,17 @@
 // APP COLOR SCHEME:
 
 PINK:   rgb(249, 9, 110)
-  hex:  #F9096E
+    hex: #F9096E
 
 LIGHT BLUE: rgb(36, 201, 201)
-  hex:      #24C9C9
+    hex: #24C9C9
 
 GREEN: rgb(154, 204, 0)
-  hex: #9ACC00
+    hex: #9ACC00
+
+GOLD: rgb(255, 204, 0)
+    hex: #FFCC00
+SILVER: hex #C0C0C0
 
 */
 
@@ -62,7 +66,13 @@ body {
 }
 
 .StoryTitle {
-  text-align: center
+  text-align: center;
+  font-size: 35px;
+  padding-bottom: 10px;
+  margin-bottom: 25px;
+  margin-left: 10%;
+  margin-right: 10%;
+  border-bottom: 3px solid #F9096E;
 }
 
 .storyBoxStyling {
@@ -76,7 +86,7 @@ body {
   padding-top: 15px;
   padding-bottom: 15px;
   border-radius: 5px;
-  border: 1px solid silver;
+  border: 2px solid silver;
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
@@ -341,10 +351,29 @@ body {
   padding-left: 10px;
 }
 
+/* ----- ABOUT PAGE ----- */
+
+.about-content {
+  margin: 0 auto;
+  width: 500px;
+}
+
+.about-content h2 {
+  padding-bottom: 3px;
+  border-bottom: 2px solid #24C9C9;
+  margin-bottom: 7px;
+}
+.about-content h2:nth-of-type(1) {
+  color: #F9096E;
+}
+
+.about-content h2:nth-of-type(2) {
+  color: #9ACC00;
+}
 /* ----- FWIB FADEIN ----- */
 
 .fwib-appear {
-   opacity: 0.01;
+   opacity: 0;
 }
 
 .fwib-appear.fwib-appear-active {
@@ -352,7 +381,25 @@ body {
    transition: opacity 300ms linear;
 }
 
+/* ----- CANVAS FADEIN ----- */
 
+.drawing-appear {
+  opacity: 0;
+}
+
+.drawing-appear.drawing-appear-active {
+  opacity: 1;
+  transition: opacity 300ms linear;
+}
+
+
+/* ----- GAME TIMER ----- */
+
+.timer {
+  border: 2px solid silver;
+  border-radius: 5px;
+  text-align: center;
+}
 
 /* ----- SPINNER ----- */
 
